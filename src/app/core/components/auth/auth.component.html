@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="header">
+    <h1>Login</h1>
+    <p>Digite seu login e senha</p>
+  </div>
+  <div class="login">
+    <div class="form-control">
+      <label>Email</label>
+      <app-input type="text" placeholder="email@email.com.br"  [(ngModel)]="login.email" ngDefaultControl></app-input>
+    </div>
+    <div class="form-control">
+      <label>Senha</label>
+      <app-input type="password" placeholder="********"  [(ngModel)]="login.senha" ngDefaultControl></app-input>
+    </div>
+    <div class="form-control">
+      <a href="/login" class="forget-passowd">Esqueci minha senha</a>
+    </div>
+    <div class="form-button">
+      <app-cutom-button type="button" text="Entrar" (click)="logar()"></app-cutom-button>
+    </div>
+
+      <p>Ainda não tem uma conta?</p>
+      <a href="/login">Criar conta</a>
+    </div>
+</div>

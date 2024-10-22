@@ -15,6 +15,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CustomButtonComponent } from './core/components/custom-button/custom-button.component';
 import { MenuSidebarComponent } from './core/components/menu-sidebar/menu-sidebar.component';
 import { LayoutComponent } from './core/components/layout/layout.component';
+import { MenuComponent } from './core/components/menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { LayoutComponent } from './core/components/layout/layout.component';
     CertificadoComponent,
     LoaderComponent,
     MenuSidebarComponent,
-    LayoutComponent
+    LayoutComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,

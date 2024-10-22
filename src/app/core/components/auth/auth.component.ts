@@ -1,3 +1,4 @@
+
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ILoginModel } from '../../models/ILoginModel';
 
@@ -14,10 +15,13 @@ export class AuthComponent implements OnInit {
   @Output() submit = new EventEmitter();
   ngOnInit(): void {}
 
-  logar(){
-    if(this.login.email != '' || this.login.senha != ''){
+  logar() {
+    if (this.login.email !== '' && this.login.senha !== '') {
       this.submit.emit(this.login);
+    } else {
+      console.error('Email e senha são obrigatórios.');
     }
   }
+  
 
 }

@@ -2,9 +2,9 @@
 
 
 //Dev
-// const link = 'https://portal-dev-api.gdllogistica.com.br/';
+// const link = '';
 //LocalHost
-const link = 'https://localhost:5001/api/';
+const link = 'https://localhost:5001/api/v1/';
 
 
 //NGronk
@@ -18,7 +18,7 @@ const link = 'https://localhost:5001/api/';
 //   production: false,
 // };
 
-const portal = "portal-convidados"
+const portal = "portal-rb-brigaderia"
 
 export const environment = {
   version: "1.0.0",

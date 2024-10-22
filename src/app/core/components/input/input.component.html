@@ -1,1 +1,15 @@
-  <input [type]="type" [placeholder]="placeholder" />
+<div class="input-container" [ngStyle]="{'width': width}">
+  <label *ngIf="label" [ngClass]="{'boldLabel' : boldLabel}" class="input-label">{{ label }}</label>
+
+  <div class="input-wrapper">
+    <input [ngClass]="{'readonly' : readonly}" min="0" [type]="getInputType()" [placeholder]="placeholder"
+      [(ngModel)]="value" (input)="onInputChange($event)" [readonly]="readonly" />
+
+    <!-- Ícone de olho para alternar visibilidade -->
+    <span *ngIf="type === 'password'" class="material-symbols-outlined eye-icon" (click)="togglePasswordVisibility()">
+      {{ isPasswordVisible ? 'visibility_off' : 'visibility' }}
+    </span>
+  </div>
+
+  <img [ngClass]="{'inputWithLabel': label}" *ngIf="type === 'search'" src="assets/search.svg" class="search-icon" />
+</div>

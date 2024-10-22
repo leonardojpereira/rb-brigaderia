@@ -2,21 +2,8 @@
   <div class="body">
     <!-- Componente de Login -->
     <app-auth (submit)="logar($event)"></app-auth>
-    <div class="certificados">
-      <!-- Componente dos certificados -->
-      <!-- <div class="certificado-body">
-        <h1>Autoridades</h1>
-        <div class="cards">
-          <app-certificado type="com_certificado"></app-certificado>
-          <app-certificado type="sem_certificado"></app-certificado>
-        </div>
-      </div> -->
-    </div>
   </div>
-  <!-- <div class="imagem-ship">
-    <div class="logo">
-      <img src="assets/logo.svg" />
-    </div>
-  </div> -->
+  <div class="background">
+  </div>
   <app-loader *ngIf="loader"></app-loader>
 </div>

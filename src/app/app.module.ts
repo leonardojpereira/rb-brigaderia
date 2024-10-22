@@ -7,12 +7,12 @@ import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthComponent } from './core/components/auth/auth.component';
 import { InputComponent } from './core/components/input/input.component';
-import { CutomButtonComponent } from './core/components/cutom-button/cutom-button.component';
 import { CertificadoComponent } from './core/components/certificado/certificado.component';
 import { FormsModule } from '@angular/forms';
 import { LoaderComponent } from './core/components/loader/loader.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { CustomButtonComponent } from './core/components/custom-button/custom-button.component';
 
 @NgModule({
   declarations: [
@@ -20,8 +20,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     LoginComponent,
     HomeComponent,
     AuthComponent,
+    CustomButtonComponent,
     InputComponent,
-    CutomButtonComponent,
     CertificadoComponent,
     LoaderComponent
   ],

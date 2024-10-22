@@ -13,6 +13,9 @@ import { LoaderComponent } from './core/components/loader/loader.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CustomButtonComponent } from './core/components/custom-button/custom-button.component';
+import { MenuSidebarComponent } from './core/components/menu-sidebar/menu-sidebar.component';
+import { LayoutComponent } from './core/components/layout/layout.component';
+import { MenuComponent } from './core/components/menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,10 @@ import { CustomButtonComponent } from './core/components/custom-button/custom-bu
     CustomButtonComponent,
     InputComponent,
     CertificadoComponent,
-    LoaderComponent
+    LoaderComponent,
+    MenuSidebarComponent,
+    LayoutComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,

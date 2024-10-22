@@ -1,0 +1,21 @@
+<div class="menu-container" [class.expanded]="isMenuExpanded">
+    <div class="menu-header">
+        <img src="assets/logo_brigaderia.png" />
+    </div>
+    <div class="menu-body">
+        <app-menu></app-menu>
+        <div class="menu-footer">
+            <span class="material-symbols-outlined icon" >
+                logout
+            </span>
+            <span class="logout-text">Sair</span>
+
+        </div>
+    </div>
+    <div class="toggle-close-sidebar">
+        <button class="toggle-button" (click)="toggleMenu()">
+            <!-- <img src="assets/close.svg" alt="Ícone de fechar sidebar" class="toggle-icon"> -->
+        </button>
+    </div>
+
+</div>

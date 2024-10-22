@@ -1,0 +1,59 @@
+.menu-list {
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    padding: 0;
+    gap: 50px;
+  
+    .item-icon {
+      color: #5e7d9f;
+      font-weight: 700;
+    }
+  
+    .menu-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      cursor: pointer;
+
+
+      .icon {
+        color: #5D6679;
+        font-size: 22px;
+        transition: all 0.3s ease;
+        
+        &.active {
+          color: #000;
+        }
+      }
+  
+      .cadastro-item-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+      }
+  
+      .menu-link {
+        text-decoration: none;
+        color: #5D6679;
+        font-weight: 700;
+        font-size: 16px;
+        transition: all 0.3s ease;
+
+        &.active {
+          color: #000;
+        }
+      }
+
+      &:hover {
+        .icon {
+          color: #000; /* Muda a cor do ícone para preto ao passar o mouse */
+        }
+        .menu-link {
+          color: #000; /* Muda a cor do texto para preto ao passar o mouse */
+        }
+      }
+    }
+  }

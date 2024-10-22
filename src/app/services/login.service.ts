@@ -60,7 +60,7 @@ export class LoginService {
       .subscribe({
         next: (res: any) => {
           this.setUserLoggedIn(true);
-          this.router.navigate(['/home']);
+          this.router.navigate(['/dashboard']);
           return onSuccess(res);
         },
         error: (error: any) => {

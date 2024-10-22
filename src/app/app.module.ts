@@ -16,6 +16,8 @@ import { CustomButtonComponent } from './core/components/custom-button/custom-bu
 import { MenuSidebarComponent } from './core/components/menu-sidebar/menu-sidebar.component';
 import { LayoutComponent } from './core/components/layout/layout.component';
 import { MenuComponent } from './core/components/menu/menu.component';
+import { EstoquePageComponent } from './pages/estoque-page/estoque-page.component';
+import { HeaderComponent } from './core/components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { MenuComponent } from './core/components/menu/menu.component';
     LoaderComponent,
     MenuSidebarComponent,
     LayoutComponent,
-    MenuComponent
+    MenuComponent,
+    EstoquePageComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

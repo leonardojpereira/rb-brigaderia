@@ -1,17 +1,17 @@
 <div class="container">
   <div class="header">
-    <img src="assets/logo_brigaderia.jpg" alt="logo" class="logo">
+    <img src="assets/logo_brigaderia.png" alt="logo" class="logo">
     <h1>Entre em sua conta</h1>
     <p>Bem-vindo(a)! Por favor, digite suas credenciais</p>
   </div>
   <div class="login">
     <div class="form-control">
       <label>Email</label>
-      <app-input type="text" placeholder="email@email.com.br"  [(ngModel)]="login.email" ngDefaultControl></app-input>
+      <app-input type="text" placeholder=""  [(ngModel)]="login.email" ngDefaultControl></app-input>
     </div>
     <div class="form-control">
       <label>Senha</label>
-      <app-input type="password" placeholder="********"  [(ngModel)]="login.senha" ngDefaultControl></app-input>
+      <app-input type="password" placeholder=""  [(ngModel)]="login.senha" ngDefaultControl></app-input>
     </div>
     <div class="form-button">
       <app-custom-button type="button" text="Entrar" (click)="logar()"></app-custom-button>

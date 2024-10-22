@@ -44,23 +44,23 @@ export class LoginService {
   }
 
   login(login: ILoginModel, { onSuccess, onError }: any): any {
+    const payload = {
+      login: login.email,  // ou username, se necessário
+      password: login.senha
+    };
+
     localStorage.clear();
     this.httpClient
-      .post(environment.apiUrl + `Login`, login, {
+      .post(environment.apiUrl + `Authentication/Login`, payload, {
         headers: {
-          'Access-Control-Allow-Origin': '*',
-          type: 'application/json',
+          'Content-Type': 'application/json',
           Authorization: "Bearer " + localStorage.getItem('token'),
         },
       })
       .subscribe({
         next: (res: any) => {
-          // let objectResponse = res.data;
-          // localStorage.setItem('usuario', JSON.stringify(objectResponse));
           this.setUserLoggedIn(true);
-
           this.router.navigate(['/home']);
-
           return onSuccess(res);
         },
         error: (error: any) => {
@@ -68,6 +68,7 @@ export class LoginService {
         },
       });
   }
+
   loginAd(login: any, { onSuccess, onError }: any): any {
     localStorage.clear();
     this.httpClient

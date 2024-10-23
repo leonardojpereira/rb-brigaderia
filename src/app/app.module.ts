@@ -18,6 +18,7 @@ import { LayoutComponent } from './core/components/layout/layout.component';
 import { MenuComponent } from './core/components/menu/menu.component';
 import { EstoquePageComponent } from './pages/estoque-page/estoque-page.component';
 import { HeaderComponent } from './core/components/header/header.component';
+import { ResumoEstoqueCardComponent } from './core/components/resumo-estoque-card/resumo-estoque-card.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { HeaderComponent } from './core/components/header/header.component';
     LayoutComponent,
     MenuComponent,
     EstoquePageComponent,
-    HeaderComponent
+    HeaderComponent,
+    ResumoEstoqueCardComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,84 @@
+.resume-container {
+    box-shadow: 0 2px 12px rgb(0 0 0 / 13%);
+    border-radius: 12px;
+    padding: 28px;
+    margin-top: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+  
+    .title {
+      font-size: 22px;
+      color: #383e49;
+      margin: 0;
+    }
+  
+    .resume-body {
+      display: flex;
+      gap: 80px;
+  
+      .column {
+        display: flex;
+        flex-direction: column;
+        gap: 26px;
+        width: 33%;
+      }
+  
+      .card {
+        display: flex;
+        align-items: center;
+  
+        .content {
+          display: flex;
+          gap: 6px;
+          width: 100%;
+          flex-direction: column;
+  
+          .product-name {
+            font-size: 16px;
+            color: #383E49;
+            font-weight: bold;
+          }
+  
+          .product-quantity {
+            font-size: 14px;
+            color: #667085;
+          }
+        }
+  
+        .status {
+          padding: 4px 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 16px;
+  
+          .status-text {
+            font-size: 12px;
+          }
+  
+          &.status-pouco {
+            background-color: #feeceb;
+            .status-text {
+              color: #aa3028;
+            }
+          }
+  
+          &.status-medio {
+            background-color: #fff4e0;
+            .status-text {
+              color: #d9730d;
+            }
+          }
+  
+          &.status-muito {
+            background-color: #e0f7e9;
+            .status-text {
+              color: #1a7f37;
+            }
+          }
+        }
+      }
+    }
+  }
+  

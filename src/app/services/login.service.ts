@@ -11,10 +11,7 @@ import { ILoginModel } from '../core/models/ILoginModel';
 export class LoginService {
   private userLoggedIn = new BehaviorSubject<boolean>(false);
 
-  constructor(
-    private router: Router,
-    public httpClient: HttpClient
-  ) {
+  constructor(private router: Router, public httpClient: HttpClient) {
     this.userLoggedIn.next(false);
   }
 
@@ -24,7 +21,6 @@ export class LoginService {
   get isLoggedIn() {
     return this.userLoggedIn.asObservable();
   }
-
 
   // saveToken(token: string): void {
   //   localStorage.setItem('token', token);
@@ -45,8 +41,8 @@ export class LoginService {
 
   login(login: ILoginModel, { onSuccess, onError }: any): any {
     const payload = {
-      login: login.email,  // ou username, se necessário
-      password: login.senha
+      login: login.email, // ou username, se necessário
+      password: login.senha,
     };
 
     localStorage.clear();
@@ -54,11 +50,16 @@ export class LoginService {
       .post(environment.apiUrl + `Authentication/Login`, payload, {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: "Bearer " + localStorage.getItem('token'),
         },
       })
       .subscribe({
         next: (res: any) => {
+          if (res.isSuccess && res.data && res.data.token) {
+            localStorage.setItem('token', res.data.token);
+          } else {
+            console.error('Token não encontrado na resposta');
+          }
+
           this.setUserLoggedIn(true);
           this.router.navigate(['/dashboard']);
           return onSuccess(res);
@@ -70,39 +71,29 @@ export class LoginService {
   }
 
   loginAd(login: any, { onSuccess, onError }: any): any {
-    localStorage.clear();
     this.httpClient
       .post(environment.apiUrl + `Auth/LoginAd`, login, {
         headers: {
           'Access-Control-Allow-Origin': '*',
           type: 'application/json',
-          Authorization: "Bearer " + localStorage.getItem('token'),
         },
       })
       .subscribe({
         next: (res: any) => {
-          localStorage.setItem(
-            'token',
-            JSON.stringify(res.Dados.Token).replace(/"/g, '')
-          );
+          localStorage.setItem('token', res.Dados.Token);
+
           localStorage.setItem(
             'nmUsuario',
-            JSON.stringify(res.Dados.InformacoesToken.NomeUsuario)
+            res.Dados.InformacoesToken.NomeUsuario
           );
-          localStorage.setItem(
-            'idUsuario',
-            JSON.stringify(res.Dados.InformacoesToken.Id)
-          );
+          localStorage.setItem('idUsuario', res.Dados.InformacoesToken.Id);
           localStorage.setItem(
             'roles',
             JSON.stringify(res.Dados.InformacoesToken.Claims)
           );
           localStorage.setItem('usuario', JSON.stringify(res.Dados));
-          // let objectResponse = res.data;
-          // localStorage.setItem('usuario', JSON.stringify(objectResponse));
 
           this.setUserLoggedIn(true);
-
           this.router.navigate(['/home']);
 
           return onSuccess(res);
@@ -113,10 +104,10 @@ export class LoginService {
       });
   }
 
-  esqueceuSenha(email: any,{ onSuccess, onError }: any) {
-    let url = environment.apiUrl +'Auth/EsqueceuSenha'
+  esqueceuSenha(email: any, { onSuccess, onError }: any) {
+    let url = environment.apiUrl + 'Auth/EsqueceuSenha';
     this.httpClient
-      .post(url, email,{
+      .post(url, email, {
         headers: {
           'Access-Control-Allow-Origin': '*',
           type: 'application/json',

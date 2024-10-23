@@ -1,7 +1,7 @@
 .resume-container {
     box-shadow: 0 2px 12px rgb(0 0 0 / 13%);
     border-radius: 12px;
-    padding: 28px;
+    padding: 18px;
     margin-top: 22px;
     display: flex;
     flex-direction: column;
@@ -58,6 +58,13 @@
           }
   
           &.status-pouco {
+            background-color: #feeceb;
+            .status-text {
+              color: #aa3028;
+            }
+          }
+
+          &.status-acabou {
             background-color: #feeceb;
             .status-text {
               color: #aa3028;

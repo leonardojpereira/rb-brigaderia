@@ -6,7 +6,7 @@
 
   .input-label {
     margin-bottom: 0.5rem;
-    color: #003166;
+    color: #000;
   }
 
   .boldLabel {
@@ -21,7 +21,7 @@
     outline: none;
 
     &::placeholder {
-      color: #003166;
+      color: #000;
     }
   }
 
@@ -30,7 +30,7 @@
   input[type="datetime-local"] {
     border: 2px solid var(--Grayscale-200, #f0f0f0);
     background-color: #fff;
-    color: #003166;
+    color: #000;
   }
 
   .input-wrapper {

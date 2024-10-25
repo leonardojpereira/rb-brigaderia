@@ -1,0 +1,27 @@
+<div class="modal-backdrop" (click)="onBackdropClick()" *ngIf="isVisible"></div>
+<div class="modal" [ngClass]="{'noPadding': noPadding}" [ngStyle]="{ width: width }" *ngIf="isVisible">
+  <div class="modal-header">
+    <h2 *ngIf="title" class="modal-title">{{ title }}</h2>
+    <ng-content select="[modal-title]"></ng-content>
+    <button class="close-button" (click)="close()">
+      <span class="material-symbols-outlined icon" >
+        close
+    </span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <ng-content select="[modal-body]"></ng-content>
+  </div>
+  <div class="modal-footer" [ngClass]="{'alert-footer': isAlert, 'noPadding': noPadding}">
+    <ng-container *ngIf="!isAlert">
+      <ng-container *ngIf="showDefaultButtons">
+        <app-custom-button type="cancelar" (click)="close()" text="Cancelar" class="cancel-button" />
+        <app-custom-button type="submit" [text]="saveButtonText" [isDisabled]="isDisabled" (click)="save()"
+          class="save-button" />
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="isAlert">
+      <app-custom-button type="submit" [text]="saveButtonText" (click)="close()" class="save-button" />
+    </ng-container>
+  </div>
+</div>

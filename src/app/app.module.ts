@@ -12,7 +12,6 @@ import { FormsModule } from '@angular/forms';
 import { LoaderComponent } from './core/components/loader/loader.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { CustomButtonComponent } from './core/components/custom-button/custom-button.component';
 import { MenuSidebarComponent } from './core/components/menu-sidebar/menu-sidebar.component';
 import { LayoutComponent } from './core/components/layout/layout.component';
 import { MenuComponent } from './core/components/menu/menu.component';
@@ -21,10 +20,10 @@ import { HeaderComponent } from './core/components/header/header.component';
 import { ResumoEstoqueCardComponent } from './core/components/resumo-estoque-card/resumo-estoque-card.component';
 import { CustomTableComponent } from './core/components/custom-table/custom-table.component';
 import { PaginacaoComponent } from './core/components/paginacao/paginacao.component';
-import { MatPaginatorModule,   MatPaginatorIntl,
-} from '@angular/material/paginator';
+import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { ModalComponent } from './components/modal/modal.component';
+import { CustomButtonComponent } from './core/components/custom-button/custom-button.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +31,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LoginComponent,
     HomeComponent,
     AuthComponent,
-    CustomButtonComponent,
     InputComponent,
     CertificadoComponent,
     LoaderComponent,
@@ -43,7 +41,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HeaderComponent,
     ResumoEstoqueCardComponent,
     CustomTableComponent,
-    PaginacaoComponent
+    PaginacaoComponent,
+    ModalComponent,
+    CustomButtonComponent,
+    ModalCadastroProdutoComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,7 +53,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     MatSnackBarModule,
     MatPaginatorModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    CommonModule,
+
   ],
   providers: [
     {
@@ -62,4 +65,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { }import { CommonModule } from '@angular/common';
+import { ModalCadastroProdutoComponent } from './core/components/modal-cadastro-produto/modal-cadastro-produto.component';
+

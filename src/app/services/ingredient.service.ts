@@ -9,6 +9,16 @@ import { environment } from '../../environments/environment';
 export class IngredientService {
   constructor(private httpClient: HttpClient) {}
 
+  addIngredient(ingredient: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.httpClient.post(environment.apiUrl + 'Ingredient', ingredient, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+    });
+  }
+
   getAllIngredients(): Observable<any> {
     const token = localStorage.getItem('token');
     return this.httpClient.get(environment.apiUrl + 'Ingredient', {

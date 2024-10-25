@@ -1,0 +1,33 @@
+<app-modal width="600px" [saveButtonText]="isEditMode ? 'Salvar' : 'Cadastrar produto'" [isVisible]="isVisible"
+    [isAlert]="false" (onClose)="close()" (onSave)="save()"
+    title="{{ isEditMode ? 'Editar produto' : 'Cadastrar produto' }}">
+
+    <ng-container modal-body>
+        <form class="form-grid">
+            <div class="form-group">
+                <app-input label="Nome do produto*" type="text" id="nomeProduto" name="nomeProduto"
+                    [(ngModel)]="newProduct.nome" required></app-input>
+            </div>
+            <div class="form-group">
+                <app-input label="Unidade de medida*" type="text" id="unidadeMedida" name="unidadeMedida"
+                    [(ngModel)]="newProduct.unidadeMedida" required></app-input>
+            </div>
+            <div class="form-group">
+                <app-input label="Quantidade*" type="number" id="quantidade" name="quantidade"
+                    [(ngModel)]="newProduct.quantidade" required></app-input>
+            </div>
+            <div class="form-group">
+                <app-input label="Quantidade mínima*" type="number" id="quantidadeMinima" name="quantidadeMinima"
+                    [(ngModel)]="newProduct.quantidadeMinima" required></app-input>
+            </div>
+            <div class="form-group">
+                <app-input label="Preço unitário" type="number" id="precoUnitario" name="precoUnitario"
+                    [(ngModel)]="newProduct.precoUnitario" required></app-input>
+            </div>
+            <div class="form-group">
+                <app-input label="Data de entrada*" type="date" id="dataEntrada" name="dataEntrada"
+                    [(ngModel)]="newProduct.dataEntrada" required></app-input>
+            </div>
+        </form>
+    </ng-container>
+</app-modal>

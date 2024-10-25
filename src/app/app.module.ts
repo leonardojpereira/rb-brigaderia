@@ -19,6 +19,7 @@ import { MenuComponent } from './core/components/menu/menu.component';
 import { EstoquePageComponent } from './pages/estoque-page/estoque-page.component';
 import { HeaderComponent } from './core/components/header/header.component';
 import { ResumoEstoqueCardComponent } from './core/components/resumo-estoque-card/resumo-estoque-card.component';
+import { CustomTableComponent } from './core/components/custom-table/custom-table.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ResumoEstoqueCardComponent } from './core/components/resumo-estoque-car
     MenuComponent,
     EstoquePageComponent,
     HeaderComponent,
-    ResumoEstoqueCardComponent
+    ResumoEstoqueCardComponent,
+    CustomTableComponent
   ],
   imports: [
     BrowserModule,

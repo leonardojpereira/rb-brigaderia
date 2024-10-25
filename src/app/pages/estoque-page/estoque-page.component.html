@@ -1,7 +1,9 @@
 <app-layout>
     <div class="container">
         <app-header title="Estoque" buttonText="Adicionar produto"></app-header>
-        <app-resumo-estoque-card></app-resumo-estoque-card> <!-- Aqui você chama o componente -->
-
+        <app-resumo-estoque-card></app-resumo-estoque-card>
+        <app-custom-table [columns]="columns" [data]="estoque" [actions]="actions"
+        [noDataMessage]="'Nenhum produto encontrado'"></app-custom-table>
+    
     </div>
 </app-layout>

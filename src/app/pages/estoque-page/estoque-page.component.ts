@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IngredientService } from '../../services/ingredient.service';
+import { IPaginacaoModel } from '../../core/models/IPaginacaoModel';
 
 @Component({
   selector: 'app-estoque-page',
@@ -7,6 +8,12 @@ import { IngredientService } from '../../services/ingredient.service';
   styleUrls: ['./estoque-page.component.scss']
 })
 export class EstoquePageComponent implements OnInit {
+
+  paginacao: IPaginacaoModel = {
+    pageNumber: 1,
+    pageSize: 7,
+    totalItem: 0,
+  };
 
   columns = [
     { header: 'Produto', field: 'name' },
@@ -27,6 +34,7 @@ export class EstoquePageComponent implements OnInit {
     },
   ];
 
+  isLoading = false;
   estoque: any[] = [];
 
   constructor(private ingredientService: IngredientService) {}
@@ -36,7 +44,8 @@ export class EstoquePageComponent implements OnInit {
   }
 
   fetchIngredients(): void {
-    this.ingredientService.getIngredients().subscribe({
+    this.isLoading = true;
+    this.ingredientService.getIngredients(this.paginacao.pageNumber, this.paginacao.pageSize).subscribe({
       next: (response) => {
         if (response.isSuccess && response.data?.ingredients) {
           this.estoque = response.data.ingredients.map((ingredient: any) => ({
@@ -46,12 +55,21 @@ export class EstoquePageComponent implements OnInit {
             minimumStock: ingredient.minimumStock,
             unitPrice: ingredient.unitPrice,
           }));
+          this.paginacao.totalItem = response.data.totalItems; 
         }
+        this.isLoading = false;
       },
       error: (error) => {
         console.error('Erro ao buscar os ingredientes:', error);
+        this.isLoading = false;
       }
     });
+  }
+
+  getPaginacao(event: any): void {
+    this.paginacao.pageNumber = event.pageNumber;
+    this.paginacao.pageSize = event.pageSize;
+    this.fetchIngredients();
   }
 
 

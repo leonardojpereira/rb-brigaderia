@@ -20,6 +20,11 @@ import { EstoquePageComponent } from './pages/estoque-page/estoque-page.componen
 import { HeaderComponent } from './core/components/header/header.component';
 import { ResumoEstoqueCardComponent } from './core/components/resumo-estoque-card/resumo-estoque-card.component';
 import { CustomTableComponent } from './core/components/custom-table/custom-table.component';
+import { PaginacaoComponent } from './core/components/paginacao/paginacao.component';
+import { MatPaginatorModule,   MatPaginatorIntl,
+} from '@angular/material/paginator';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
   declarations: [
@@ -37,16 +42,24 @@ import { CustomTableComponent } from './core/components/custom-table/custom-tabl
     EstoquePageComponent,
     HeaderComponent,
     ResumoEstoqueCardComponent,
-    CustomTableComponent
+    CustomTableComponent,
+    PaginacaoComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatPaginatorModule,
+    BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: MatPaginatorIntl,
+      useClass: PaginacaoComponent,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

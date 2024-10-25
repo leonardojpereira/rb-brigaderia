@@ -1,0 +1,11 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 5px;
+  margin-top: 20px;
+}
+
+::ng-deep .mat-mdc-paginator-container {
+  padding: 0 !important;
+}

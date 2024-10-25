@@ -18,7 +18,7 @@ export class ResumoEstoqueCardComponent implements OnInit {
   }
 
   fetchIngredients(): void {
-    this.ingredientService.getIngredients().subscribe({
+    this.ingredientService.getAllIngredients().subscribe({
       next: (response) => {
         if (response.isSuccess) {
           this.products = response.data.ingredients
@@ -27,7 +27,7 @@ export class ResumoEstoqueCardComponent implements OnInit {
               quantity: ingredient.stock,
               status: this.getStatus(ingredient.stock, ingredient.minimumStock)
             }))
-            .sort((a: { quantity: number }, b: { quantity: number }) => a.quantity - b.quantity) // Ordena por estoque (menor para maior)
+            .sort((a: { quantity: number }, b: { quantity: number }) => a.quantity - b.quantity)
             .slice(0, this.displayCount);
         }
       },

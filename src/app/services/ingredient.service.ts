@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -9,13 +9,28 @@ import { environment } from '../../environments/environment';
 export class IngredientService {
   constructor(private httpClient: HttpClient) {}
 
-  getIngredients(): Observable<any> {
+  getAllIngredients(): Observable<any> {
     const token = localStorage.getItem('token');
     return this.httpClient.get(environment.apiUrl + 'Ingredient', {
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + token,
       },
+    });
+  }
+
+  getIngredients(pageNumber: number, pageSize: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    const params = new HttpParams()
+      .set('pageNumber', pageNumber.toString())
+      .set('pageSize', pageSize.toString());
+
+    return this.httpClient.get(environment.apiUrl + 'Ingredient', {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+      params: params,
     });
   }
 

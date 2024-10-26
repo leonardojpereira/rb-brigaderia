@@ -41,6 +41,9 @@ export class EstoquePageComponent implements OnInit {
   isEditMode: boolean = false;
   selectedProduct: any = null;
   productId: string = '';
+  modalSuccess: boolean = false;
+  titulo: string = '';
+  subTitulo: string = '';
 
   constructor(private ingredientService: IngredientService) {}
 
@@ -100,7 +103,7 @@ export class EstoquePageComponent implements OnInit {
 
     if (isEdit && product) {
       this.selectedProduct = { ...product };
-      this.productId = product.id; // Verifique se o produto possui `id`
+      this.productId = product.id; 
       console.log('Produto selecionado para edição:', this.selectedProduct);
       console.log('ID do produto:', this.productId);
     } else {
@@ -112,10 +115,17 @@ export class EstoquePageComponent implements OnInit {
         precoUnitario: null,
         dataEntrada: '',
       };
-      this.productId = ''; // Redefine para novo cadastro
+      this.productId = ''; 
       console.log('Abrindo modal para novo cadastro');
     }
     console.log('Modal aberto com:', { isEdit, productId: this.productId });
+  }
+
+  handleSuccessModal(): void {
+    this.modalSuccess = true;
+    this.titulo = 'Sucesso!';
+    this.subTitulo =  this.isEditMode ? 'Produto atualizado com sucesso!' : 'Produto cadastrado com sucesso!';
+    this.fetchIngredients();
   }
 
   closeModal(): void {
@@ -125,6 +135,6 @@ export class EstoquePageComponent implements OnInit {
   openDeleteModal(id: string): void {}
 
   onProductSaved(): void {
-    this.fetchIngredients();
+    this.handleSuccessModal();
   }
 }

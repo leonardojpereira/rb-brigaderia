@@ -13,4 +13,8 @@
     <app-modal-cadastro-produto [productId]="productId" [isVisible]="isModalVisible" [isEditMode]="isEditMode" (onClose)="closeModal()"
         (onSave)="onProductSaved()" [produto]="selectedProduct">
     </app-modal-cadastro-produto>
+
+    <app-modal-sucesso [openModal]="modalSuccess" [title]="titulo" [subTitle]="subTitulo"
+    (closeModal)="modalSuccess = !modalSuccess">
+</app-modal-sucesso>
 </app-layout>

@@ -45,6 +45,7 @@ import { CustomButtonComponent } from './core/components/custom-button/custom-bu
     ModalComponent,
     CustomButtonComponent,
     ModalCadastroProdutoComponent,
+    ModalSucessoComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,4 +68,5 @@ import { CustomButtonComponent } from './core/components/custom-button/custom-bu
 })
 export class AppModule { }import { CommonModule } from '@angular/common';
 import { ModalCadastroProdutoComponent } from './core/components/modal-cadastro-produto/modal-cadastro-produto.component';
+import { ModalSucessoComponent } from './core/components/modal-sucesso/modal-sucesso.component';
 

@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class IngredientService {
+  private ingredientsSubject = new BehaviorSubject<any[]>([]);
+  ingredients$ = this.ingredientsSubject.asObservable();
   constructor(private httpClient: HttpClient) {}
 
   addIngredient(ingredient: any): Observable<any> {
@@ -63,5 +65,20 @@ export class IngredientService {
         Authorization: `Bearer ${token}`,
       },
     });
+  }
+
+  updateIngredientsList(): void {
+    this.getAllIngredients().subscribe({
+      next: (response) => {
+        if (response.isSuccess) {
+          this.ingredientsSubject.next(response.data.ingredients);
+        }
+      },
+      error: (error) => console.error('Erro ao atualizar a lista de ingredientes:', error),
+    });
+  }
+
+  notifyIngredientsUpdated(): void {
+    this.updateIngredientsList();
   }
 }

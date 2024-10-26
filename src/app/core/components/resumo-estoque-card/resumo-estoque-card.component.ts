@@ -13,8 +13,17 @@ export class ResumoEstoqueCardComponent implements OnInit {
   constructor(private ingredientService: IngredientService) {}
 
   ngOnInit(): void {
-    this.checkWindowWidth(); 
-    this.fetchIngredients();
+    this.checkWindowWidth();
+    this.ingredientService.ingredients$.subscribe((ingredients) => {
+      this.products = ingredients
+        .map((ingredient: any) => ({
+          name: ingredient.name,
+          quantity: ingredient.stock,
+          status: this.getStatus(ingredient.stock, ingredient.minimumStock),
+        }))
+        .sort((a: { quantity: number }, b: { quantity: number }) => a.quantity - b.quantity)
+        .slice(0, this.displayCount);
+    });
   }
 
   fetchIngredients(): void {

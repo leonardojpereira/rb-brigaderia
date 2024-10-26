@@ -125,8 +125,13 @@ export class EstoquePageComponent implements OnInit {
   openDeleteModal(id: string): void {}
 
   onProductSaved(): void {
-    this.showSuccessModal = true;
-    this.fetchIngredients(true);
+    this.isLoading = true;
+    this.fetchIngredients(true); 
+    
+    setTimeout(() => {
+      this.ingredientService.notifyIngredientsUpdated(); 
+      this.handleSuccessModal();
+    }, 100); 
   }
 
   private resetSelectedProduct(): void {

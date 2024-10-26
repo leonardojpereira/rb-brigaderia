@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IngredientService } from '../../services/ingredient.service';
 import { IPaginacaoModel } from '../../core/models/IPaginacaoModel';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-estoque-page',
@@ -17,8 +18,8 @@ export class EstoquePageComponent implements OnInit {
   columns = [
     { header: 'Produto', field: 'name' },
     { header: 'Unidade de medida', field: 'measurement' },
-    { header: 'Quantidade', field: 'stock',  specialStyle: 'low-stock'  },
-    { header: 'Quantidade mínima', field: 'minimumStock',},
+    { header: 'Quantidade', field: 'stock', specialStyle: 'low-stock' },
+    { header: 'Quantidade mínima', field: 'minimumStock' },
     { header: 'Preço unitário', field: 'unitPrice' },
     { header: 'Data de entrada', field: 'createdAt' },
   ];
@@ -36,7 +37,6 @@ export class EstoquePageComponent implements OnInit {
 
   isLoading = false;
   estoque: any[] = [];
-
   isModalVisible: boolean = false;
   isEditMode: boolean = false;
   selectedProduct: any = null;
@@ -44,25 +44,20 @@ export class EstoquePageComponent implements OnInit {
   modalSuccess: boolean = false;
   titulo: string = '';
   subTitulo: string = '';
+  showSuccessModal: boolean = false;
 
   constructor(private ingredientService: IngredientService) {}
 
   ngOnInit(): void {
-    this.fetchIngredients();
-    this.selectedProduct = {
-      nome: '',
-      unidadeMedida: '',
-      quantidade: null,
-      quantidadeMinima: null,
-      precoUnitario: null,
-      dataEntrada: '',
-    };
+    this.fetchIngredients(false);
+    this.resetSelectedProduct();
   }
 
-  fetchIngredients(): void {
+  fetchIngredients(showSuccessModal: boolean = false): void {
     this.isLoading = true;
     this.ingredientService
       .getIngredients(this.paginacao.pageNumber, this.paginacao.pageSize)
+      .pipe(delay(1000))
       .subscribe({
         next: (response) => {
           if (response.isSuccess && response.data?.ingredients) {
@@ -75,18 +70,22 @@ export class EstoquePageComponent implements OnInit {
               unitPrice: ingredient.unitPrice.toLocaleString('pt-BR', {
                 style: 'currency',
                 currency: 'BRL',
-              }), 
+              }),
               createdAt: new Date(ingredient.createdAt).toLocaleDateString(
                 'pt-BR'
               ),
             }));
             this.paginacao.totalItem = response.data.totalItems;
           }
-          this.isLoading = false;
         },
         error: (error) => {
           console.error('Erro ao buscar os ingredientes:', error);
+        },
+        complete: () => {
           this.isLoading = false;
+          if (showSuccessModal) {
+            this.handleSuccessModal();
+          }
         },
       });
   }
@@ -94,7 +93,7 @@ export class EstoquePageComponent implements OnInit {
   getPaginacao(event: any): void {
     this.paginacao.pageNumber = event.pageNumber;
     this.paginacao.pageSize = event.pageSize;
-    this.fetchIngredients();
+    this.fetchIngredients(false);
   }
 
   openModal(isEdit: boolean = false, product?: any): void {
@@ -103,29 +102,20 @@ export class EstoquePageComponent implements OnInit {
 
     if (isEdit && product) {
       this.selectedProduct = { ...product };
-      this.productId = product.id; 
+      this.productId = product.id;
       console.log('Produto selecionado para edição:', this.selectedProduct);
       console.log('ID do produto:', this.productId);
     } else {
-      this.selectedProduct = {
-        nome: '',
-        unidadeMedida: '',
-        quantidade: null,
-        quantidadeMinima: null,
-        precoUnitario: null,
-        dataEntrada: '',
-      };
-      this.productId = ''; 
-      console.log('Abrindo modal para novo cadastro');
+      this.resetSelectedProduct();
     }
-    console.log('Modal aberto com:', { isEdit, productId: this.productId });
   }
 
   handleSuccessModal(): void {
     this.modalSuccess = true;
     this.titulo = 'Sucesso!';
-    this.subTitulo =  this.isEditMode ? 'Produto atualizado com sucesso!' : 'Produto cadastrado com sucesso!';
-    this.fetchIngredients();
+    this.subTitulo = this.isEditMode
+      ? 'Produto atualizado com sucesso!'
+      : 'Produto cadastrado com sucesso!';
   }
 
   closeModal(): void {
@@ -135,6 +125,19 @@ export class EstoquePageComponent implements OnInit {
   openDeleteModal(id: string): void {}
 
   onProductSaved(): void {
-    this.handleSuccessModal();
+    this.showSuccessModal = true;
+    this.fetchIngredients(true);
+  }
+
+  private resetSelectedProduct(): void {
+    this.selectedProduct = {
+      nome: '',
+      unidadeMedida: '',
+      quantidade: null,
+      quantidadeMinima: null,
+      precoUnitario: null,
+      dataEntrada: '',
+    };
+    this.productId = '';
   }
 }

@@ -17,4 +17,7 @@
     <app-modal-sucesso [openModal]="modalSuccess" [title]="titulo" [subTitle]="subTitulo"
     (closeModal)="modalSuccess = !modalSuccess">
 </app-modal-sucesso>
+
+<app-brigadeiro-loading *ngIf="isLoading"></app-brigadeiro-loading>
+
 </app-layout>

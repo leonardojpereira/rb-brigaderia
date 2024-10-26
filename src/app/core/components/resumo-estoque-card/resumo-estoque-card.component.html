@@ -1,21 +1,28 @@
 <div class="resume-container">
     <h3 class="title">Resumo</h3>
     <div class="resume-body">
-        <div class="column" *ngFor="let product of products; let i = index">
-            <div class="card">
-                <div class="content">
-                    <span class="product-name">{{ product.name }}</span>
-                    <span class="product-quantity">Quantidade: {{ product.quantity }} unidades</span>
-                </div>
-                <div class="status" [ngClass]="{
-                    'status-pouco': product.status === 'Pouco',
-                    'status-medio': product.status === 'Médio',
-                    'status-muito': product.status === 'Muito',
-                    'status-acabou': product.status === 'Acabou'
-                }">
-                    <span class="status-text">{{ product.status }}</span>
-                </div>
-            </div>
+      <div
+        class="column"
+        *ngFor="let product of visibleProducts; let i = index"
+      >
+        <div class="card">
+          <div class="content">
+            <span class="product-name">{{ product.name }}</span>
+            <span class="product-quantity">Quantidade: {{ product.quantity }} unidades</span>
+          </div>
+          <div
+            class="status"
+            [ngClass]="{
+              'status-pouco': product.status === 'Pouco',
+              'status-medio': product.status === 'Médio',
+              'status-muito': product.status === 'Muito',
+              'status-acabou': product.status === 'Acabou'
+            }"
+          >
+            <span class="status-text">{{ product.status }}</span>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>
+  

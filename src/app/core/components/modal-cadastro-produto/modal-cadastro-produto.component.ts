@@ -116,6 +116,7 @@ export class ModalCadastroProdutoComponent implements OnInit {
 
     this.ingredientService.addIngredient(payload).subscribe({
       next: () => {
+        this.ingredientService.notifyIngredientsUpdated();
         this.onSave.emit();
         this.closeModal();
       },
@@ -152,7 +153,7 @@ export class ModalCadastroProdutoComponent implements OnInit {
   
     this.ingredientService.updateIngredient(this.productId, payload).subscribe({
       next: () => {
-        console.log('Produto atualizado com sucesso');
+        this.ingredientService.notifyIngredientsUpdated();
         this.onSave.emit();
         this.closeModal();
       },

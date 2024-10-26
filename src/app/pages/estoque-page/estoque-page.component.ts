@@ -147,6 +147,7 @@ export class EstoquePageComponent implements OnInit {
       next: () => {
         this.fetchIngredients(true);
         this.isDeleteModalOpen = false;
+        this.ingredientService.notifyIngredientsUpdated();
       },
       error: (error) => {
         console.error('Erro ao deletar o produto:', error);

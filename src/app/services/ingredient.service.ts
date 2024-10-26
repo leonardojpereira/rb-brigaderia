@@ -78,7 +78,19 @@ export class IngredientService {
     });
   }
 
+   deleteProduct(id: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.httpClient.delete(`${environment.apiUrl}Ingredient/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
   notifyIngredientsUpdated(): void {
     this.updateIngredientsList();
   }
+
+  
 }

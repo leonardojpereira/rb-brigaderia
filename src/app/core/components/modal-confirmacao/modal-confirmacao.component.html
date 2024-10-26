@@ -1,0 +1,21 @@
+<app-modal [saveButtonText]="'Confirmar'"
+[isVisible]="openModal"
+[isAlert]="false"
+(onClose)="closeModal()"
+(onSave)="salvar()"
+[isDisabled]="disabledButton"
+>
+<ng-container modal-body>
+  <div class="container">
+    <div class="header">
+        <span class="material-symbols-outlined warning">
+            priority_high
+            </span>
+    </div>
+    <div class="body">
+      <h1>{{title}}</h1>
+      <p>{{subTitle}}</p>
+    </div>
+  </div>
+</ng-container>
+</app-modal>

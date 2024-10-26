@@ -46,6 +46,8 @@ export class EstoquePageComponent implements OnInit {
   titulo: string = '';
   subTitulo: string = '';
   showSuccessModal: boolean = false;
+  isDeleteModalOpen = false;
+  successAction: 'cadastrar' | 'editar' | 'deletar' = 'cadastrar';
 
   constructor(private ingredientService: IngredientService) {}
 
@@ -85,7 +87,7 @@ export class EstoquePageComponent implements OnInit {
         complete: () => {
           this.isLoading = false;
           if (showSuccessModal) {
-            this.handleSuccessModal();
+            this.handleSuccessModal(this.successAction);
           }
         },
       });
@@ -104,19 +106,22 @@ export class EstoquePageComponent implements OnInit {
     if (isEdit && product) {
       this.selectedProduct = { ...product };
       this.productId = product.id;
-      console.log('Produto selecionado para edição:', this.selectedProduct);
-      console.log('ID do produto:', this.productId);
+      this.successAction = 'editar';
     } else {
       this.resetSelectedProduct();
+      this.successAction = 'cadastrar';
     }
   }
 
-  handleSuccessModal(): void {
+  handleSuccessModal(action: 'cadastrar' | 'editar' | 'deletar'): void {
     this.modalSuccess = true;
     this.titulo = 'Sucesso!';
-    this.subTitulo = this.isEditMode
-      ? 'Produto atualizado com sucesso!'
-      : 'Produto cadastrado com sucesso!';
+    this.subTitulo =
+      action === 'cadastrar'
+        ? 'Produto cadastrado com sucesso!'
+        : action === 'editar'
+        ? 'Produto atualizado com sucesso!'
+        : 'Produto deletado com sucesso!';
   }
 
   handleErrorModal(message: string): void {
@@ -130,16 +135,30 @@ export class EstoquePageComponent implements OnInit {
     this.isModalVisible = false;
   }
 
-  openDeleteModal(id: string): void {}
+  openDeleteModal(id: string): void {
+    this.productId = id;
+    this.isDeleteModalOpen = true;
+  }
+
+  deleteProduct(): void {
+    this.isLoading = true;
+    this.successAction = 'deletar';
+    this.ingredientService.deleteProduct(this.productId).subscribe({
+      next: () => {
+        this.fetchIngredients(true);
+        this.isDeleteModalOpen = false;
+      },
+      error: (error) => {
+        console.error('Erro ao deletar o produto:', error);
+        this.handleErrorModal('Erro ao deletar o produto.');
+      },
+    });
+  }
 
   onProductSaved(): void {
     this.isLoading = true;
-    this.fetchIngredients(true); 
-    
-    setTimeout(() => {
-      this.ingredientService.notifyIngredientsUpdated(); 
-      this.handleSuccessModal();
-    }, 100); 
+    this.successAction = this.isEditMode ? 'editar' : 'cadastrar';
+    this.fetchIngredients(true);
   }
 
   onError(message: string): void {
@@ -156,5 +175,9 @@ export class EstoquePageComponent implements OnInit {
       dataEntrada: '',
     };
     this.productId = '';
+  }
+
+  closeDeleteModal(): void {
+    this.isDeleteModalOpen = false;
   }
 }

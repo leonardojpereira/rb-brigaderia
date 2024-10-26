@@ -48,6 +48,7 @@ import { CustomButtonComponent } from './core/components/custom-button/custom-bu
     ModalSucessoComponent,
     BrigadeiroLoadingComponent,
     ModalErroComponent,
+    ModalConfirmacaoComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,4 +74,5 @@ import { ModalCadastroProdutoComponent } from './core/components/modal-cadastro-
 import { ModalSucessoComponent } from './core/components/modal-sucesso/modal-sucesso.component';
 import { BrigadeiroLoadingComponent } from './core/components/brigadeiro-loading/brigadeiro-loading.component';
 import { ModalErroComponent } from './core/components/modal-erro/modal-erro.component';
+import { ModalConfirmacaoComponent } from './core/components/modal-confirmacao/modal-confirmacao.component';
 

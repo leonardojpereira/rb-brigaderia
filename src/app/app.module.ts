@@ -47,6 +47,7 @@ import { CustomButtonComponent } from './core/components/custom-button/custom-bu
     ModalCadastroProdutoComponent,
     ModalSucessoComponent,
     BrigadeiroLoadingComponent,
+    ModalErroComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,4 +72,5 @@ export class AppModule { }import { CommonModule } from '@angular/common';
 import { ModalCadastroProdutoComponent } from './core/components/modal-cadastro-produto/modal-cadastro-produto.component';
 import { ModalSucessoComponent } from './core/components/modal-sucesso/modal-sucesso.component';
 import { BrigadeiroLoadingComponent } from './core/components/brigadeiro-loading/brigadeiro-loading.component';
+import { ModalErroComponent } from './core/components/modal-erro/modal-erro.component';
 

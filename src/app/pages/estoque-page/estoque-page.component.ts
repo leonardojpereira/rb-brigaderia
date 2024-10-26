@@ -42,6 +42,7 @@ export class EstoquePageComponent implements OnInit {
   selectedProduct: any = null;
   productId: string = '';
   modalSuccess: boolean = false;
+  modalError: boolean = false;
   titulo: string = '';
   subTitulo: string = '';
   showSuccessModal: boolean = false;
@@ -57,7 +58,7 @@ export class EstoquePageComponent implements OnInit {
     this.isLoading = true;
     this.ingredientService
       .getIngredients(this.paginacao.pageNumber, this.paginacao.pageSize)
-      .pipe(delay(1000))
+      .pipe(delay(500))
       .subscribe({
         next: (response) => {
           if (response.isSuccess && response.data?.ingredients) {
@@ -118,6 +119,13 @@ export class EstoquePageComponent implements OnInit {
       : 'Produto cadastrado com sucesso!';
   }
 
+  handleErrorModal(message: string): void {
+    this.modalError = true;
+    this.titulo = 'Erro!';
+    this.subTitulo = message;
+    this.isModalVisible = false;
+  }
+
   closeModal(): void {
     this.isModalVisible = false;
   }
@@ -132,6 +140,10 @@ export class EstoquePageComponent implements OnInit {
       this.ingredientService.notifyIngredientsUpdated(); 
       this.handleSuccessModal();
     }, 100); 
+  }
+
+  onError(message: string): void {
+    this.handleErrorModal(message);
   }
 
   private resetSelectedProduct(): void {

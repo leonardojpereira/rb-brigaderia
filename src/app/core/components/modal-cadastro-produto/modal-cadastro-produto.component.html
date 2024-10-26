@@ -31,5 +31,9 @@
             </div>
 
         </form>
+
+        <app-modal-erro *ngIf="modalError" [openModal]="modalError" [title]="titulo" [subTitle]="subTitulo"
+        (closeModal)="modalError = !modalError">
+    </app-modal-erro>
     </ng-container>
 </app-modal>

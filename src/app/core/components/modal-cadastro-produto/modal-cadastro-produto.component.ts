@@ -34,6 +34,9 @@ export class ModalCadastroProdutoComponent implements OnInit {
 
   isLoading = false;
   errorMessage: string | null = null;
+  modalError: boolean = false;
+  titulo: string = '';
+  subTitulo: string = '';
 
   constructor(private ingredientService: IngredientService) {}
 
@@ -76,15 +79,14 @@ export class ModalCadastroProdutoComponent implements OnInit {
   }
 
   save(form: NgForm): void {
-    console.log('Botão salvar acionado'); // Confirma que o botão foi acionado
-    console.log('Formulário status:', form.status); // Exibe o status geral do formulário
-    console.log('Produto:', this.produto); // Confirma que os valores de `produto` foram corretamente atribuídos
+    console.log('Botão salvar acionado'); 
+    console.log('Formulário status:', form.status); 
+    console.log('Produto:', this.produto); 
 
-    // Verifica o estado de cada controle para diagnosticar qual está inválido
     Object.keys(form.controls).forEach(controlName => {
         const control = form.controls[controlName];
-        console.log(`Campo ${controlName} status:`, control.status); // "VALID" ou "INVALID"
-        console.log(`Campo ${controlName} erros:`, control.errors); // Erros específicos do campo, se existirem
+        console.log(`Campo ${controlName} status:`, control.status);
+        console.log(`Campo ${controlName} erros:`, control.errors); 
     });
 
     if (form.valid) {
@@ -97,7 +99,7 @@ export class ModalCadastroProdutoComponent implements OnInit {
             this.createProduto();
         }
     } else {
-        console.log('Formulário inválido'); // Exibe mensagem caso o formulário não seja válido
+        console.log('Formulário inválido'); 
         this.markFormFieldsAsTouched(form);
     }
 }
@@ -117,13 +119,17 @@ export class ModalCadastroProdutoComponent implements OnInit {
         this.onSave.emit();
         this.closeModal();
       },
-      error: (error) => {
-        if (error.error.errors.includes('Produto já existe.')) {
-          this.onError.emit('Produto já existe.');
-        } else {
-          console.error('Erro ao cadastrar produto:', error);
-        }
+       error: (httpErrorResponse) => {
         this.isLoading = false;
+        if (
+          httpErrorResponse.status === 400 &&
+          httpErrorResponse.error &&
+          httpErrorResponse.error.errors
+        ) {
+          this.onError.emit(httpErrorResponse.error.errors);
+        } else {
+          console.error('Erro inesperado:', httpErrorResponse);
+        }
       },
     });
   }
@@ -150,11 +156,24 @@ export class ModalCadastroProdutoComponent implements OnInit {
         this.onSave.emit();
         this.closeModal();
       },
-      error: (error) => {
-        console.error('Erro ao atualizar produto:', error);
+      error: (httpErrorResponse) => {
         this.isLoading = false;
+        if (
+          httpErrorResponse.status === 400 &&
+          httpErrorResponse.error &&
+          httpErrorResponse.error.errors
+        ) {
+          this.onError.emit(httpErrorResponse.error.errors);
+        } else {
+          console.error('Erro inesperado:', httpErrorResponse);
+        }
       },
     });
+  }
+
+  handleErrorModal(message: string): void {
+    this.onError.emit(message);
+    this.closeModal();
   }
   
 

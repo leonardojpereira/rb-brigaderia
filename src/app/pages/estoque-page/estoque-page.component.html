@@ -10,7 +10,7 @@
     </div>
 
     <!-- Modal de cadastro de produto -->
-    <app-modal-cadastro-produto [isVisible]="isModalVisible" [isEditMode]="isEditMode" (onClose)="closeModal()"
+    <app-modal-cadastro-produto [productId]="productId" [isVisible]="isModalVisible" [isEditMode]="isEditMode" (onClose)="closeModal()"
         (onSave)="onProductSaved()" [produto]="selectedProduct">
     </app-modal-cadastro-produto>
 </app-layout>

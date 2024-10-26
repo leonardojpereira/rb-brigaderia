@@ -17,9 +17,10 @@ export class EstoquePageComponent implements OnInit {
   columns = [
     { header: 'Produto', field: 'name' },
     { header: 'Unidade de medida', field: 'measurement' },
-    { header: 'Quantidade', field: 'stock' },
-    { header: 'Quantidade mínima', field: 'minimumStock' },
+    { header: 'Quantidade', field: 'stock',  specialStyle: 'low-stock'  },
+    { header: 'Quantidade mínima', field: 'minimumStock',},
     { header: 'Preço unitário', field: 'unitPrice' },
+    { header: 'Data de entrada', field: 'createdAt' },
   ];
 
   actions = [
@@ -39,6 +40,7 @@ export class EstoquePageComponent implements OnInit {
   isModalVisible: boolean = false;
   isEditMode: boolean = false;
   selectedProduct: any = null;
+  productId: string = '';
 
   constructor(private ingredientService: IngredientService) {}
 
@@ -62,11 +64,18 @@ export class EstoquePageComponent implements OnInit {
         next: (response) => {
           if (response.isSuccess && response.data?.ingredients) {
             this.estoque = response.data.ingredients.map((ingredient: any) => ({
+              id: ingredient.id,
               name: ingredient.name,
               measurement: ingredient.measurement,
               stock: ingredient.stock,
               minimumStock: ingredient.minimumStock,
-              unitPrice: ingredient.unitPrice,
+              unitPrice: ingredient.unitPrice.toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+              }), 
+              createdAt: new Date(ingredient.createdAt).toLocaleDateString(
+                'pt-BR'
+              ),
             }));
             this.paginacao.totalItem = response.data.totalItems;
           }
@@ -88,16 +97,25 @@ export class EstoquePageComponent implements OnInit {
   openModal(isEdit: boolean = false, product?: any): void {
     this.isEditMode = isEdit;
     this.isModalVisible = true;
-    this.selectedProduct = product
-      ? { ...product }
-      : {
-          nome: '',
-          unidadeMedida: '',
-          quantidade: null,
-          quantidadeMinima: null,
-          precoUnitario: null,
-          dataEntrada: '',
-        };
+
+    if (isEdit && product) {
+      this.selectedProduct = { ...product };
+      this.productId = product.id; // Verifique se o produto possui `id`
+      console.log('Produto selecionado para edição:', this.selectedProduct);
+      console.log('ID do produto:', this.productId);
+    } else {
+      this.selectedProduct = {
+        nome: '',
+        unidadeMedida: '',
+        quantidade: null,
+        quantidadeMinima: null,
+        precoUnitario: null,
+        dataEntrada: '',
+      };
+      this.productId = ''; // Redefine para novo cadastro
+      console.log('Abrindo modal para novo cadastro');
+    }
+    console.log('Modal aberto com:', { isEdit, productId: this.productId });
   }
 
   closeModal(): void {

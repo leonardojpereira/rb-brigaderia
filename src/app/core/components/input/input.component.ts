@@ -29,6 +29,9 @@ export class InputComponent implements ControlValueAccessor, OnInit {
   @Input() label?: string;
   @Input() boldLabel?: boolean = false;
   @Input() readonly: boolean = false;
+  @Input() name: string = '';     
+@Input() required: boolean = false; 
+
   isPassword: boolean = false;
 
   private currentWidth!: string;

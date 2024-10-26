@@ -114,19 +114,20 @@ export class CustomTableComponent implements AfterViewInit {
     this.sortChange.emit(field);
   }
 
-  getClasses(column: any) {
+  getClasses(column: any, item: any) {
     const classes: { [key: string]: boolean } = {
       hasBolderCell: this.hasBolderCell,
       hasBorder: this.hasBorder,
       centerCell: this.centerCell,
     };
-
-    if (typeof column.specialStyle === 'string') {
+  
+    if (column.field === 'stock' && item.stock < item.minimumStock) {
       classes[column.specialStyle] = true;
     }
-
+  
     return classes;
   }
+  
 
   isBlockedField(column: any): boolean {
     return this.highlightBlockedFields.includes(column.field);

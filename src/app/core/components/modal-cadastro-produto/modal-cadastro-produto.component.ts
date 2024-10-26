@@ -1,26 +1,25 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  OnChanges,
-} from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, Input, Output, EventEmitter, OnInit, SimpleChanges } from '@angular/core';
 import { IngredientService } from '../../../services/ingredient.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-modal-cadastro-produto',
   templateUrl: './modal-cadastro-produto.component.html',
   styleUrls: ['./modal-cadastro-produto.component.scss'],
 })
-export class ModalCadastroProdutoComponent implements OnChanges {
+export class ModalCadastroProdutoComponent implements OnInit {
   @Input() isVisible: boolean = false;
   @Input() isEditMode: boolean = false;
-  @Input() produto: any = null;
-  @Output() onClose = new EventEmitter();
-  @Output() onSave = new EventEmitter();
-
-  newProduct = {
+  @Input() productId: string | null = null;
+  @Input() disabledButton: boolean = false;
+  @Input() produto: {
+    nome: string;
+    unidadeMedida: string;
+    quantidade: number | null;
+    quantidadeMinima: number | null;
+    precoUnitario: number | null;
+    dataEntrada: string;
+  } = {
     nome: '',
     unidadeMedida: '',
     quantidade: null,
@@ -29,70 +28,146 @@ export class ModalCadastroProdutoComponent implements OnChanges {
     dataEntrada: '',
   };
 
-  isLoading: boolean = false;
-  subscription: Subscription | undefined;
+  @Output() onClose = new EventEmitter<void>();
+  @Output() onSave = new EventEmitter<void>();
+  @Output() onError = new EventEmitter<string>();
+
+  isLoading = false;
+  errorMessage: string | null = null;
 
   constructor(private ingredientService: IngredientService) {}
 
-  ngOnChanges() {
-    if (this.produto) {
-      this.newProduct = { ...this.produto };
-    } else {
-      this.resetForm();
+  ngOnInit(): void {
+    if (this.isEditMode && this.productId) {
+      this.getProdutoById();
     }
   }
 
-  resetForm() {
-    this.newProduct = {
-      nome: '',
-      unidadeMedida: '',
-      quantidade: null,
-      quantidadeMinima: null,
-      precoUnitario: null,
-      dataEntrada: '',
-    };
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.isEditMode && this.productId) {
+      this.getProdutoById();
+    }
   }
 
-  close() {
+  getProdutoById(): void {
+    if (!this.productId) return;
+
+    this.isLoading = true;
+    this.ingredientService.getIngredientById(this.productId).subscribe({
+      next: (response) => {
+        if (response.isSuccess && response.data && response.data.ingredient) {
+          const produtoData = response.data.ingredient;
+          this.produto = {
+            nome: produtoData.name,
+            unidadeMedida: produtoData.measurement,
+            quantidade: produtoData.stock,
+            quantidadeMinima: produtoData.minimumStock,
+            precoUnitario: produtoData.unitPrice,
+            dataEntrada: produtoData.dataEntrada || '',
+          };
+        }
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Erro ao buscar produto:', error);
+        this.isLoading = false;
+      },
+    });
+  }
+
+  save(form: NgForm): void {
+    console.log('Botão salvar acionado'); // Confirma que o botão foi acionado
+    console.log('Formulário status:', form.status); // Exibe o status geral do formulário
+    console.log('Produto:', this.produto); // Confirma que os valores de `produto` foram corretamente atribuídos
+
+    // Verifica o estado de cada controle para diagnosticar qual está inválido
+    Object.keys(form.controls).forEach(controlName => {
+        const control = form.controls[controlName];
+        console.log(`Campo ${controlName} status:`, control.status); // "VALID" ou "INVALID"
+        console.log(`Campo ${controlName} erros:`, control.errors); // Erros específicos do campo, se existirem
+    });
+
+    if (form.valid) {
+        this.isLoading = true;
+        if (this.isEditMode) {
+            console.log('Modo de edição ativado');
+            this.updateProduto();
+        } else {
+            console.log('Criando novo produto');
+            this.createProduto();
+        }
+    } else {
+        console.log('Formulário inválido'); // Exibe mensagem caso o formulário não seja válido
+        this.markFormFieldsAsTouched(form);
+    }
+}
+
+
+  createProduto(): void {
+    const payload = {
+      name: this.produto.nome,
+      measurement: this.produto.unidadeMedida,
+      stock: this.produto.quantidade,
+      minimumStock: this.produto.quantidadeMinima,
+      unitPrice: this.produto.precoUnitario,
+    };
+
+    this.ingredientService.addIngredient(payload).subscribe({
+      next: () => {
+        this.onSave.emit();
+        this.closeModal();
+      },
+      error: (error) => {
+        if (error.error.errors.includes('Produto já existe.')) {
+          this.onError.emit('Produto já existe.');
+        } else {
+          console.error('Erro ao cadastrar produto:', error);
+        }
+        this.isLoading = false;
+      },
+    });
+  }
+
+  updateProduto(): void {
+    if (!this.productId) {
+      console.error('ID do produto não definido. Abandonando updateProduto.');
+      return;
+    }
+  
+    const payload = {
+      name: this.produto.nome,
+      measurement: this.produto.unidadeMedida,
+      stock: this.produto.quantidade,
+      minimumStock: this.produto.quantidadeMinima,
+      unitPrice: this.produto.precoUnitario,
+    };
+  
+    console.log('Enviando payload para atualização:', payload);
+  
+    this.ingredientService.updateIngredient(this.productId, payload).subscribe({
+      next: () => {
+        console.log('Produto atualizado com sucesso');
+        this.onSave.emit();
+        this.closeModal();
+      },
+      error: (error) => {
+        console.error('Erro ao atualizar produto:', error);
+        this.isLoading = false;
+      },
+    });
+  }
+  
+
+  closeModal(): void {
+    this.isVisible = false;
+    this.errorMessage = null;
     this.onClose.emit();
   }
 
-  save() {
-    if (!this.isEditMode) {
-      this.isLoading = true;
-
-      console.log(this.newProduct);
-
-      const payload = {
-        name: this.newProduct.nome,
-        measurement: this.newProduct.unidadeMedida,
-        stock: this.newProduct.quantidade,
-        minimumStock: this.newProduct.quantidadeMinima,
-        unitPrice: this.newProduct.precoUnitario,
-      };
-
-      this.subscription = this.ingredientService
-        .addIngredient(payload)
-        .subscribe({
-          next: (response) => {
-            console.log('Produto adicionado com sucesso:', response);
-            this.onSave.emit(response);
-            this.close();
-            this.isLoading = false;
-          },
-          error: (error) => {
-            console.error('Erro ao adicionar o produto:', error);
-            this.isLoading = false;
-          },
-        });
-    } else {
-      this.onSave.emit(this.newProduct);
-    }
-  }
-
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+  markFormFieldsAsTouched(form: NgForm): void {
+    Object.keys(form.controls).forEach((field) => {
+      const control = form.controls[field];
+      control.markAsTouched({ onlySelf: true });
+    });
   }
 }

@@ -13,7 +13,7 @@
         </thead>
         <tbody class="table-body">
             <tr *ngFor="let item of data" class="table-body-row">
-                <td *ngFor="let column of columns" [ngClass]="getClasses(column)" class="table-body-cell">
+                <td *ngFor="let column of columns" [ngClass]="getClasses(column, item)" class="table-body-cell">
                     <!-- Renderizando o valor diretamente -->
                     {{ column.field === 'dataCriacao' ? (item[column.field] | date:'dd/MM/yyyy') :
                         column.field === 'ativo' ? (item[column.field] ? 'Ativo' : 'Inativo') :

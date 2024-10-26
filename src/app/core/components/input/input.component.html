@@ -2,7 +2,7 @@
   <label *ngIf="label" [ngClass]="{'boldLabel' : boldLabel}" class="input-label">{{ label }}</label>
 
   <div class="input-wrapper">
-    <input [ngClass]="{'readonly' : readonly}" min="0" [type]="getInputType()" [placeholder]="placeholder"
+    <input [required]="required" [attr.name]="name" [ngClass]="{'readonly' : readonly}" min="0" [type]="getInputType()" [placeholder]="placeholder"
       [(ngModel)]="value" (input)="onInputChange($event)" [readonly]="readonly" />
 
     <!-- Ícone de olho para alternar visibilidade -->

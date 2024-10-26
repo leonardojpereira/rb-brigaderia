@@ -28,6 +28,7 @@ export class IngredientService {
       },
     });
   }
+  
 
   getIngredients(pageNumber: number, pageSize: number): Observable<any> {
     const token = localStorage.getItem('token');
@@ -44,5 +45,23 @@ export class IngredientService {
     });
   }
 
+  getIngredientById(id: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.httpClient.get(`${environment.apiUrl}Ingredient/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
   
+  updateIngredient(id: string, ingredient: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.httpClient.put(`${environment.apiUrl}Ingredient/${id}`, ingredient, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
 }

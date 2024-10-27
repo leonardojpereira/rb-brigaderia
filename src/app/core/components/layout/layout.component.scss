@@ -11,6 +11,7 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    padding-top: 40px;
   }
   
   .content {
@@ -21,6 +22,8 @@
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px;
+
   }
 
   .main-content {
@@ -28,18 +31,22 @@
     border-radius: 20px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
     margin: 20px;
-    height: calc(100% - 40px);
+    margin-bottom: 60px;
+
+    
+    @media screen and (min-width: 1310px) {
+      height: calc(100% - 80px);
+    }
+
+    @media screen and (min-height: 1000px) {
+      height: calc(100% - 40px);
+
+    }
   }
   
   @media screen and (max-width: 940px) {
     .container {
-      padding-top: 40px;
       padding-left: 0;
-      width: 100%;
-    }
-  
-    .content {
-      padding-bottom: 80px;
     }
   }
   

@@ -36,6 +36,8 @@ export class EstoquePageComponent implements OnInit {
   ];
 
   isLoading = false;
+  private filterTimeout: any;
+  filter: string = '';
   estoque: any[] = [];
   isModalVisible: boolean = false;
   isEditMode: boolean = false;
@@ -59,7 +61,11 @@ export class EstoquePageComponent implements OnInit {
   fetchIngredients(showSuccessModal: boolean = false): void {
     this.isLoading = true;
     this.ingredientService
-      .getIngredients(this.paginacao.pageNumber, this.paginacao.pageSize)
+      .getIngredients(
+        this.paginacao.pageNumber,
+        this.paginacao.pageSize,
+        this.filter
+      )
       .pipe(delay(500))
       .subscribe({
         next: (response) => {
@@ -93,6 +99,18 @@ export class EstoquePageComponent implements OnInit {
           }
         },
       });
+  }
+
+  onFilterChange(filterValue: string): void {
+    this.filter = filterValue;
+
+    if (this.filterTimeout) {
+      clearTimeout(this.filterTimeout);
+    }
+
+    this.filterTimeout = setTimeout(() => {
+      this.fetchIngredients(false);
+    }, 500);
   }
 
   getPaginacao(event: any): void {

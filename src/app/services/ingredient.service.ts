@@ -30,13 +30,20 @@ export class IngredientService {
       },
     });
   }
-  
 
-  getIngredients(pageNumber: number, pageSize: number): Observable<any> {
+  getIngredients(
+    pageNumber: number,
+    pageSize: number,
+    filter?: string
+  ): Observable<any> {
     const token = localStorage.getItem('token');
-    const params = new HttpParams()
+    let params = new HttpParams()
       .set('pageNumber', pageNumber.toString())
       .set('pageSize', pageSize.toString());
+
+    if (filter) {
+      params = params.set('filter', filter);
+    }
 
     return this.httpClient.get(environment.apiUrl + 'Ingredient', {
       headers: {
@@ -56,15 +63,19 @@ export class IngredientService {
       },
     });
   }
-  
+
   updateIngredient(id: string, ingredient: any): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.httpClient.put(`${environment.apiUrl}Ingredient/${id}`, ingredient, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    return this.httpClient.put(
+      `${environment.apiUrl}Ingredient/${id}`,
+      ingredient,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
   }
 
   updateIngredientsList(): void {
@@ -74,11 +85,12 @@ export class IngredientService {
           this.ingredientsSubject.next(response.data.ingredients);
         }
       },
-      error: (error) => console.error('Erro ao atualizar a lista de ingredientes:', error),
+      error: (error) =>
+        console.error('Erro ao atualizar a lista de ingredientes:', error),
     });
   }
 
-   deleteProduct(id: string): Observable<any> {
+  deleteProduct(id: string): Observable<any> {
     const token = localStorage.getItem('token');
     return this.httpClient.delete(`${environment.apiUrl}Ingredient/${id}`, {
       headers: {
@@ -91,6 +103,4 @@ export class IngredientService {
   notifyIngredientsUpdated(): void {
     this.updateIngredientsList();
   }
-
-  
 }

@@ -2,7 +2,7 @@
     <div class="container">
         <app-header title="Estoque" buttonText="Adicionar produto" (click)="openModal(false)"></app-header>
         <app-resumo-estoque-card></app-resumo-estoque-card>
-        <app-custom-table [columns]="columns" [data]="estoque" [actions]="actions"
+        <app-custom-table minWidth="1000px" [columns]="columns" [data]="estoque" [actions]="actions"
             [noDataMessage]="'Nenhum produto encontrado'"></app-custom-table>
 
         <app-paginacao *ngIf="!isLoading" (valuePagination)="getPaginacao($event)" [paginacao]="paginacao">

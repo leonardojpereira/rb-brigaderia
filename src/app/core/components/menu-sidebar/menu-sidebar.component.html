@@ -1,3 +1,13 @@
+<!-- Botão de alternância fixo -->
+<div class="toggle-close-sidebar">
+    <button class="toggle-button" (click)="toggleMenu()">
+        <span class="material-symbols-outlined">
+            {{ isMenuExpanded ? 'close' : 'menu' }}
+        </span>
+    </button>
+</div>
+
+<!-- Menu deslizante -->
 <div class="menu-container" [class.expanded]="isMenuExpanded">
     <div class="menu-header" *ngIf="isMenuExpanded">
         <img src="assets/logo_brigaderia.png" />
@@ -10,13 +20,6 @@
             </span>
             <span class="logout-text" *ngIf="isMenuExpanded">Sair</span>
         </div>
-    </div>
-    <div class="toggle-close-sidebar">
-        <button class="toggle-button" (click)="toggleMenu()">
-            <span class="material-symbols-outlined">
-                {{ isMenuExpanded ? 'close' : 'menu' }}
-            </span>
-        </button>
     </div>
 
     <!-- Modal de Confirmação de Logout -->

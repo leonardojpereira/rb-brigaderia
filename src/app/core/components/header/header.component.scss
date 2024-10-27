@@ -13,4 +13,13 @@
         font-size: 36px;
         color: #000;
     }
+
+    .controller {
+        display: flex;
+        gap: 12px;
+
+        .filter {
+            width: 400px;
+        }
+    }
 }

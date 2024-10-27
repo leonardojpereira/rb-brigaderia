@@ -19,10 +19,6 @@
     border-radius: 5px;
     width: 100%;
     outline: none;
-
-    &::placeholder {
-      color: #000;
-    }
   }
 
   input[type="date"],
@@ -32,6 +28,12 @@
     background-color: #fff;
     color: #000;
   }
+
+  input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  
 
   .input-wrapper {
     position: relative;

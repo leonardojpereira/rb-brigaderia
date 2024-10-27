@@ -2,14 +2,15 @@
   <label *ngIf="label" [ngClass]="{'boldLabel' : boldLabel}" class="input-label">{{ label }}</label>
 
   <div class="input-wrapper">
-    <input [required]="required" [attr.name]="name" [ngClass]="{'readonly' : readonly}" min="0" [type]="getInputType()" [placeholder]="placeholder"
-      [(ngModel)]="value" (input)="onInputChange($event)" [readonly]="readonly" />
+    <input [required]="required" [attr.name]="name" [ngClass]="{'readonly' : readonly}" min="0" [type]="getInputType()"
+      [placeholder]="placeholder" [(ngModel)]="value" (input)="onInputChange($event)" [readonly]="readonly" />
 
     <!-- Ícone de olho para alternar visibilidade -->
     <span *ngIf="type === 'password'" class="material-symbols-outlined eye-icon" (click)="togglePasswordVisibility()">
-      {{ isPasswordVisible ? 'visibility_off' : 'visibility' }}
+      {{ isPasswordVisible ? 'vistosibility_off' : 'visibility' }}
     </span>
   </div>
 
-  <img [ngClass]="{'inputWithLabel': label}" *ngIf="type === 'search'" src="assets/search.svg" class="search-icon" />
+  <span [ngClass]="{'inputWithLabel': label}" *ngIf="type === 'search'"
+    class="material-symbols-outlined search-icon">search</span>
 </div>

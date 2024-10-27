@@ -1,6 +1,6 @@
 <app-layout>
     <div class="container">
-        <app-header title="Estoque" buttonText="Adicionar produto" (filterChange)="onFilterChange($event)"
+        <app-header placeholder="Digite o nome do produto" title="Estoque" buttonText="Adicionar produto" (filterChange)="onFilterChange($event)"
             (buttonClick)="openModal(false)"></app-header>
         <app-resumo-estoque-card></app-resumo-estoque-card>
         <app-custom-table minWidth="1000px" [columns]="columns" [data]="estoque" [actions]="actions"

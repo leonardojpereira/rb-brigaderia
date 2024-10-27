@@ -1,6 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu-sidebar',
@@ -17,15 +18,29 @@ import { MatAccordion } from '@angular/material/expansion';
 })
 export class MenuSidebarComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion | undefined;
+  
+  @Input() isMenuExpanded: boolean = false;
+  isLogoutModalOpen: boolean = false;
 
-  isMenuExpanded: boolean = false;
+  constructor(private router: Router) {}
+
+  ngOnInit() {}
 
   toggleMenu() {
     this.isMenuExpanded = !this.isMenuExpanded;
   }
 
-  constructor() {}
+  openLogoutModal() {
+    this.isLogoutModalOpen = true;
+  }
 
-  ngOnInit() {}
+  closeLogoutModal() {
+    this.isLogoutModalOpen = false;
+  }
+
+  confirmLogout() {
+    this.closeLogoutModal();
+    this.router.navigate(['/']);
+    localStorage.clear();
+  }
 }
- 

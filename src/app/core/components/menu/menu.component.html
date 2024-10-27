@@ -1,28 +1,28 @@
-<ul class="menu-list">
-    <li class="menu-item" (click)="navigate('/dashboard')">
+<ul class="menu-list" [ngClass]="{'expanded': isMenuExpanded}">
+    <li class="menu-item" [ngClass]="{'expanded': isMenuExpanded}" (click)="navigate('/dashboard')">
         <span class="material-symbols-outlined icon">
             dashboard
         </span>
-        <span class="menu-link">Dashboard</span>
+        <span class="menu-link" *ngIf="isMenuExpanded">Dashboard</span>
     </li>
-    <li class="menu-item" (click)="navigate('/estoque')">
+    <li class="menu-item" [ngClass]="{'expanded': isMenuExpanded}" (click)="navigate('/estoque')">
         <span class="material-symbols-outlined icon">
             inventory_2
         </span>
-        <span class="menu-link">Estoque</span>
+        <span class="menu-link" *ngIf="isMenuExpanded">Estoque</span>
     </li>
-    <li class="menu-item" (click)="navigate('/receitas')">
+    <li class="menu-item" [ngClass]="{'expanded': isMenuExpanded}" (click)="navigate('/receitas')">
         <span class="material-symbols-outlined icon">
             grocery
         </span>
         <div class="cadastro-item-container">
-            <span class="menu-link">Receitas</span>
+            <span class="menu-link" *ngIf="isMenuExpanded">Receitas</span>
         </div>
     </li>
-    <li class="menu-item" (click)="navigate('/producoes')">
+    <li class="menu-item" [ngClass]="{'expanded': isMenuExpanded}" (click)="navigate('/producoes')">
         <span class="material-symbols-outlined icon">
-            manufacturing
+            skillet
         </span>
-        <span class="menu-link">Produções</span>
+        <span class="menu-link" *ngIf="isMenuExpanded">Produções</span>
     </li>
 </ul>

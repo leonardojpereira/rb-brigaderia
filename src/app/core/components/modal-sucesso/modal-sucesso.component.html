@@ -1,0 +1,19 @@
+<app-modal [saveButtonText]="'Fechar'"
+    [isVisible]="openModal"
+    [isAlert]="true"
+    (onSave)="close()"
+    (onClose)="close()">
+    <ng-container modal-body>
+      <div class="container">
+        <div class="header">
+            <span class="material-symbols-outlined check">
+                check
+                </span>
+        </div>
+        <div class="body">
+          <h1>{{title}}</h1>
+          <p>{{subTitle}}</p>
+        </div>
+      </div>
+    </ng-container>
+</app-modal>

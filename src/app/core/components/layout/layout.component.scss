@@ -26,9 +26,9 @@
   .main-content {
     background-color: #fff;
     border-radius: 20px;
-    height: calc(100% - 40px);
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
     margin: 20px;
+    height: calc(100% - 40px);
   }
   
   @media screen and (max-width: 940px) {

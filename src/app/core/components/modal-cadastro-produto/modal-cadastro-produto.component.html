@@ -1,0 +1,39 @@
+<app-modal width="600px" [saveButtonText]="isEditMode ? 'Salvar' : 'Cadastrar produto'" [isVisible]="isVisible"
+    [isAlert]="false" (onClose)="closeModal()" (onSave)="save(produtoForm)"
+    title="{{ isEditMode ? 'Editar produto' : 'Cadastrar produto' }}">
+    <ng-container modal-body>
+        <form #produtoForm="ngForm" class="form-grid">
+            <div class="form-row">
+                <div class="form-group">
+                    <app-input label="Nome do produto*" type="text" id="nomeProduto" name="nomeProduto"
+                        [(ngModel)]="produto.nome" [required]="true"></app-input>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <app-input label="Unidade de medida*" type="text" id="unidadeMedida" name="unidadeMedida"
+                        [(ngModel)]="produto.unidadeMedida" [required]="true"></app-input>
+                </div>
+                <div class="form-group">
+                    <app-input label="Quantidade*" type="number" id="quantidade" name="quantidade"
+                        [(ngModel)]="produto.quantidade" [required]="true"></app-input>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <app-input label="Quantidade mínima*" type="number" id="quantidadeMinima" name="quantidadeMinima"
+                        [(ngModel)]="produto.quantidadeMinima" [required]="true"></app-input>
+                </div>
+                <div class="form-group">
+                    <app-input label="Preço unitário" type="number" id="precoUnitario" name="precoUnitario"
+                        [(ngModel)]="produto.precoUnitario" [required]="true"></app-input>
+                </div>
+            </div>
+
+        </form>
+
+        <app-modal-erro *ngIf="modalError" [openModal]="modalError" [title]="titulo" [subTitle]="subTitulo"
+        (closeModal)="modalError = !modalError">
+    </app-modal-erro>
+    </ng-container>
+</app-modal>

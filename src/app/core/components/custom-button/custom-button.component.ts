@@ -10,4 +10,6 @@ export class CustomButtonComponent  implements OnInit{
   }
   @Input() type: string = 'button';
   @Input() text: string = '';
+  @Input() isFirstAccessButton: boolean = false;
+  @Input() isDisabled: boolean = false;
 }

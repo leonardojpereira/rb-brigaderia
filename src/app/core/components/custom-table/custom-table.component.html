@@ -1,0 +1,40 @@
+<div #tableContainer class="table-responsive">
+    <table class="custom-table" [ngStyle]="{'min-width': minWidth}">
+        <thead class="table-header">
+            <tr class="table-header-row">
+                <th *ngFor="let column of columns" class="table-header-cell" [ngClass]="{'centerCell' : centerCell}"
+                    [style.width]="column.width">
+                    <span>{{ column.header }}</span>
+                </th>
+                <th *ngIf="actions.length > 0" class="table-header-cell actions-container-header">
+                    <ng-container *ngIf="!seeMore"></ng-container>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="table-body">
+            <tr *ngFor="let item of data" class="table-body-row">
+                <td *ngFor="let column of columns" [ngClass]="getClasses(column, item)" class="table-body-cell">
+                    <!-- Renderizando o valor diretamente -->
+                    {{ column.field === 'dataCriacao' ? (item[column.field] | date:'dd/MM/yyyy') :
+                        column.field === 'ativo' ? (item[column.field] ? 'Ativo' : 'Inativo') :
+                        item[column.field] }}
+                </td>
+
+                <td *ngIf="actions.length > 0" class="table-body-cell actions-container hasBorder">
+                    <span *ngFor="let action of actions"
+                        [ngClass]="{'material-symbols-outlined': !seeMore, 'see-more-text' : seeMore}"
+                        class="action-button" (click)="action.action(item)">
+                        {{ action.icon || action.text }}
+                    </span>
+                </td>
+            </tr>
+
+            <tr *ngIf="data.length === 0">
+                <td class="table-body-cell error-message"
+                    [attr.colspan]="columns.length + (actions.length > 0 ? 1 : 0)">
+                    {{ noDataMessage }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

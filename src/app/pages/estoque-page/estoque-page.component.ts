@@ -21,7 +21,7 @@ export class EstoquePageComponent implements OnInit {
     { header: 'Quantidade', field: 'stock', specialStyle: 'low-stock' },
     { header: 'Quantidade mínima', field: 'minimumStock' },
     { header: 'Preço unitário', field: 'unitPrice' },
-    { header: 'Data de entrada', field: 'createdAt' },
+    { header: 'Data de atualização', field: 'createdAt' },
   ];
 
   actions = [
@@ -74,9 +74,11 @@ export class EstoquePageComponent implements OnInit {
                 style: 'currency',
                 currency: 'BRL',
               }),
-              createdAt: new Date(ingredient.createdAt).toLocaleDateString(
-                'pt-BR'
-              ),
+              createdAt: new Date(
+                ingredient.updatedAt == null
+                  ? ingredient.createdAt
+                  : ingredient.updatedAt
+              ).toLocaleDateString('pt-BR'),
             }));
             this.paginacao.totalItem = response.data.totalItems;
           }
@@ -173,7 +175,7 @@ export class EstoquePageComponent implements OnInit {
       quantidade: null,
       quantidadeMinima: null,
       precoUnitario: null,
-      dataEntrada: '',
+      createdAt: '',
     };
     this.productId = '';
   }

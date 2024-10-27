@@ -1,0 +1,19 @@
+<div class="card-receitas">
+    <h3 class="title">Receitas mais produzidas</h3>
+    <table class="receitas-table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Quantidade</th>
+                <th>Custo da receita</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let receita of receitas">
+                <td>{{ receita.nome }}</td>
+                <td>{{ receita.quantidade }}</td>
+                <td>{{ receita.custo | currency: 'BRL':'symbol':'1.2-2' }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

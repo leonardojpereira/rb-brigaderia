@@ -24,6 +24,7 @@ import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginato
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalComponent } from './components/modal/modal.component';
 import { CustomButtonComponent } from './core/components/custom-button/custom-button.component';
+import { CardReceitasProduzidasComponent } from './core/components/card-receitas-produzidas/card-receitas-produzidas.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { CustomButtonComponent } from './core/components/custom-button/custom-bu
     ModalErroComponent,
     ModalConfirmacaoComponent,
     ReceitaPageComponent,
+    CardReceitasProduzidasComponent
   ],
   imports: [
     BrowserModule,

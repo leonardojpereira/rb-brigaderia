@@ -1,15 +1,15 @@
-$background-blue: #37576c;
-$background-selected-blue: #1f3f55;
-$hover-color: #253c4b;
-
 .menu-container {
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 220px;
+  width: 60px; 
   height: 100vh;
   transition: all 0.3s ease-in-out;
   z-index: 1000;
+
+  &.expanded {
+    width: 220px;
+  }
 
   .menu-header {
     display: flex;
@@ -18,8 +18,8 @@ $hover-color: #253c4b;
     margin: 8px 0 22px 0;
 
     img {
-        width: 180px;
-        height:180px;
+      width: 180px;
+      height: 180px;
     }
   }
 
@@ -33,26 +33,32 @@ $hover-color: #253c4b;
       display: flex;
       gap: 12px;
       margin: 22px 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        .icon {
+          color: #000;
+        }
+        .logout-text {
+          color: #000
+        }
+      }
+
 
       .icon {
         color: #5D6679;
         font-size: 22px;
-      }
+        transition: all 0.3s ease;
 
-      .logout-button {
-        border: none;
-        background: none;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        cursor: pointer;
+        
       }
 
       .logout-text {
-        text-decoration: none;
         color: #5D6679;
         font-weight: 700;
         font-size: 16px;
+        transition: all 0.3s ease;
       }
     }
   }

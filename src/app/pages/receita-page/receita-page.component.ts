@@ -17,7 +17,11 @@ export class ReceitaPageComponent implements OnInit {
 
   columns = [
     { header: 'Receita', field: 'nome' },
-    { header: 'Ingredientes', field: 'ingredientes', specialStyle: 'ingredients-list' },
+    {
+      header: 'Ingredientes',
+      field: 'ingredientes',
+      specialStyle: 'ingredients-list',
+    },
     { header: 'Custo total', field: 'custoTotal', format: 'currency' },
   ];
 
@@ -40,6 +44,7 @@ export class ReceitaPageComponent implements OnInit {
   selectedRecipe: any = null;
   recipeId: string = '';
   isDeleteModalOpen = false;
+  private filterTimeout: any;
 
   constructor(private recipeService: RecipeService) {}
 
@@ -50,7 +55,11 @@ export class ReceitaPageComponent implements OnInit {
   fetchRecipes(): void {
     this.isLoading = true;
     this.recipeService
-      .getAllRecipes()
+      .getAllRecipes(
+        this.paginacao.pageNumber,
+        this.paginacao.pageSize,
+        this.filter
+      )
       .pipe(delay(500))
       .subscribe({
         next: (response) => {
@@ -62,7 +71,9 @@ export class ReceitaPageComponent implements OnInit {
                 style: 'currency',
                 currency: 'BRL',
               }),
-              ingredientes: recipe.ingredientes.map((i: any) => i.nome).join(', '),
+              ingredientes: recipe.ingredientes
+                .map((i: any) => i.nome)
+                .join(', '),
             }));
             this.paginacao.totalItem = response.data.totalItems;
           }
@@ -78,7 +89,14 @@ export class ReceitaPageComponent implements OnInit {
 
   onFilterChange(filterValue: string): void {
     this.filter = filterValue;
-    this.fetchRecipes();
+
+    if (this.filterTimeout) {
+      clearTimeout(this.filterTimeout);
+    }
+
+    this.filterTimeout = setTimeout(() => {
+      this.fetchRecipes();
+    }, 500);
   }
 
   getPaginacao(event: any): void {
@@ -102,19 +120,6 @@ export class ReceitaPageComponent implements OnInit {
     this.recipeId = id;
     this.isDeleteModalOpen = true;
   }
-
-  // deleteRecipe(): void {
-  //   this.isLoading = true;
-  //   this.recipeService.deleteRecipe(this.recipeId).subscribe({
-  //     next: () => {
-  //       this.fetchRecipes();
-  //       this.isDeleteModalOpen = false;
-  //     },
-  //     error: (error) => {
-  //       console.error('Erro ao deletar a receita:', error);
-  //     },
-  //   });
-  // }
 
   private resetSelectedRecipe(): void {
     this.selectedRecipe = {

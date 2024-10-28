@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -19,13 +19,26 @@ export class RecipeService {
     });
   }
 
-  getAllRecipes(): Observable<any> {
+  getAllRecipes(
+    pageNumber: number,
+    pageSize: number,
+    filter?: string
+  ): Observable<any> {
     const token = localStorage.getItem('token');
+    let params = new HttpParams()
+      .set('pageNumber', pageNumber.toString())
+      .set('pageSize', pageSize.toString());
+
+    if (filter) {
+      params = params.set('filter', filter);
+    }
+
     return this.httpClient.get(`${environment.apiUrl}Recipe`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
+      params,
     });
   }
 }

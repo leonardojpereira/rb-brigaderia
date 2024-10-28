@@ -1,6 +1,7 @@
 <app-layout>
     <div class="container">
-        <app-header placeholder="Digite o nome da receita" title="Receita" buttonText="Adicionar receita"></app-header>
+        <app-header (filterChange)="onFilterChange($event)" placeholder="Digite o nome da receita" title="Receita"
+            buttonText="Adicionar receita"></app-header>
 
         <app-card-receitas-produzidas></app-card-receitas-produzidas>
 
@@ -10,6 +11,9 @@
 
         <app-paginacao *ngIf="!isLoading" (valuePagination)="getPaginacao($event)" [paginacao]="paginacao">
         </app-paginacao>
+
+        <app-brigadeiro-loading *ngIf="isLoading"></app-brigadeiro-loading>
+
     </div>
 
 </app-layout>

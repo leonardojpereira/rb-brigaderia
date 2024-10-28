@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RecipeService } from '../../../services/recipe.serivce';
 
 @Component({
   selector: 'app-card-receitas-produzidas',
@@ -6,13 +7,33 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./card-receitas-produzidas.component.scss'],
 })
 export class CardReceitasProduzidasComponent implements OnInit {
-  receitas = [
-    { nome: 'Brigadeiro de Ninho', quantidade: 12, custo: 40.0 },
-    { nome: 'Brigadeiro Tradicional', quantidade: 15, custo: 40.0 },
-    { nome: 'Brigadeiro de Óreo', quantidade: 17, custo: 40.0 },
-  ];
+  receitas: { nome: string; quantidade: number; custo: number }[] = [];
 
-  constructor() {}
+  constructor(private recipeService: RecipeService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.fetchTopProducedRecipes();
+  }
+
+  fetchTopProducedRecipes(): void {
+    this.recipeService.getTopProducedRecipes().subscribe({
+      next: (response) => {
+        if (response.isSuccess) {
+          this.receitas = response.data.topProducedRecipes.map(
+            (recipe: any) => ({
+              nome: recipe.nome,
+              quantidade: recipe.totalProduzido,
+              custo: recipe.custoTotal,
+            })
+          );
+        }
+      },
+      error: (error) =>
+        console.error('Erro ao buscar as receitas mais produzidas:', error),
+    });
+  }
+
+  // calculateCost(recipe: any): number {
+  //   return recipe.custoTotal;
+  // }
 }

@@ -131,6 +131,15 @@ export class ReceitaPageComponent implements OnInit {
     this.recipeId = '';
   }
 
+  closeModal(): void {
+    this.isModalVisible = false;
+  }
+
+  onRecipeSaved(recipeData: any): void {
+    console.log('Recipe saved:', recipeData);
+    this.isModalVisible = false;
+  }
+
   closeDeleteModal(): void {
     this.isDeleteModalOpen = false;
   }

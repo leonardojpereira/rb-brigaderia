@@ -14,9 +14,17 @@
 
         <app-brigadeiro-loading *ngIf="isLoading"></app-brigadeiro-loading>
 
-        <app-modal-cadastro-receita [isVisible]="isModalVisible" [isEditMode]="isEditMode" (onClose)="closeModal()"
-            (onSave)="onRecipeSaved($event)">
+        <app-modal-cadastro-receita (onError)="handleErrorModal($event)" [isVisible]="isModalVisible" [isEditMode]="isEditMode" [recipeId]="recipeId"
+            (onClose)="closeModal()" (onSave)="onRecipeSaved($event)">
         </app-modal-cadastro-receita>
+
+        <app-modal-sucesso [openModal]="modalSuccess" [title]="titulo" [subTitle]="subTitulo"
+            (closeModal)="modalSuccess = !modalSuccess">
+        </app-modal-sucesso>
+
+        <app-modal-erro *ngIf="modalError" [openModal]="modalError" [title]="titulo" [subTitle]="subTitulo"
+            (closeModal)="modalError = !modalError">
+        </app-modal-erro>
 
     </div>
 

@@ -45,6 +45,11 @@ export class ReceitaPageComponent implements OnInit {
   recipeId: string = '';
   isDeleteModalOpen = false;
   private filterTimeout: any;
+  modalSuccess: boolean = false;
+  modalError: boolean = false;
+  titulo: string = '';
+  subTitulo: string = '';
+  showSuccessModal: boolean = false;
 
   constructor(private recipeService: RecipeService) {}
 
@@ -108,13 +113,14 @@ export class ReceitaPageComponent implements OnInit {
   openModal(isEdit: boolean = false, recipe?: any): void {
     this.isEditMode = isEdit;
     this.isModalVisible = true;
+  
     if (isEdit && recipe) {
-      this.selectedRecipe = { ...recipe };
       this.recipeId = recipe.id;
     } else {
       this.resetSelectedRecipe();
     }
   }
+  
 
   openDeleteModal(id: string): void {
     this.recipeId = id;
@@ -138,9 +144,24 @@ export class ReceitaPageComponent implements OnInit {
   onRecipeSaved(recipeData: any): void {
     console.log('Recipe saved:', recipeData);
     this.isModalVisible = false;
+    this.fetchRecipes();
+    this.handleSuccessModal();
   }
 
   closeDeleteModal(): void {
     this.isDeleteModalOpen = false;
+  }
+
+  handleSuccessModal(): void {
+    this.modalSuccess = true;
+    this.titulo = 'Sucesso!';
+    this.subTitulo = this.isEditMode ? 'Receita atualizada com sucesso!' : 'Receita cadastrada com sucesso!';
+  }
+
+  handleErrorModal(message: string): void {
+    this.modalError = true;
+    this.titulo = 'Erro!';
+    this.subTitulo = message;
+    this.isModalVisible = false;
   }
 }

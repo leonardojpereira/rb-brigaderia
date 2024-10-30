@@ -19,11 +19,7 @@ export class RecipeService {
     });
   }
 
-  getAllRecipes(
-    pageNumber: number,
-    pageSize: number,
-    filter?: string
-  ): Observable<any> {
+  getAllRecipes(pageNumber: number, pageSize: number, filter?: string): Observable<any> {
     const token = localStorage.getItem('token');
     let params = new HttpParams()
       .set('pageNumber', pageNumber.toString())
@@ -39,6 +35,36 @@ export class RecipeService {
         Authorization: `Bearer ${token}`,
       },
       params,
+    });
+  }
+
+  createRecipe(recipeData: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.httpClient.post(`${environment.apiUrl}Recipe`, recipeData, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
+  getRecipeById(id: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.httpClient.get(`${environment.apiUrl}Recipe/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
+  updateRecipe(id: string, recipeData: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.httpClient.put(`${environment.apiUrl}Recipe/${id}`, recipeData, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
     });
   }
 }

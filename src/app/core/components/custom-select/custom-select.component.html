@@ -1,0 +1,7 @@
+<div class="custom-select-container"  [ngStyle]="{'height': height}" [class.no-border]="noBorder">
+    <mat-select [disabled]="disabled" [ngStyle]="{'width': width}" [required]="required" [(value)]="value"
+      (selectionChange)="onChangeValue($event.value)" [placeholder]="placeholder" [disabled]="disabledButton">
+      <mat-option *ngFor="let option of options" [value]="option.value">{{ option.label }}</mat-option>
+    </mat-select>
+  </div>
+  

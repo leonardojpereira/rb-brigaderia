@@ -10,6 +10,7 @@ export class HeaderComponent {
   @Input() buttonText: string = '';
   @Output() buttonClick = new EventEmitter<void>();
   @Output() filterChange = new EventEmitter<string>();
+  @Input() placeholder: string = '';
 
   onButtonClick(): void {
     this.buttonClick.emit();

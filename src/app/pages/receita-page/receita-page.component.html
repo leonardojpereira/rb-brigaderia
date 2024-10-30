@@ -1,0 +1,36 @@
+<app-layout>
+    <div class="container">
+        <app-header (buttonClick)="openModal(false)" (filterChange)="onFilterChange($event)"
+            placeholder="Digite o nome da receita" title="Receita" buttonText="Adicionar receita"></app-header>
+
+        <app-card-receitas-produzidas></app-card-receitas-produzidas>
+
+        <app-custom-table minWidth="1000px" [columns]="columns" [data]="receitas" [actions]="actions"
+            [noDataMessage]="'Nenhuma receitesa encontrada'"></app-custom-table>
+
+
+        <app-paginacao *ngIf="!isLoading" (valuePagination)="getPaginacao($event)" [paginacao]="paginacao">
+        </app-paginacao>
+
+        <app-brigadeiro-loading *ngIf="isLoading"></app-brigadeiro-loading>
+
+        <app-modal-cadastro-receita (onError)="handleErrorModal($event)" [isVisible]="isModalVisible" [isEditMode]="isEditMode" [recipeId]="recipeId"
+            (onClose)="closeModal()" (onSave)="onRecipeSaved($event)">
+        </app-modal-cadastro-receita>
+
+        <app-modal-sucesso [openModal]="modalSuccess" [title]="titulo" [subTitle]="subTitulo"
+            (closeModal)="modalSuccess = !modalSuccess">
+        </app-modal-sucesso>
+
+        <app-modal-erro *ngIf="modalError" [openModal]="modalError" [title]="titulo" [subTitle]="subTitulo"
+            (closeModal)="modalError = !modalError">
+        </app-modal-erro>
+
+        <app-modal-confirmacao [openModal]="isDeleteModalOpen" title="Excluir"
+        subTitle="Tem certeza que deseja excluir essa receita?" (cancelar)="closeDeleteModal()"
+        (confirmar)="deleteRecipe()">
+    </app-modal-confirmacao>
+
+    </div>
+
+</app-layout>

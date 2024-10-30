@@ -24,6 +24,9 @@ import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginato
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalComponent } from './components/modal/modal.component';
 import { CustomButtonComponent } from './core/components/custom-button/custom-button.component';
+import { CardReceitasProduzidasComponent } from './core/components/card-receitas-produzidas/card-receitas-produzidas.component';
+import { MatSelectModule } from '@angular/material/select';
+
 
 @NgModule({
   declarations: [
@@ -49,6 +52,10 @@ import { CustomButtonComponent } from './core/components/custom-button/custom-bu
     BrigadeiroLoadingComponent,
     ModalErroComponent,
     ModalConfirmacaoComponent,
+    ReceitaPageComponent,
+    CardReceitasProduzidasComponent,
+    ModalCadastroReceitaComponent,
+    CustomSelectComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +66,7 @@ import { CustomButtonComponent } from './core/components/custom-button/custom-bu
     MatPaginatorModule,
     BrowserAnimationsModule,
     CommonModule,
+    MatSelectModule,
 
   ],
   providers: [
@@ -75,4 +83,7 @@ import { ModalSucessoComponent } from './core/components/modal-sucesso/modal-suc
 import { BrigadeiroLoadingComponent } from './core/components/brigadeiro-loading/brigadeiro-loading.component';
 import { ModalErroComponent } from './core/components/modal-erro/modal-erro.component';
 import { ModalConfirmacaoComponent } from './core/components/modal-confirmacao/modal-confirmacao.component';
+import { ReceitaPageComponent } from './pages/receita-page/receita-page.component';
+import { ModalCadastroReceitaComponent } from './core/components/modal-cadastro-receita/modal-cadastro-receita.component';
+import { CustomSelectComponent } from './core/components/custom-select/custom-select.component';
 

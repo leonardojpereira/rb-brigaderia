@@ -77,7 +77,7 @@ export class ReceitaPageComponent implements OnInit {
                 currency: 'BRL',
               }),
               ingredientes: recipe.ingredientes
-                .map((i: any) => i.nome)
+                .map((i: any) => `${i.nome} (${i.quantidadeNecessaria})`)
                 .join(', '),
             }));
             this.paginacao.totalItem = response.data.totalItems;

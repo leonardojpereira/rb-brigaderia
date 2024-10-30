@@ -174,6 +174,7 @@ export class ReceitaPageComponent implements OnInit {
   deleteRecipe(): void {
     this.recipeService.deleteRecipe(this.recipeId).subscribe({
       next: () => {
+        this.recipeService.notifyRecipesUpdated();
         this.isDeleteModalOpen = false;
         this.fetchRecipes();
         this.handleDeleteSuccessModal();

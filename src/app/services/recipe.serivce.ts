@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RecipeService {
+  private recipesSubject = new BehaviorSubject<any[]>([]);
+  recipes$ = this.recipesSubject.asObservable();
+
   constructor(private httpClient: HttpClient) {}
 
   getTopProducedRecipes(): Observable<any> {
@@ -19,7 +22,11 @@ export class RecipeService {
     });
   }
 
-  getAllRecipes(pageNumber: number, pageSize: number, filter?: string): Observable<any> {
+  getAllRecipes(
+    pageNumber: number,
+    pageSize: number,
+    filter?: string
+  ): Observable<any> {
     const token = localStorage.getItem('token');
     let params = new HttpParams()
       .set('pageNumber', pageNumber.toString())
@@ -60,12 +67,16 @@ export class RecipeService {
 
   updateRecipe(id: string, recipeData: any): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.httpClient.put(`${environment.apiUrl}Recipe/${id}`, recipeData, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    return this.httpClient.put(
+      `${environment.apiUrl}Recipe/${id}`,
+      recipeData,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
   }
 
   deleteRecipe(id: string): Observable<any> {
@@ -77,5 +88,23 @@ export class RecipeService {
       },
     });
   }
-  
+
+  updateRecipesList(): void {
+    this.getTopProducedRecipes().subscribe({
+      next: (response) => {
+        if (response.isSuccess) {
+          this.recipesSubject.next(response.data.topProducedRecipes);
+        }
+      },
+      error: (error) =>
+        console.error(
+          'Erro ao atualizar a lista de receitas mais produzidas:',
+          error
+        ),
+    });
+  }
+
+  notifyRecipesUpdated(): void {
+    this.updateRecipesList();
+  }
 }

@@ -144,6 +144,7 @@ export class ModalCadastroReceitaComponent implements OnInit, OnChanges {
       if (this.isEditMode && this.recipeId) {
         this.recipeService.updateRecipe(this.recipeId, payload).subscribe({
           next: (response) => {
+            this.recipeService.notifyRecipesUpdated();
             this.onSave.emit(response);
             this.resetRecipe();
             this.closeModal();
@@ -155,6 +156,7 @@ export class ModalCadastroReceitaComponent implements OnInit, OnChanges {
       } else {
         this.recipeService.createRecipe(payload).subscribe({
           next: (response) => {
+            this.recipeService.notifyRecipesUpdated(); 
             this.onSave.emit(response);
             this.resetRecipe();
             this.closeModal();

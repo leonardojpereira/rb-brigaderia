@@ -113,14 +113,13 @@ export class ReceitaPageComponent implements OnInit {
   openModal(isEdit: boolean = false, recipe?: any): void {
     this.isEditMode = isEdit;
     this.isModalVisible = true;
-  
+
     if (isEdit && recipe) {
       this.recipeId = recipe.id;
     } else {
       this.resetSelectedRecipe();
     }
   }
-  
 
   openDeleteModal(id: string): void {
     this.recipeId = id;
@@ -155,13 +154,33 @@ export class ReceitaPageComponent implements OnInit {
   handleSuccessModal(): void {
     this.modalSuccess = true;
     this.titulo = 'Sucesso!';
-    this.subTitulo = this.isEditMode ? 'Receita atualizada com sucesso!' : 'Receita cadastrada com sucesso!';
+    this.subTitulo = this.isEditMode
+      ? 'Receita atualizada com sucesso!'
+      : 'Receita cadastrada com sucesso!';
+  }
+
+  handleDeleteSuccessModal(): void {
+    this.modalSuccess = true;
+    this.titulo = 'Sucesso!';
+    this.subTitulo = 'Receita deletada com sucesso!';
   }
 
   handleErrorModal(message: string): void {
     this.modalError = true;
     this.titulo = 'Erro!';
     this.subTitulo = message;
-    this.isModalVisible = false;
+  }
+
+  deleteRecipe(): void {
+    this.recipeService.deleteRecipe(this.recipeId).subscribe({
+      next: () => {
+        this.isDeleteModalOpen = false;
+        this.fetchRecipes();
+        this.handleDeleteSuccessModal();
+      },
+      error: () => {
+        this.handleErrorModal('Erro ao excluir a receita.');
+      },
+    });
   }
 }

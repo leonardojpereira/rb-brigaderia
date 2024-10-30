@@ -26,6 +26,11 @@
             (closeModal)="modalError = !modalError">
         </app-modal-erro>
 
+        <app-modal-confirmacao [openModal]="isDeleteModalOpen" title="Excluir"
+        subTitle="Tem certeza que deseja excluir essa receita?" (cancelar)="closeDeleteModal()"
+        (confirmar)="deleteRecipe()">
+    </app-modal-confirmacao>
+
     </div>
 
 </app-layout>

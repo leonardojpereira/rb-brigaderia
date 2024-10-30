@@ -1,4 +1,12 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { IngredientService } from '../../../services/ingredient.service';
 import { RecipeService } from '../../../services/recipe.serivce';
 
@@ -33,7 +41,12 @@ export class ModalCadastroReceitaComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['isVisible'] && this.isVisible && this.isEditMode && this.recipeId) {
+    if (
+      changes['isVisible'] &&
+      this.isVisible &&
+      this.isEditMode &&
+      this.recipeId
+    ) {
       this.loadRecipeById(this.recipeId);
     }
   }
@@ -42,10 +55,12 @@ export class ModalCadastroReceitaComponent implements OnInit, OnChanges {
     this.ingredientService.getIngredients(1, 100).subscribe({
       next: (response) => {
         if (response.isSuccess && response.data?.ingredients) {
-          this.ingredientOptions = response.data.ingredients.map((ingredient: any) => ({
-            value: ingredient.id,
-            label: ingredient.name,
-          }));
+          this.ingredientOptions = response.data.ingredients.map(
+            (ingredient: any) => ({
+              value: ingredient.id,
+              label: ingredient.name,
+            })
+          );
         }
       },
       error: (error) => {
@@ -58,13 +73,15 @@ export class ModalCadastroReceitaComponent implements OnInit, OnChanges {
     this.recipeService.getRecipeById(id).subscribe({
       next: (response) => {
         if (response.isSuccess && response.data?.recipe) {
-          const recipeData = response.data.recipe; // Access recipe data correctly
+          const recipeData = response.data.recipe;
           this.recipe.nome = recipeData.nome;
           this.recipe.descricao = recipeData.descricao;
-          this.recipe.ingredientes = recipeData.ingredients.map((ingredient: any) => ({
-            id: ingredient.ingredienteId,
-            quantidade: ingredient.quantidadeNecessaria,
-          }));
+          this.recipe.ingredientes = recipeData.ingredients.map(
+            (ingredient: any) => ({
+              id: ingredient.ingredienteId,
+              quantidade: ingredient.quantidadeNecessaria,
+            })
+          );
         }
       },
       error: (error) => {
@@ -72,7 +89,6 @@ export class ModalCadastroReceitaComponent implements OnInit, OnChanges {
       },
     });
   }
-  
 
   addIngredient(): void {
     this.recipe.ingredientes.push({ id: null, quantidade: null });
@@ -97,6 +113,25 @@ export class ModalCadastroReceitaComponent implements OnInit, OnChanges {
 
   save(form: any): void {
     if (form.valid) {
+      if (!this.recipe.nome || this.recipe.nome.trim() === '') {
+        this.onError.emit('O nome da receita é obrigatório.');
+        return;
+      }
+
+      const hasValidIngredient = this.recipe.ingredientes.some(
+        (ingredient) =>
+          ingredient.id &&
+          ingredient.quantidade !== null &&
+          ingredient.quantidade > 0
+      );
+
+      if (!hasValidIngredient) {
+        this.onError.emit(
+          'A receita deve conter pelo menos um ingrediente válido.'
+        );
+        return;
+      }
+
       const payload = {
         nome: this.recipe.nome,
         descricao: this.recipe.descricao,
@@ -129,6 +164,10 @@ export class ModalCadastroReceitaComponent implements OnInit, OnChanges {
           },
         });
       }
+    } else {
+      this.onError.emit(
+        'Preencha todos os campos obrigatórios antes de salvar.'
+      );
     }
   }
 }

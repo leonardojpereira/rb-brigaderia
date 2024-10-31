@@ -34,12 +34,10 @@
     margin-bottom: 60px;
 
     
-    @media screen and (min-width: 1310px) {
-      height: calc(100% - 80px);
-    }
+
 
     @media screen and (min-height: 1000px) {
-      height: calc(100% - 40px);
+      height: calc(100% - 80px);
 
     }
   }

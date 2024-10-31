@@ -1,0 +1,35 @@
+<app-modal width="700px" [saveButtonText]="isEditMode ? 'Salvar' : 'Cadastrar receita'" [isVisible]="isVisible"
+    [isAlert]="false" (onClose)="closeModal()" (onSave)="save(recipeForm)"
+    title="{{ isEditMode ? 'Editar receita' : 'Cadastrar receita' }}">
+    <ng-container modal-body>
+        <form #recipeForm="ngForm" class="form-grid">
+            <div class="form-row">
+                <div class="form-group receita-input">
+                    <app-input label="Nome da receita*" type="text" id="nomeReceita" name="nomeReceita"
+                        [(ngModel)]="recipe.nome" [required]="true"></app-input>
+                </div>
+                <div class="form-group button">
+                    <app-custom-button text="Adicionar ingrediente" (click)="addIngredient()">Adicionar
+                        ingrediente</app-custom-button>
+                </div>
+            </div>
+
+            <div *ngFor="let ingredient of recipe.ingredientes; let i = index" class="form-row responsive-row">
+                <div class="form-group">
+                    <label for="">Ingrediente*</label>
+                    <app-custom-select [(ngModel)]="ingredient.id" [options]="ingredientOptions"
+                        [name]="'ingrediente' + i" #ingredient="ngModel" [required]="true">
+                    </app-custom-select>
+                </div>
+                <div class="form-group">
+                    <app-input label="Quantidade*" type="number" [id]="'quantidade' + i" [name]="'quantidade' + i"
+                        [(ngModel)]="ingredient.quantidade" [required]="true"></app-input>
+                </div>
+                <span *ngIf="recipe.ingredientes.length > 1"
+                    class="material-symbols-outlined delete-ingredient-button" (click)="removeIngredient(i)">
+                    delete
+                </span>
+            </div>
+        </form>
+    </ng-container>
+</app-modal>

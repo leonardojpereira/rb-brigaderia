@@ -1,0 +1,56 @@
+.form-grid {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  
+  .form-row {
+    display: flex;
+    align-items: end;
+    width: 100%;
+    gap: 12px;
+  }
+  
+  .responsive-row {
+    @media (max-width: 470px) {
+      flex-direction: column;
+    }
+  }
+  
+  .form-group {
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .receita-input {
+    width: 70%;
+  }
+
+  .button {
+    width: 30%;
+    display: flex;
+    justify-content: end;
+  }
+  
+  
+  .delete-ingredient-button {
+    color: rgb(169, 60, 60);
+    cursor: pointer;
+    font-size: 26px;
+  }
+  
+  .cancel-button {
+    background: transparent;
+    border: 1px solid black;
+    padding: 10px 20px;
+  }
+  
+  .save-button {
+    background: black;
+    color: white;
+    padding: 10px 20px;
+  }
+  

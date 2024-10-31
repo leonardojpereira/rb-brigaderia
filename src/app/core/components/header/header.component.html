@@ -2,7 +2,7 @@
     <h1 class="title">{{title}}</h1>
     <div class="controller">
         <div class="filter">
-            <app-input (input)="onFilterInputChange($event)" placeholder="Digite o nome do produto"
+            <app-input (input)="onFilterInputChange($event)" [placeholder]="placeholder"
                 type="search"></app-input>
         </div>
         <app-custom-button [text]="buttonText" (click)="onButtonClick()"></app-custom-button>

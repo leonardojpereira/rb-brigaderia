@@ -8,6 +8,9 @@
 
             <app-paginacao *ngIf="!isLoading" (valuePagination)="getPaginacao($event)" [paginacao]="paginacao">
             </app-paginacao>
+
+            <app-brigadeiro-loading *ngIf="isLoading"></app-brigadeiro-loading>
+
     </div>
 
   

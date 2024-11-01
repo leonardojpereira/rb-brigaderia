@@ -16,6 +16,11 @@
             (onSave)="onProductionSaved($event)">
         </app-modal-cadastro-producao>
 
+
+        <app-modal-sucesso [openModal]="modalSuccess" [title]="titulo" [subTitle]="subTitulo"
+        (closeModal)="modalSuccess = !modalSuccess">
+    </app-modal-sucesso>
+
     </div>
 
 

@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { ProductionService } from '../../../services/production.service';
 import { RecipeService } from '../../../services/recipe.serivce';
 
@@ -29,6 +36,30 @@ export class ModalCadastroProducaoComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadRecipes();
+    if (this.isEditMode && this.productionId) {
+      this.loadProductionDetails();
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['productionId'] && this.isEditMode && this.productionId) {
+      this.loadProductionDetails();
+    }
+  }
+
+  loadProductionDetails(): void {
+    this.productionService.getProductionById(this.productionId!).subscribe({
+      next: (response) => {
+        if (response.isSuccess && response.data.productions.length > 0) {
+          const production = response.data.productions[0];
+          this.producao.receita = production.receitaId;
+          this.producao.quantidade = production.quantidadeProduzida;
+        }
+      },
+      error: () => {
+        this.onError.emit('Erro ao carregar produção');
+      },
+    });
   }
 
   loadRecipes(): void {
@@ -66,19 +97,37 @@ export class ModalCadastroProducaoComponent implements OnInit {
         dataProducao,
       };
 
-      this.productionService.createProduction(productionData).subscribe({
-        next: (response) => {
-          if (response.isSuccess) {
-            this.onSave.emit(response.data);
-            this.closeModal();
-          } else {
+      if (this.isEditMode && this.productionId) {
+        this.productionService
+          .updateProduction(this.productionId, productionData)
+          .subscribe({
+            next: (response) => {
+              if (response.isSuccess) {
+                this.onSave.emit(response.data);
+                this.closeModal();
+              } else {
+                this.onError.emit('Erro ao atualizar produção');
+              }
+            },
+            error: () => {
+              this.onError.emit('Erro ao atualizar produção');
+            },
+          });
+      } else {
+        this.productionService.createProduction(productionData).subscribe({
+          next: (response) => {
+            if (response.isSuccess) {
+              this.onSave.emit(response.data);
+              this.closeModal();
+            } else {
+              this.onError.emit('Erro ao salvar produção');
+            }
+          },
+          error: () => {
             this.onError.emit('Erro ao salvar produção');
-          }
-        },
-        error: () => {
-          this.onError.emit('Erro ao salvar produção');
-        },
-      });
+          },
+        });
+      }
     }
   }
 }

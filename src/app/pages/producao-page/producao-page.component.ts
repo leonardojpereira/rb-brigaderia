@@ -75,8 +75,18 @@ export class ProducaoPageComponent implements OnInit {
   openModal(isEdit: boolean = false, production?: any): void {
     this.isEditMode = isEdit;
     this.isModalVisible = true;
-    this.productionId = isEdit && production ? production.id : '';
+  
+    if (isEdit && production) {
+      this.productionId = production.id;
+    } else {
+      this.productionId = ''; 
+    }
   }
+  
+
+
+  
+  
 
   onFilterChange(filterValue: string): void {
     this.filter = filterValue;

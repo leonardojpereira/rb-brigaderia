@@ -42,4 +42,25 @@ export class ProductionService {
 
     return this.httpClient.post(`${environment.apiUrl}Production`, data, { headers });
   }
+
+  getProductionById(id: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.httpClient.get(`${environment.apiUrl}Production/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+  
+  updateProduction(id: string, data: { receitaId: string; quantidadeProduzida: number; dataProducao: string }): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.httpClient.put(`${environment.apiUrl}Production/${id}`, data, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+  
 }

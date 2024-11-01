@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductionService } from '../../services/production.service';
 import { IPaginacaoModel } from '../../core/models/IPaginacaoModel';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-producao-page',
@@ -50,20 +51,29 @@ export class ProducaoPageComponent implements OnInit {
   fetchProductions(): void {
     this.isLoading = true;
     this.productionService
-      .getAllProductions(this.paginacao.pageNumber, this.paginacao.pageSize, this.filter)
+      .getAllProductions(
+        this.paginacao.pageNumber,
+        this.paginacao.pageSize,
+        this.filter
+      )
+      .pipe(delay(500))
       .subscribe({
         next: (response) => {
           if (response.isSuccess) {
-            this.producoes = response.data.productions.map((production: any) => {
-              const dataProducao = new Date(production.dataProducao);
-              return {
-                ...production,
-                dataProducao: `${dataProducao.toLocaleDateString('pt-BR')} - ${dataProducao.toLocaleTimeString('pt-BR', {
-                  hour: '2-digit',
-                  minute: '2-digit',
-                })}`,
-              };
-            });
+            this.producoes = response.data.productions.map(
+              (production: any) => {
+                const dataProducao = new Date(production.dataProducao);
+                return {
+                  ...production,
+                  dataProducao: `${dataProducao.toLocaleDateString(
+                    'pt-BR'
+                  )} - ${dataProducao.toLocaleTimeString('pt-BR', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })}`,
+                };
+              }
+            );
             this.paginacao.totalItem = response.data.totalRecords;
           }
         },
@@ -75,11 +85,11 @@ export class ProducaoPageComponent implements OnInit {
   openModal(isEdit: boolean = false, production?: any): void {
     this.isEditMode = isEdit;
     this.isModalVisible = true;
-  
+
     if (isEdit && production) {
       this.productionId = production.id;
     } else {
-      this.productionId = ''; 
+      this.productionId = '';
     }
   }
 
@@ -92,7 +102,7 @@ export class ProducaoPageComponent implements OnInit {
 
     this.filterTimeout = setTimeout(() => {
       this.fetchProductions();
-    }, 500);
+    }, 1000);
   }
 
   handleErrorModal(message: string): void {
@@ -101,7 +111,6 @@ export class ProducaoPageComponent implements OnInit {
     this.subTitulo = message;
   }
 
-  
   onProductionSaved(recipeData: any): void {
     this.isModalVisible = false;
     this.fetchProductions();
@@ -154,14 +163,12 @@ export class ProducaoPageComponent implements OnInit {
         },
       });
     }
-    this.isDeleteModalOpen = false; 
-  }
-
-  
-  closeDeleteModal(): void {
     this.isDeleteModalOpen = false;
   }
 
+  closeDeleteModal(): void {
+    this.isDeleteModalOpen = false;
+  }
 
   getPaginacao(event: any): void {
     this.paginacao.pageNumber = event.pageNumber;

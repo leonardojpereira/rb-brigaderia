@@ -5,14 +5,9 @@
         <form #producaoForm="ngForm" class="form-grid">
             <div class="form-row responsive-row">
                 <div class="form-group recipe-input">
-                    <label for="">Receita*</label>
-                    <app-custom-select
-            [(ngModel)]="producao.receita"
-            [options]="productionOptions"
-            name="receita"
-            #receita="ngModel"
-            [required]="true"
-          ></app-custom-select>
+                    <label for="receita">Receita*</label>
+                    <app-custom-select [(ngModel)]="producao.receita" [options]="productionOptions" name="receita"
+                        #receita="ngModel" [required]="true"></app-custom-select>
                 </div>
                 <div class="form-group quantity-input">
                     <app-input label="Quantidade*" type="number" id="quantidade" name="quantidade"

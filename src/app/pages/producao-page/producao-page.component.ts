@@ -36,6 +36,10 @@ export class ProducaoPageComponent implements OnInit {
     pageSize: 7,
     totalItem: 0,
   };
+  modalError: boolean = false;
+  subTitulo: string = '';
+  titulo: string = '';
+  modalSuccess: boolean = false;
 
   constructor(private productionService: ProductionService) {}
 
@@ -84,6 +88,28 @@ export class ProducaoPageComponent implements OnInit {
     }, 500);
   }
 
+  handleErrorModal(message: string): void {
+    this.modalError = true;
+    this.titulo = 'Erro!';
+    this.subTitulo = message;
+  }
+
+  
+  onProductionSaved(recipeData: any): void {
+    console.log('Recipe saved:', recipeData);
+    this.isModalVisible = false;
+    this.fetchProductions();
+    this.handleSuccessModal();
+  }
+
+  handleSuccessModal(): void {
+    this.modalSuccess = true;
+    this.titulo = 'Sucesso!';
+    this.subTitulo = this.isEditMode
+      ? 'Produção atualizada com sucesso!'
+      : 'Produção cadastrada com sucesso!';
+  }
+
   openDeleteModal(id: string): void {
     this.productionId = id;
     this.isDeleteModalOpen = true;
@@ -94,5 +120,9 @@ export class ProducaoPageComponent implements OnInit {
     this.paginacao.pageNumber = event.pageNumber;
     this.paginacao.pageSize = event.pageSize;
     this.fetchProductions();
+  }
+
+  closeModal(): void {
+    this.isModalVisible = false;
   }
 }

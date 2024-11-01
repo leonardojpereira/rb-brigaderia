@@ -56,7 +56,8 @@ import { MatSelectModule } from '@angular/material/select';
     CardReceitasProduzidasComponent,
     ModalCadastroReceitaComponent,
     CustomSelectComponent,
-    ProducaoPageComponent
+    ProducaoPageComponent,
+    ModalCadastroProducaoComponent
   ],
   imports: [
     BrowserModule,
@@ -88,4 +89,5 @@ import { ReceitaPageComponent } from './pages/receita-page/receita-page.componen
 import { ModalCadastroReceitaComponent } from './core/components/modal-cadastro-receita/modal-cadastro-receita.component';
 import { CustomSelectComponent } from './core/components/custom-select/custom-select.component';
 import { ProducaoPageComponent } from './pages/producao-page/producao-page.component';
+import { ModalCadastroProducaoComponent } from './core/components/modal-cadastro-producao/modal-cadastro-producao.component';
 

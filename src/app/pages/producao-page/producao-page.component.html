@@ -3,16 +3,21 @@
         <app-header (buttonClick)="openModal(false)" (filterChange)="onFilterChange($event)"
             placeholder="Digite o nome da produção" title="Produção" buttonText="Criar produção"></app-header>
 
-            <app-custom-table minWidth="1000px" [columns]="columns" [data]="producoes" [actions]="actions"
+        <app-custom-table minWidth="1000px" [columns]="columns" [data]="producoes" [actions]="actions"
             [noDataMessage]="'Nenhuma produção encontrada'"></app-custom-table>
 
-            <app-paginacao *ngIf="!isLoading" (valuePagination)="getPaginacao($event)" [paginacao]="paginacao">
-            </app-paginacao>
+        <app-paginacao *ngIf="!isLoading" (valuePagination)="getPaginacao($event)" [paginacao]="paginacao">
+        </app-paginacao>
 
-            <app-brigadeiro-loading *ngIf="isLoading"></app-brigadeiro-loading>
+        <app-brigadeiro-loading *ngIf="isLoading"></app-brigadeiro-loading>
+
+        <app-modal-cadastro-producao (onError)="handleErrorModal($event)" [isVisible]="isModalVisible"
+            [isEditMode]="isEditMode" [productionId]="productionId" (onClose)="closeModal()"
+            (onSave)="onProductionSaved($event)">
+        </app-modal-cadastro-producao>
 
     </div>
 
-  
+
 
 </app-layout>

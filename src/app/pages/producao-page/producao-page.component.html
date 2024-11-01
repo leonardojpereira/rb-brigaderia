@@ -21,6 +21,11 @@
         (closeModal)="modalSuccess = !modalSuccess">
     </app-modal-sucesso>
 
+    <app-modal-confirmacao [openModal]="isDeleteModalOpen" title="Excluir"
+    subTitle="Tem certeza que deseja excluir essa produção?" (cancelar)="closeDeleteModal()"
+    (confirmar)="confirmDelete()">
+</app-modal-confirmacao>
+
     </div>
 
 

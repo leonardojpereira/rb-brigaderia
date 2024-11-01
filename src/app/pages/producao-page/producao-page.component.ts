@@ -27,7 +27,7 @@ export class ProducaoPageComponent implements OnInit {
   isModalVisible: boolean = false;
   productionId: string = '';
   filter: string = '';
-  filterTimeout: any;
+  private filterTimeout: any;
   isDeleteModalOpen: boolean = false;
   producoes: any[] = [];
   isLoading = false;
@@ -85,9 +85,11 @@ export class ProducaoPageComponent implements OnInit {
 
   onFilterChange(filterValue: string): void {
     this.filter = filterValue;
+
     if (this.filterTimeout) {
       clearTimeout(this.filterTimeout);
     }
+
     this.filterTimeout = setTimeout(() => {
       this.fetchProductions();
     }, 500);
@@ -101,7 +103,6 @@ export class ProducaoPageComponent implements OnInit {
 
   
   onProductionSaved(recipeData: any): void {
-    console.log('Recipe saved:', recipeData);
     this.isModalVisible = false;
     this.fetchProductions();
     this.handleSuccessModal();
@@ -115,9 +116,50 @@ export class ProducaoPageComponent implements OnInit {
       : 'Produção cadastrada com sucesso!';
   }
 
+  handleDeleteSuccessModal(): void {
+    this.modalSuccess = true;
+    this.titulo = 'Sucesso!';
+    this.subTitulo = 'Produção deletada com sucesso!';
+  }
+
   openDeleteModal(id: string): void {
     this.productionId = id;
     this.isDeleteModalOpen = true;
+  }
+
+  confirmDelete(): void {
+    this.isLoading = true;
+    if (this.productionId) {
+      this.productionService.deleteProduction(this.productionId).subscribe({
+        next: (response) => {
+          this.isLoading = false;
+          if (response.isSuccess) {
+            this.handleDeleteSuccessModal();
+            this.fetchProductions();
+          } else {
+            this.handleErrorModal('Erro ao deletar produção');
+          }
+        },
+        error: (httpErrorResponse) => {
+          this.isLoading = false;
+          if (
+            httpErrorResponse.status === 400 &&
+            httpErrorResponse.error &&
+            httpErrorResponse.error.errors
+          ) {
+            this.handleErrorModal(httpErrorResponse.error.errors);
+          } else {
+            console.error('Erro inesperado:', httpErrorResponse);
+          }
+        },
+      });
+    }
+    this.isDeleteModalOpen = false; 
+  }
+
+  
+  closeDeleteModal(): void {
+    this.isDeleteModalOpen = false;
   }
 
 

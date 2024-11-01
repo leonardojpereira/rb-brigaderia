@@ -62,5 +62,16 @@ export class ProductionService {
       },
     });
   }
+
+  deleteProduction(id: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.httpClient.delete(`${environment.apiUrl}Production/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+  
   
 }

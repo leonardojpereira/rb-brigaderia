@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductionService } from '../../services/production.service';
+import { IPaginacaoModel } from '../../core/models/IPaginacaoModel';
 
 @Component({
   selector: 'app-producao-page',
@@ -29,6 +30,12 @@ export class ProducaoPageComponent implements OnInit {
   filterTimeout: any;
   isDeleteModalOpen: boolean = false;
   producoes: any[] = [];
+  isLoading = false;
+  paginacao: IPaginacaoModel = {
+    pageNumber: 1,
+    pageSize: 7,
+    totalItem: 0,
+  };
 
   constructor(private productionService: ProductionService) {}
 
@@ -37,24 +44,28 @@ export class ProducaoPageComponent implements OnInit {
   }
 
   fetchProductions(): void {
-    this.productionService.getAllProductions(1, 10, this.filter).subscribe({
-      next: (response) => {
-        if (response.isSuccess) {
-          this.producoes = response.data.productions.map((production: any) => {
-            const dataProducao = new Date(production.dataProducao);
-            return {
-              ...production,
-              dataProducao: `${dataProducao.toLocaleDateString('pt-BR')} - ${dataProducao.toLocaleTimeString('pt-BR', {
-                hour: '2-digit',
-                minute: '2-digit',
-              })}`,
-            };
-          });
-        }
-      },
-      error: (error) =>
-        console.error('Erro ao buscar produções:', error),
-    });
+    this.isLoading = true;
+    this.productionService
+      .getAllProductions(this.paginacao.pageNumber, this.paginacao.pageSize, this.filter)
+      .subscribe({
+        next: (response) => {
+          if (response.isSuccess) {
+            this.producoes = response.data.productions.map((production: any) => {
+              const dataProducao = new Date(production.dataProducao);
+              return {
+                ...production,
+                dataProducao: `${dataProducao.toLocaleDateString('pt-BR')} - ${dataProducao.toLocaleTimeString('pt-BR', {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}`,
+              };
+            });
+            this.paginacao.totalItem = response.data.totalRecords;
+          }
+        },
+        error: (error) => console.error('Erro ao buscar produções:', error),
+        complete: () => (this.isLoading = false),
+      });
   }
 
   openModal(isEdit: boolean = false, production?: any): void {
@@ -76,5 +87,12 @@ export class ProducaoPageComponent implements OnInit {
   openDeleteModal(id: string): void {
     this.productionId = id;
     this.isDeleteModalOpen = true;
+  }
+
+
+  getPaginacao(event: any): void {
+    this.paginacao.pageNumber = event.pageNumber;
+    this.paginacao.pageSize = event.pageSize;
+    this.fetchProductions();
   }
 }

@@ -28,6 +28,7 @@ export class ModalCadastroProducaoComponent implements OnInit {
     receita: '',
     quantidade: 0,
   };
+  isLoading: boolean = false;
 
   constructor(
     private recipeService: RecipeService,
@@ -109,8 +110,17 @@ export class ModalCadastroProducaoComponent implements OnInit {
                 this.onError.emit('Erro ao atualizar produção');
               }
             },
-            error: () => {
-              this.onError.emit('Erro ao atualizar produção');
+            error: (httpErrorResponse) => {
+              this.isLoading = false;
+              if (
+                httpErrorResponse.status === 400 &&
+                httpErrorResponse.error &&
+                httpErrorResponse.error.errors
+              ) {
+                this.onError.emit(httpErrorResponse.error.errors);
+              } else {
+                console.error('Erro inesperado:', httpErrorResponse);
+              }
             },
           });
       } else {
@@ -123,8 +133,17 @@ export class ModalCadastroProducaoComponent implements OnInit {
               this.onError.emit('Erro ao salvar produção');
             }
           },
-          error: () => {
-            this.onError.emit('Erro ao salvar produção');
+          error: (httpErrorResponse) => {
+            this.isLoading = false;
+            if (
+              httpErrorResponse.status === 400 &&
+              httpErrorResponse.error &&
+              httpErrorResponse.error.errors
+            ) {
+              this.onError.emit(httpErrorResponse.error.errors);
+            } else {
+              console.error('Erro inesperado:', httpErrorResponse);
+            }
           },
         });
       }

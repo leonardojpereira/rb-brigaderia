@@ -82,11 +82,6 @@ export class ProducaoPageComponent implements OnInit {
       this.productionId = ''; 
     }
   }
-  
-
-
-  
-  
 
   onFilterChange(filterValue: string): void {
     this.filter = filterValue;

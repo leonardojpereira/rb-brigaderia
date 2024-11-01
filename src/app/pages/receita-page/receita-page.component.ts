@@ -179,8 +179,17 @@ export class ReceitaPageComponent implements OnInit {
         this.fetchRecipes();
         this.handleDeleteSuccessModal();
       },
-      error: () => {
-        this.handleErrorModal('Erro ao excluir a receita.');
+      error: (httpErrorResponse) => {
+        this.isLoading = false;
+        if (
+          httpErrorResponse.status === 400 &&
+          httpErrorResponse.error &&
+          httpErrorResponse.error.errors
+        ) {
+          this.handleErrorModal(httpErrorResponse.error.errors);
+        } else {
+          console.error('Erro inesperado:', httpErrorResponse);
+        }
       },
     });
   }

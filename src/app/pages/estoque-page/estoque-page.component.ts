@@ -169,9 +169,17 @@ export class EstoquePageComponent implements OnInit {
         this.isDeleteModalOpen = false;
         this.ingredientService.notifyIngredientsUpdated();
       },
-      error: (error) => {
-        console.error('Erro ao deletar o produto:', error);
-        this.handleErrorModal('Erro ao deletar o produto.');
+      error: (httpErrorResponse) => {
+        this.isLoading = false;
+        if (
+          httpErrorResponse.status === 400 &&
+          httpErrorResponse.error &&
+          httpErrorResponse.error.errors
+        ) {
+          this.handleErrorModal(httpErrorResponse.error.errors);
+        } else {
+          console.error('Erro inesperado:', httpErrorResponse);
+        }
       },
     });
   }

@@ -16,15 +16,18 @@
             (onSave)="onProductionSaved($event)">
         </app-modal-cadastro-producao>
 
+        <app-modal-erro *ngIf="modalError" [openModal]="modalError" [title]="titulo" [subTitle]="subTitulo"
+        (closeModal)="modalError = !modalError">
+    </app-modal-erro>
 
         <app-modal-sucesso [openModal]="modalSuccess" [title]="titulo" [subTitle]="subTitulo"
-        (closeModal)="modalSuccess = !modalSuccess">
-    </app-modal-sucesso>
+            (closeModal)="modalSuccess = !modalSuccess">
+        </app-modal-sucesso>
 
-    <app-modal-confirmacao [openModal]="isDeleteModalOpen" title="Excluir"
-    subTitle="Tem certeza que deseja excluir essa produção?" (cancelar)="closeDeleteModal()"
-    (confirmar)="confirmDelete()">
-</app-modal-confirmacao>
+        <app-modal-confirmacao [openModal]="isDeleteModalOpen" title="Excluir"
+            subTitle="Tem certeza que deseja excluir essa produção?" (cancelar)="closeDeleteModal()"
+            (confirmar)="confirmDelete()">
+        </app-modal-confirmacao>
 
     </div>
 

@@ -25,11 +25,14 @@
                     <app-input label="Quantidade*" type="number" [id]="'quantidade' + i" [name]="'quantidade' + i"
                         [(ngModel)]="ingredient.quantidade" [required]="true"></app-input>
                 </div>
-                <span *ngIf="recipe.ingredientes.length > 1"
-                    class="material-symbols-outlined delete-ingredient-button" (click)="removeIngredient(i)">
+                <span *ngIf="recipe.ingredientes.length > 1" class="material-symbols-outlined delete-ingredient-button"
+                    (click)="removeIngredient(i)">
                     delete
                 </span>
             </div>
         </form>
     </ng-container>
+
+    <app-brigadeiro-loading *ngIf="isLoading"></app-brigadeiro-loading>
+
 </app-modal>

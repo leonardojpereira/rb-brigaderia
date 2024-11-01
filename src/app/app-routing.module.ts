@@ -4,6 +4,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { EstoquePageComponent } from './pages/estoque-page/estoque-page.component';
 import { ReceitaPageComponent } from './pages/receita-page/receita-page.component';
+import { ProducaoPageComponent } from './pages/producao-page/producao-page.component';
 // import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'dashboard', component: HomeComponent },
   { path: 'estoque', component: EstoquePageComponent },
   { path: 'receitas', component: ReceitaPageComponent },
+  { path: 'producoes', component: ProducaoPageComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];
 

@@ -1,0 +1,17 @@
+.form-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .recipe-input {
+        width: 60%;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .quantity-input {
+        width: 40%;
+    }
+}

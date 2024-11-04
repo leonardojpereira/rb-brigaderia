@@ -5,5 +5,9 @@
   </div>
   <div class="background">
   </div>
-  <app-brigadeiro-loading *ngIf="loader"></app-brigadeiro-loading>
+  <app-brigadeiro-loading *ngIf="isLoading"></app-brigadeiro-loading>
+
+  <app-modal-erro *ngIf="modalError" [openModal]="modalError" [title]="titulo" [subTitle]="subTitulo"
+    (closeModal)="modalError = !modalError">
+  </app-modal-erro>
 </div>

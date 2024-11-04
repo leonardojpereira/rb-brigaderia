@@ -8,27 +8,39 @@ import { ILoginModel } from '../../core/models/ILoginModel';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent  {
-  loader: boolean = false;
+  isLoading: boolean = false;
+  modalError: boolean = false;
+  titulo: string = '';
+  subTitulo: string = '';
 
   constructor(private loginService: LoginService){}
 
   logar(event: ILoginModel) {
-    this.loader = true;
+    this.isLoading = true;
 
       this.loginService.login(event, {
-        onSuccess: (res: any) => {},
-        onError: (error: any) => {
-          this.loader = false;
-          if (error.status != 400) {
-            console.error("Ocorreu um erro, tente novamente mais tarde!");
+        onSuccess: () => {},
+        onError: (httpErrorResponse: { status: number; error: { errors: any; }; }) => {
+          this.isLoading = false;
+          if (
+            httpErrorResponse.status === 400 &&
+            httpErrorResponse.error &&
+            httpErrorResponse.error.errors
+          ) {
+            this.handleErrorModal(httpErrorResponse.error.errors);
           } else {
-            error.error.Erros?.map((x: any) => {
-              console.error(x);
-            });
-            // this.toast.error('Email ou senha inválidos!');
+            this.isLoading = false;
+            console.error('Erro inesperado:', httpErrorResponse);
           }
         },
       });
 
+    }
+
+    handleErrorModal(message: string): void {
+      this.modalError = true;
+      this.titulo = 'Erro!';
+      this.subTitulo = message;
+      this.isLoading = false;
     }
 }

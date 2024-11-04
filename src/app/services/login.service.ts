@@ -41,7 +41,7 @@ export class LoginService {
 
   login(login: ILoginModel, { onSuccess, onError }: any): any {
     const payload = {
-      login: login.email, // ou username, se necessário
+      login: login.email,
       password: login.senha,
     };
 

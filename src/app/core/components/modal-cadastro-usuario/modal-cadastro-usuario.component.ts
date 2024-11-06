@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { RoleService } from '../../../services/role.service';
+import { UsuarioService } from '../../../services/usuario.service'; // Importe o serviço
 
 @Component({
   selector: 'app-modal-cadastro-usuario',
@@ -18,6 +19,7 @@ export class ModalCadastroUsuarioComponent implements OnInit {
 
   user = {
     nome: '',
+    username: '', 
     email: '',
     role: '',
     senha: '',
@@ -28,7 +30,7 @@ export class ModalCadastroUsuarioComponent implements OnInit {
   titulo: string = '';
   subTitulo: string = '';
 
-  constructor(private roleService: RoleService) {}
+  constructor(private roleService: RoleService, private usuarioService: UsuarioService) {}
 
   ngOnInit(): void {
     this.loadRoles();
@@ -53,8 +55,31 @@ export class ModalCadastroUsuarioComponent implements OnInit {
   save(form: NgForm): void {
     if (form.valid) {
       this.isLoading = true;
-      this.onSave.emit();
-      this.closeModal();
+      const userData = {
+        nome: this.user.nome,
+        username: this.user.email,
+        password: this.user.senha,
+        email: this.user.email,
+        roleId: this.user.role,
+      };
+      
+      this.usuarioService.registerUser(userData).subscribe({
+        next: (response) => {
+          if (response.isSuccess) {
+            this.onSave.emit();
+            this.closeModal();
+          } else {
+            this.handleError(response.message || 'Erro ao cadastrar usuário.');
+          }
+        },
+        error: (error) => {
+          console.error('Erro ao cadastrar usuário:', error);
+          this.handleError('Erro ao cadastrar usuário.');
+        },
+        complete: () => {
+          this.isLoading = false;
+        },
+      });
     } else {
       this.markFormFieldsAsTouched(form);
     }
@@ -70,5 +95,11 @@ export class ModalCadastroUsuarioComponent implements OnInit {
       const control = form.controls[field];
       control.markAsTouched({ onlySelf: true });
     });
+  }
+
+  private handleError(message: string): void {
+    this.modalError = true;
+    this.titulo = 'Erro!';
+    this.subTitulo = message;
   }
 }

@@ -28,5 +28,9 @@
     (onClose)="closeModal()"
     (onSave)="onUserSaved($event)"
   ></app-modal-cadastro-usuario>
+
+  <app-modal-sucesso [openModal]="modalSuccess" [title]="titulo" [subTitle]="subTitulo"
+  (closeModal)="modalSuccess = !modalSuccess">
+</app-modal-sucesso>
   </app-layout>
   

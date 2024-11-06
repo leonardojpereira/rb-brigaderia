@@ -128,4 +128,15 @@ export class LoginService {
     this.setUserLoggedIn(false);
     this.router.navigate(['/login']);
   }
+
+  getUsuarios(pageNumber: number = 1, pageSize: number = 10, filter: string = ''): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}Authentication/GetAllUsers`, {
+      params: {
+        pageNumber: pageNumber.toString(),
+        pageSize: pageSize.toString(),
+        filter: filter
+      }
+    });
+  }
+  
 }

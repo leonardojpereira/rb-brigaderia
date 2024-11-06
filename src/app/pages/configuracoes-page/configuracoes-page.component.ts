@@ -12,7 +12,7 @@ export class ConfiguracoesPageComponent implements OnInit {
   columns = [
     { header: 'Nome', field: 'nome', width: '40%' },
     { header: 'Email', field: 'email', width: '40%' },
-    { header: 'Role', field: 'role' }
+    { header: 'Perfil', field: 'role' }
   ];
   actions = [
     {
@@ -41,8 +41,9 @@ export class ConfiguracoesPageComponent implements OnInit {
   subTitulo: string = '';
   titulo: string = '';
   modalSuccess: boolean = false;
+  user: { nome: any; email: any; role: any; senha: string; } = { nome: '', email: '', role: '', senha: '' };
 
-  constructor(private loginService: LoginService) {}
+  constructor(private loginService: LoginService) {}  
 
   ngOnInit(): void {
     this.fetchUsuarios();
@@ -68,11 +69,14 @@ export class ConfiguracoesPageComponent implements OnInit {
   openModal(isEdit: boolean = false, user?: any): void {
     this.isEditMode = isEdit;
     this.isModalVisible = true;
-
+  
     if (isEdit && user) {
       this.userId = user.id;
+      // Configurar o usuário para edição
+      this.user = { nome: user.nome, email: user.email, role: user.role, senha: '' };
     } else {
       this.userId = '';
+      this.user = { nome: '', email: '', role: '', senha: '' };
     }
   }
 

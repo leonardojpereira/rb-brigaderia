@@ -21,6 +21,12 @@
     </div>
 
     <app-brigadeiro-loading *ngIf="isLoading"></app-brigadeiro-loading>
-
+    
+    <app-modal-cadastro-usuario
+    [isVisible]="isModalVisible"
+    [isEditMode]="isEditMode"
+    (onClose)="closeModal()"
+    (onSave)="onUserSaved($event)"
+  ></app-modal-cadastro-usuario>
   </app-layout>
   

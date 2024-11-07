@@ -37,4 +37,14 @@ export class UsuarioService {
       },
     });
   }
+
+  updateUsuario(id: string, usuario: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.httpClient.put<any>(`${environment.apiUrl}User/UpdateUser/${id}`, usuario, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
 }

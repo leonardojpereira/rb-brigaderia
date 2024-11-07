@@ -108,28 +108,52 @@ export class ModalCadastroUsuarioComponent implements OnInit {
       const userData = {
         nome: this.user.nome,
         username: this.user.email,
-        password: this.user.senha,
         email: this.user.email,
         roleId: this.user.role,
+        password: this.user.senha,
       };
 
-      this.loginService.registerUser(userData).subscribe({
-        next: (response) => {
-          if (response.isSuccess) {
-            this.onSave.emit();
-            this.closeModal();
-          } else {
-            this.handleError(response.message || 'Erro ao cadastrar usuário.');
-          }
-        },
-        error: (error) => {
-          console.error('Erro ao cadastrar usuário:', error);
-          this.handleError('Erro ao cadastrar usuário.');
-        },
-        complete: () => {
-          this.isLoading = false;
-        },
-      });
+      if (this.isEditMode && this.userId) {
+        this.usuarioService.updateUsuario(this.userId, userData).subscribe({
+          next: (response) => {
+            if (response.isSuccess) {
+              this.onSave.emit();
+              this.closeModal();
+            } else {
+              this.handleError(
+                response.message || 'Erro ao atualizar usuário.'
+              );
+            }
+          },
+          error: (error) => {
+            console.error('Erro ao atualizar usuário:', error);
+            this.handleError('Erro ao atualizar usuário.');
+          },
+          complete: () => {
+            this.isLoading = false;
+          },
+        });
+      } else {
+        this.loginService.registerUser(userData).subscribe({
+          next: (response) => {
+            if (response.isSuccess) {
+              this.onSave.emit();
+              this.closeModal();
+            } else {
+              this.handleError(
+                response.message || 'Erro ao cadastrar usuário.'
+              );
+            }
+          },
+          error: (error) => {
+            console.error('Erro ao cadastrar usuário:', error);
+            this.handleError('Erro ao cadastrar usuário.');
+          },
+          complete: () => {
+            this.isLoading = false;
+          },
+        });
+      }
     } else {
       this.markFormFieldsAsTouched(form);
     }

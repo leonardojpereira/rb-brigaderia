@@ -1,6 +1,8 @@
 <app-modal width="600px" [saveButtonText]="isEditMode ? 'Salvar' : 'Cadastrar produção'" [isVisible]="isVisible"
-    [isAlert]="false" [isDisabled]="isDisabled" (onClose)="closeModal()" (onSave)="save(producaoForm)"
+    [isAlert]="false" [isDisabled]="isDisabled || !producaoForm.valid || producao.quantidade <= 0"
+    (onClose)="closeModal()" (onSave)="save(producaoForm)"
     title="{{ isEditMode ? 'Editar Produção' : 'Cadastrar produção' }}">
+
     <ng-container modal-body>
         <form #producaoForm="ngForm" class="form-grid">
             <div class="form-row responsive-row">

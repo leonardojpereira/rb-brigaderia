@@ -1,4 +1,11 @@
-import { Component, Input, Output, EventEmitter, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { IngredientService } from '../../../services/ingredient.service';
 import { NgForm } from '@angular/forms';
 
@@ -48,7 +55,7 @@ export class ModalCadastroProdutoComponent implements OnInit {
     this.getPermissao();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     if (this.isEditMode && this.productId) {
       this.getProdutoById();
     }
@@ -57,11 +64,11 @@ export class ModalCadastroProdutoComponent implements OnInit {
   getPermissao(): void {
     this.role = localStorage.getItem('role') || '';
     console.log('Role:', this.role);
-    if(this.role === 'User') {
-     this.isDisabled = true;
-     return;
+    if (this.role === 'User') {
+      this.isDisabled = true;
+      return;
     }
- }
+  }
 
   getProdutoById(): void {
     if (!this.productId) return;
@@ -90,31 +97,17 @@ export class ModalCadastroProdutoComponent implements OnInit {
   }
 
   save(form: NgForm): void {
-    console.log('Botão salvar acionado'); 
-    console.log('Formulário status:', form.status); 
-    console.log('Produto:', this.produto); 
-
-    Object.keys(form.controls).forEach(controlName => {
-        const control = form.controls[controlName];
-        console.log(`Campo ${controlName} status:`, control.status);
-        console.log(`Campo ${controlName} erros:`, control.errors); 
-    });
-
     if (form.valid) {
-        this.isLoading = true;
-        if (this.isEditMode) {
-            console.log('Modo de edição ativado');
-            this.updateProduto();
-        } else {
-            console.log('Criando novo produto');
-            this.createProduto();
-        }
+      this.isLoading = true;
+      if (this.isEditMode) {
+        this.updateProduto();
+      } else {
+        this.createProduto();
+      }
     } else {
-        console.log('Formulário inválido'); 
-        this.markFormFieldsAsTouched(form);
+      this.markFormFieldsAsTouched(form);
     }
-}
-
+  }
 
   createProduto(): void {
     const payload = {
@@ -131,7 +124,7 @@ export class ModalCadastroProdutoComponent implements OnInit {
         this.onSave.emit();
         this.closeModal();
       },
-       error: (httpErrorResponse) => {
+      error: (httpErrorResponse) => {
         this.isLoading = false;
         if (
           httpErrorResponse.status === 400 &&
@@ -151,7 +144,7 @@ export class ModalCadastroProdutoComponent implements OnInit {
       console.error('ID do produto não definido. Abandonando updateProduto.');
       return;
     }
-  
+
     const payload = {
       name: this.produto.nome,
       measurement: this.produto.unidadeMedida,
@@ -159,9 +152,9 @@ export class ModalCadastroProdutoComponent implements OnInit {
       minimumStock: this.produto.quantidadeMinima,
       unitPrice: this.produto.precoUnitario,
     };
-  
+
     console.log('Enviando payload para atualização:', payload);
-  
+
     this.ingredientService.updateIngredient(this.productId, payload).subscribe({
       next: () => {
         this.ingredientService.notifyIngredientsUpdated();
@@ -187,7 +180,6 @@ export class ModalCadastroProdutoComponent implements OnInit {
     this.onError.emit(message);
     this.closeModal();
   }
-  
 
   closeModal(): void {
     this.isVisible = false;

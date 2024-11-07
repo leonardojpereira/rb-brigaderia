@@ -1,6 +1,8 @@
 <app-modal width="600px" [saveButtonText]="isEditMode ? 'Salvar' : 'Cadastrar produto'" [isVisible]="isVisible"
-    [isAlert]="false" (onClose)="closeModal()" [isDisabled]="isDisabled" (onSave)="save(produtoForm)"
-    title="{{ isEditMode ? 'Editar produto' : 'Cadastrar produto' }}">
+    [isAlert]="false" (onClose)="closeModal()" (onSave)="save(produtoForm)"
+    title="{{ isEditMode ? 'Editar produto' : 'Cadastrar produto' }}" 
+    [isDisabled]="isDisabled || !produtoForm.valid">
+
     <ng-container modal-body>
         <form #produtoForm="ngForm" class="form-grid">
             <div class="form-row">

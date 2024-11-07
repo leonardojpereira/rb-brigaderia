@@ -116,54 +116,68 @@ export class ModalCadastroProducaoComponent implements OnInit {
       };
 
       if (this.isEditMode && this.productionId) {
-        this.productionService
-          .updateProduction(this.productionId, productionData)
-          .subscribe({
-            next: (response) => {
-              if (response.isSuccess) {
-                this.onSave.emit(response.data);
-                this.closeModal();
-              } else {
-                this.onError.emit('Erro ao atualizar produção');
-              }
-            },
-            error: (httpErrorResponse) => {
-              this.isLoading = false;
-              if (
-                httpErrorResponse.status === 400 &&
-                httpErrorResponse.error &&
-                httpErrorResponse.error.errors
-              ) {
-                this.onError.emit(httpErrorResponse.error.errors);
-              } else {
-                console.error('Erro inesperado:', httpErrorResponse);
-              }
-            },
-          });
+        this.updateProduction(productionData);
       } else {
-        this.productionService.createProduction(productionData).subscribe({
-          next: (response) => {
-            if (response.isSuccess) {
-              this.onSave.emit(response.data);
-              this.closeModal();
-            } else {
-              this.onError.emit('Erro ao salvar produção');
-            }
-          },
-          error: (httpErrorResponse) => {
-            this.isLoading = false;
-            if (
-              httpErrorResponse.status === 400 &&
-              httpErrorResponse.error &&
-              httpErrorResponse.error.errors
-            ) {
-              this.onError.emit(httpErrorResponse.error.errors);
-            } else {
-              console.error('Erro inesperado:', httpErrorResponse);
-            }
-          },
-        });
+        this.createProduction(productionData);
       }
+    } else {
+      this.onError.emit(
+        'Preencha todos os campos obrigatórios antes de salvar.'
+      );
     }
+  }
+
+  updateProduction(productionData: any): void {
+    if (!this.productionId) return;
+
+    this.productionService
+      .updateProduction(this.productionId, productionData)
+      .subscribe({
+        next: (response) => {
+          if (response.isSuccess) {
+            this.onSave.emit(response.data);
+            this.closeModal();
+          } else {
+            this.onError.emit('Erro ao atualizar produção');
+          }
+        },
+        error: (httpErrorResponse) => {
+          this.isLoading = false;
+          if (
+            httpErrorResponse.status === 400 &&
+            httpErrorResponse.error &&
+            httpErrorResponse.error.errors
+          ) {
+            this.onError.emit(httpErrorResponse.error.errors);
+          } else {
+            console.error('Erro inesperado:', httpErrorResponse);
+          }
+        },
+      });
+  }
+
+  createProduction(productionData: any): void {
+    this.productionService.createProduction(productionData).subscribe({
+      next: (response) => {
+        if (response.isSuccess) {
+          this.onSave.emit(response.data);
+          this.closeModal();
+        } else {
+          this.onError.emit('Erro ao salvar produção');
+        }
+      },
+      error: (httpErrorResponse) => {
+        this.isLoading = false;
+        if (
+          httpErrorResponse.status === 400 &&
+          httpErrorResponse.error &&
+          httpErrorResponse.error.errors
+        ) {
+          this.onError.emit(httpErrorResponse.error.errors);
+        } else {
+          console.error('Erro inesperado:', httpErrorResponse);
+        }
+      },
+    });
   }
 }

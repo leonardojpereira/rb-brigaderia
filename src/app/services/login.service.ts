@@ -56,6 +56,7 @@ export class LoginService {
         next: (res: any) => {
           if (res.isSuccess && res.data && res.data.token) {
             localStorage.setItem('token', res.data.token);
+            localStorage.setItem('nmUsuario', res.data.nome);
           } else {
             console.error('Token não encontrado na resposta');
           }
@@ -81,11 +82,7 @@ export class LoginService {
       .subscribe({
         next: (res: any) => {
           localStorage.setItem('token', res.Dados.Token);
-
-          localStorage.setItem(
-            'nmUsuario',
-            res.Dados.InformacoesToken.NomeUsuario
-          );
+          localStorage.setItem('nmUsuario', res.Dados.InformacoesToken.Nome);
           localStorage.setItem('idUsuario', res.Dados.InformacoesToken.Id);
           localStorage.setItem(
             'roles',

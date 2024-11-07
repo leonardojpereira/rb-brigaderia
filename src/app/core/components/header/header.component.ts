@@ -11,6 +11,7 @@ export class HeaderComponent {
   @Output() buttonClick = new EventEmitter<void>();
   @Output() filterChange = new EventEmitter<string>();
   @Input() placeholder: string = '';
+  @Input() isDisabled: boolean = false;
 
   onButtonClick(): void {
     this.buttonClick.emit();

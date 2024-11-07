@@ -48,13 +48,21 @@
   }
 }
 
-.info {
+.info-container {
   display: flex;
-  font-size: 12px;
-  color: #8e8e8e;
   justify-content: center;
   align-items: center;
+  gap: 5px;
   position: fixed;
   top: 13px;
   right: 20px;
+
+  .info {
+    font-size: 12px;
+    color: #8e8e8e;
+  }
+
+  .username {
+    color: #000;
+  }
 }

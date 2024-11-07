@@ -1,7 +1,7 @@
 <app-layout>
     <div class="container">
         <app-header (buttonClick)="openModal(false)" (filterChange)="onFilterChange($event)"
-            placeholder="Digite o nome da produção" title="Produção" buttonText="Criar produção"></app-header>
+            placeholder="Digite o nome da produção" title="Produção" [isDisabled]="isDisabled" buttonText="Cadastrar produção"></app-header>
 
         <app-custom-table minWidth="1000px" [columns]="columns" [data]="producoes" [actions]="actions"
             [noDataMessage]="'Nenhuma produção encontrada'"></app-custom-table>
@@ -11,7 +11,7 @@
 
         <app-brigadeiro-loading *ngIf="isLoading"></app-brigadeiro-loading>
 
-        <app-modal-cadastro-producao (onError)="handleErrorModal($event)" [isVisible]="isModalVisible"
+        <app-modal-cadastro-producao [isDisabled]="isDisabled" (onError)="handleErrorModal($event)" [isVisible]="isModalVisible"
             [isEditMode]="isEditMode" [productionId]="productionId" (onClose)="closeModal()"
             (onSave)="onProductionSaved($event)">
         </app-modal-cadastro-producao>
@@ -24,7 +24,7 @@
             (closeModal)="modalSuccess = !modalSuccess">
         </app-modal-sucesso>
 
-        <app-modal-confirmacao [openModal]="isDeleteModalOpen" title="Excluir"
+        <app-modal-confirmacao [disabledButton]="isDisabled" [openModal]="isDeleteModalOpen" title="Excluir"
             subTitle="Tem certeza que deseja excluir essa produção?" (cancelar)="closeDeleteModal()"
             (confirmar)="confirmDelete()">
         </app-modal-confirmacao>

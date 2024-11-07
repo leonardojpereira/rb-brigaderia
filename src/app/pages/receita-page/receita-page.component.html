@@ -14,7 +14,7 @@
 
         <app-brigadeiro-loading *ngIf="isLoading"></app-brigadeiro-loading>
 
-        <app-modal-cadastro-receita (onError)="handleErrorModal($event)" [isVisible]="isModalVisible" [isEditMode]="isEditMode" [recipeId]="recipeId"
+        <app-modal-cadastro-receita [isDisabled]="isDisabled" (onError)="handleErrorModal($event)" [isVisible]="isModalVisible" [isEditMode]="isEditMode" [recipeId]="recipeId"
             (onClose)="closeModal()" (onSave)="onRecipeSaved($event)">
         </app-modal-cadastro-receita>
 
@@ -26,7 +26,7 @@
             (closeModal)="modalError = !modalError">
         </app-modal-erro>
 
-        <app-modal-confirmacao [openModal]="isDeleteModalOpen" title="Excluir"
+        <app-modal-confirmacao [disabledButton]="isDisabled" [openModal]="isDeleteModalOpen" title="Excluir"
         subTitle="Tem certeza que deseja excluir essa receita?" (cancelar)="closeDeleteModal()"
         (confirmar)="deleteRecipe()">
     </app-modal-confirmacao>

@@ -19,6 +19,7 @@ export class ModalCadastroReceitaComponent implements OnInit, OnChanges {
   @Input() isVisible = false;
   @Input() isEditMode = false;
   @Input() recipeId: string | null = null;
+  @Input() isDisabled = false;
   @Output() onClose = new EventEmitter<void>();
   @Output() onSave = new EventEmitter<any>();
   @Output() onError = new EventEmitter<string>();

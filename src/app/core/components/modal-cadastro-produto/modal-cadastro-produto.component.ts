@@ -11,7 +11,7 @@ export class ModalCadastroProdutoComponent implements OnInit {
   @Input() isVisible: boolean = false;
   @Input() isEditMode: boolean = false;
   @Input() productId: string | null = null;
-  @Input() disabledButton: boolean = false;
+  @Input() isDisabled: boolean = false;
   @Input() produto: {
     nome: string;
     unidadeMedida: string;
@@ -37,6 +37,7 @@ export class ModalCadastroProdutoComponent implements OnInit {
   modalError: boolean = false;
   titulo: string = '';
   subTitulo: string = '';
+  role: string = '';
 
   constructor(private ingredientService: IngredientService) {}
 
@@ -44,6 +45,7 @@ export class ModalCadastroProdutoComponent implements OnInit {
     if (this.isEditMode && this.productId) {
       this.getProdutoById();
     }
+    this.getPermissao();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -51,6 +53,15 @@ export class ModalCadastroProdutoComponent implements OnInit {
       this.getProdutoById();
     }
   }
+
+  getPermissao(): void {
+    this.role = localStorage.getItem('role') || '';
+    console.log('Role:', this.role);
+    if(this.role === 'Admin') {
+     this.isDisabled = true;
+     return;
+    }
+ }
 
   getProdutoById(): void {
     if (!this.productId) return;

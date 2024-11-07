@@ -57,6 +57,7 @@ export class LoginService {
           if (res.isSuccess && res.data && res.data.token) {
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('nmUsuario', res.data.nome);
+            localStorage.setItem('role', res.data.role);
           } else {
             console.error('Token não encontrado na resposta');
           }

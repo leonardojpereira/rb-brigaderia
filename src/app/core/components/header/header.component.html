@@ -5,6 +5,6 @@
             <app-input (input)="onFilterInputChange($event)" [placeholder]="placeholder"
                 type="search"></app-input>
         </div>
-        <app-custom-button [text]="buttonText" (click)="onButtonClick()"></app-custom-button>
+        <app-custom-button [isDisabled]="isDisabled" [text]="buttonText" (click)="onButtonClick()"></app-custom-button>
     </div>
 </div>

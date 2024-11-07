@@ -1,5 +1,5 @@
 <app-modal width="700px" [saveButtonText]="isEditMode ? 'Salvar' : 'Cadastrar receita'" [isVisible]="isVisible"
-    [isAlert]="false" (onClose)="closeModal()" (onSave)="save(recipeForm)"
+    [isAlert]="false" [isDisabled]="isDisabled" (onClose)="closeModal()" (onSave)="save(recipeForm)"
     title="{{ isEditMode ? 'Editar receita' : 'Cadastrar receita' }}">
     <ng-container modal-body>
         <form #recipeForm="ngForm" class="form-grid">
@@ -9,7 +9,7 @@
                         [(ngModel)]="recipe.nome" [required]="true"></app-input>
                 </div>
                 <div class="form-group button">
-                    <app-custom-button text="Adicionar ingrediente" (click)="addIngredient()">Adicionar
+                    <app-custom-button [isDisabled]="isDisabled" text="Adicionar ingrediente" (click)="addIngredient()">Adicionar
                         ingrediente</app-custom-button>
                 </div>
             </div>

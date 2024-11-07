@@ -41,11 +41,23 @@ export class ProducaoPageComponent implements OnInit {
   subTitulo: string = '';
   titulo: string = '';
   modalSuccess: boolean = false;
+  role: string = '';
+  isDisabled: boolean = false;
 
   constructor(private productionService: ProductionService) {}
 
   ngOnInit(): void {
     this.fetchProductions();
+    this.getPermissao();
+  }
+
+  getPermissao(): void {
+    this.role = localStorage.getItem('role') || '';
+    console.log('Role:', this.role);
+    if (this.role === 'User') {
+      this.isDisabled = true;
+      return;
+    }
   }
 
   fetchProductions(): void {

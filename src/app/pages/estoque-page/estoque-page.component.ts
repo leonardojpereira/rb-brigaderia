@@ -50,12 +50,15 @@ export class EstoquePageComponent implements OnInit {
   showSuccessModal: boolean = false;
   isDeleteModalOpen = false;
   successAction: 'cadastrar' | 'editar' | 'deletar' = 'cadastrar';
+  role: string = '';
+  isDisabled: boolean = false;
 
   constructor(private ingredientService: IngredientService) {}
 
   ngOnInit(): void {
     this.fetchIngredients(false);
     this.resetSelectedProduct();
+    this.getPermissao();
   }
 
   fetchIngredients(showSuccessModal: boolean = false): void {
@@ -100,6 +103,15 @@ export class EstoquePageComponent implements OnInit {
         },
       });
   }
+
+  getPermissao(): void {
+    this.role = localStorage.getItem('role') || '';
+    console.log('Role:', this.role);
+    if(this.role === 'User') {
+     this.isDisabled = true;
+     return;
+    }
+ }
 
   onFilterChange(filterValue: string): void {
     this.filter = filterValue;

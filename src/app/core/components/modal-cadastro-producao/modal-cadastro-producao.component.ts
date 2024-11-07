@@ -17,9 +17,10 @@ import { RecipeService } from '../../../services/recipe.serivce';
 export class ModalCadastroProducaoComponent implements OnInit {
   @Input() isVisible: boolean = false;
   @Input() isEditMode: boolean = false;
+  @Input() productionId: string | null = null;
+  @Input() isDisabled: boolean = false;
   @Output() onClose = new EventEmitter<void>();
   @Output() onSave = new EventEmitter<any>();
-  @Input() productionId: string | null = null;
   @Output() onError = new EventEmitter<string>();
 
   productionOptions: { value: string; label: string }[] = [];

@@ -50,12 +50,23 @@ export class ReceitaPageComponent implements OnInit {
   titulo: string = '';
   subTitulo: string = '';
   showSuccessModal: boolean = false;
+  role: string = '';
+  isDisabled: boolean = false;
 
   constructor(private recipeService: RecipeService) {}
 
   ngOnInit(): void {
     this.fetchRecipes();
+    this.getPermissao();
   }
+
+  getPermissao(): void {
+    this.role = localStorage.getItem('role') || '';
+    if(this.role === 'User') {
+     this.isDisabled = true;
+     return;
+    }
+ }
 
   fetchRecipes(): void {
     this.isLoading = true;

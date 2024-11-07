@@ -49,12 +49,17 @@ export class ModalCadastroUsuarioComponent implements OnInit {
     this.loadRoles();
   }
 
-  ngOnChanges(): void {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['isVisible'] && this.isVisible && !this.isEditMode) {
+      this.user = { nome: '', username: '', email: '', role: '', senha: '' };
+    }
+  
     if (this.isEditMode && this.userId) {
       this.loadRoles();
       this.loadUserData(this.userId);
     }
   }
+  
 
   loadRoles(): void {
     this.roleService

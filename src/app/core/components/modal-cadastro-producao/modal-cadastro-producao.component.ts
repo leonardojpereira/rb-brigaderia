@@ -47,6 +47,22 @@ export class ModalCadastroProducaoComponent implements OnInit {
     if (changes['productionId'] && this.isEditMode && this.productionId) {
       this.loadProductionDetails();
     }
+
+    if (
+      changes['isVisible'] &&
+      changes['isVisible'].currentValue &&
+      !this.isEditMode
+    ) {
+      this.clearForm();
+    }
+  }
+
+  clearForm(): void {
+    this.productionId = '';
+    this.producao = {
+      receita: '',
+      quantidade: 0,
+    };
   }
 
   loadProductionDetails(): void {

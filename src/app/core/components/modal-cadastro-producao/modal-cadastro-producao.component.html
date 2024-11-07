@@ -1,16 +1,16 @@
 <app-modal width="600px" [saveButtonText]="isEditMode ? 'Salvar' : 'Cadastrar produção'" [isVisible]="isVisible"
     [isAlert]="false" [isDisabled]="isDisabled" (onClose)="closeModal()" (onSave)="save(producaoForm)"
-    title="{{ isEditMode ? 'Editar Produção' : 'Cadastrar Produção' }}">
+    title="{{ isEditMode ? 'Editar Produção' : 'Cadastrar produção' }}">
     <ng-container modal-body>
         <form #producaoForm="ngForm" class="form-grid">
             <div class="form-row responsive-row">
                 <div class="form-group recipe-input">
-                    <label for="receita">Receita*</label>
+                    <label for="receita">Receita<span class="required-symbol">*</span></label>
                     <app-custom-select [(ngModel)]="producao.receita" [options]="productionOptions" name="receita"
                         #receita="ngModel" [required]="true"></app-custom-select>
                 </div>
                 <div class="form-group quantity-input">
-                    <app-input label="Quantidade*" type="number" id="quantidade" name="quantidade"
+                    <app-input label="Quantidade" type="number" id="quantidade" name="quantidade"
                         [(ngModel)]="producao.quantidade" [required]="true"></app-input>
                 </div>
             </div>

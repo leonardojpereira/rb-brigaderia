@@ -1,6 +1,7 @@
 <div class="input-container" [ngStyle]="{'width': width}">
-  <label *ngIf="label" [ngClass]="{'boldLabel' : boldLabel}" class="input-label">{{ label }}</label>
-
+  <label *ngIf="label" [ngClass]="{'boldLabel' : boldLabel}" class="input-label">
+    {{ label }}<span class="required-asterisk" *ngIf="required">*</span>
+  </label>
   <div class="input-wrapper">
     <input [required]="required" [attr.name]="name" [ngClass]="{'readonly' : readonly}" min="0" [type]="getInputType()"
       [placeholder]="placeholder" [(ngModel)]="value" (input)="onInputChange($event)" [readonly]="readonly" />

@@ -137,35 +137,35 @@ export class ConfiguracoesPageComponent implements OnInit {
     this.isDeleteModalOpen = true;
   }
 
-  // confirmDelete(): void {
-  //   this.isLoading = true;
-  //   if (this.userId) {
-  //     this.loginService.deleteUser(this.userId).subscribe({
-  //       next: (response) => {
-  //         this.isLoading = false;
-  //         if (response.isSuccess) {
-  //           this.handleDeleteSuccessModal();
-  //           this.fetchUsuarios();
-  //         } else {
-  //           this.handleErrorModal('Erro ao deletar usuário');
-  //         }
-  //       },
-  //       error: (httpErrorResponse) => {
-  //         this.isLoading = false;
-  //         if (
-  //           httpErrorResponse.status === 400 &&
-  //           httpErrorResponse.error &&
-  //           httpErrorResponse.error.errors
-  //         ) {
-  //           this.handleErrorModal(httpErrorResponse.error.errors);
-  //         } else {
-  //           console.error('Erro inesperado:', httpErrorResponse);
-  //         }
-  //       },
-  //     });
-  //   }
-  //   this.isDeleteModalOpen = false;
-  // }
+  confirmDelete(): void {
+    this.isLoading = true;
+    if (this.userId) {
+      this.usuarioService.deleteUser(this.userId).subscribe({
+        next: (response) => {
+          this.isLoading = false;
+          if (response.isSuccess) {
+            this.handleDeleteSuccessModal();
+            this.fetchUsuarios();
+          } else {
+            this.handleErrorModal('Erro ao deletar usuário');
+          }
+        },
+        error: (httpErrorResponse) => {
+          this.isLoading = false;
+          if (
+            httpErrorResponse.status === 400 &&
+            httpErrorResponse.error &&
+            httpErrorResponse.error.errors
+          ) {
+            this.handleErrorModal(httpErrorResponse.error.errors);
+          } else {
+            console.error('Erro inesperado:', httpErrorResponse);
+          }
+        },
+      });
+    }
+    this.isDeleteModalOpen = false;
+  }
 
   closeDeleteModal(): void {
     this.isDeleteModalOpen = false;

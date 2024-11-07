@@ -47,4 +47,14 @@ export class UsuarioService {
       },
     });
   }
+
+  deleteUser(id: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.httpClient.delete<any>(`${environment.apiUrl}User/DeleteUser/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
 }

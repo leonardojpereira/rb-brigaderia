@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../../services/login.service';
 import { IPaginacaoModel } from '../../core/models/IPaginacaoModel';
 import { delay } from 'rxjs/operators';
+import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
   selector: 'app-configuracoes-page',
@@ -48,7 +49,7 @@ export class ConfiguracoesPageComponent implements OnInit {
     senha: '',
   };
 
-  constructor(private loginService: LoginService) {}
+  constructor(private usuarioService: UsuarioService) {}
 
   ngOnInit(): void {
     this.fetchUsuarios();
@@ -56,7 +57,7 @@ export class ConfiguracoesPageComponent implements OnInit {
 
   fetchUsuarios(): void {
     this.isLoading = true;
-    this.loginService
+    this.usuarioService
       .getUsuarios(
         this.paginacao.pageNumber,
         this.paginacao.pageSize,
@@ -81,7 +82,6 @@ export class ConfiguracoesPageComponent implements OnInit {
 
     if (isEdit && user) {
       this.userId = user.id;
-      // Configurar o usuário para edição
       this.user = {
         nome: user.nome,
         email: user.email,

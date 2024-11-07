@@ -1,9 +1,17 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { RoleService } from '../../../services/role.service';
-import { UsuarioService } from '../../../services/usuario.service'; // Importe o serviço
+import { UsuarioService } from '../../../services/usuario.service';
+import { LoginService } from '../../../services/login.service';
 
 @Component({
   selector: 'app-modal-cadastro-usuario',
@@ -13,43 +21,85 @@ import { UsuarioService } from '../../../services/usuario.service'; // Importe o
 export class ModalCadastroUsuarioComponent implements OnInit {
   @Input() isVisible: boolean = false;
   @Input() isEditMode: boolean = false;
+  @Input() userId: string | null = null;
   @Output() onClose = new EventEmitter<void>();
   @Output() onSave = new EventEmitter<void>();
   @Output() onError = new EventEmitter<string>();
 
   user = {
     nome: '',
-    username: '', 
+    username: '',
     email: '',
     role: '',
     senha: '',
   };
-  roleOptions: Array<{ label: string, value: string }> = [];
+  roleOptions: Array<{ label: string; value: string }> = [];
   isLoading = false;
   modalError: boolean = false;
   titulo: string = '';
   subTitulo: string = '';
 
-  constructor(private roleService: RoleService, private usuarioService: UsuarioService) {}
+  constructor(
+    private roleService: RoleService,
+    private usuarioService: UsuarioService,
+    private loginService: LoginService
+  ) {}
 
   ngOnInit(): void {
     this.loadRoles();
   }
 
+  ngOnChanges(): void {
+    if (this.isEditMode && this.userId) {
+      this.loadRoles();
+      this.loadUserData(this.userId);
+    }
+  }
+
   loadRoles(): void {
-    this.roleService.getAllRoles().pipe(
-      catchError((error) => {
-        console.error('Erro ao carregar roles:', error);
-        return of([]);
-      })
-    ).subscribe((response: any) => {
-      if (response.isSuccess && response.data && response.data.roles) {
-        this.roleOptions = response.data.roles.map((role: any) => ({
-          label: role.name,
-          value: role.id
-        }));
-      }
-    });
+    this.roleService
+      .getAllRoles()
+      .pipe(
+        catchError((error) => {
+          console.error('Erro ao carregar roles:', error);
+          return of([]);
+        })
+      )
+      .subscribe((response: any) => {
+        if (response.isSuccess && response.data && response.data.roles) {
+          this.roleOptions = response.data.roles.map((role: any) => ({
+            label: role.name,
+            value: role.id,
+          }));
+        }
+      });
+  }
+
+  loadUserData(id: string): void {
+    this.usuarioService
+      .getUsuarioById(id)
+      .pipe(
+        catchError((error) => {
+          console.error('Erro ao carregar usuário:', error);
+          this.handleError('Erro ao carregar usuário.');
+          return of(null);
+        })
+      )
+      .subscribe((response: any) => {
+        if (
+          response &&
+          response.isSuccess &&
+          response.data &&
+          response.data.user
+        ) {
+          const userData = response.data.user;
+          this.user.nome = userData.nome;
+          this.user.email = userData.email;
+          this.user.role = userData.roleId;
+        } else {
+          this.handleError('Erro ao carregar dados do usuário.');
+        }
+      });
   }
 
   save(form: NgForm): void {
@@ -62,8 +112,8 @@ export class ModalCadastroUsuarioComponent implements OnInit {
         email: this.user.email,
         roleId: this.user.role,
       };
-      
-      this.usuarioService.registerUser(userData).subscribe({
+
+      this.loginService.registerUser(userData).subscribe({
         next: (response) => {
           if (response.isSuccess) {
             this.onSave.emit();

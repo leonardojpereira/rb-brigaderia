@@ -129,14 +129,16 @@ export class LoginService {
     this.router.navigate(['/login']);
   }
 
-  getUsuarios(pageNumber: number = 1, pageSize: number = 10, filter: string = ''): Observable<any> {
-    return this.httpClient.get<any>(`${environment.apiUrl}Authentication/GetAllUsers`, {
-      params: {
-        pageNumber: pageNumber.toString(),
-        pageSize: pageSize.toString(),
-        filter: filter
-      }
+  registerUser(user: { nome: string; username: string; password: string; email: string; roleId: string }): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.httpClient.post(`${environment.apiUrl}Authentication/Register`, user, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
     });
   }
+
+ 
   
 }

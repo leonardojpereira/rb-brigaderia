@@ -9,9 +9,28 @@ import { environment } from '../../environments/environment';
 export class UsuarioService {
   constructor(private httpClient: HttpClient) {}
 
-  registerUser(user: { nome: string; username: string; password: string; email: string; roleId: string }): Observable<any> {
+  getUsuarios(
+    pageNumber: number = 1,
+    pageSize: number = 10,
+    filter: string = ''
+  ): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.httpClient.post(`${environment.apiUrl}Authentication/Register`, user, {
+    return this.httpClient.get<any>(`${environment.apiUrl}User/GetAllUsers`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      params: {
+        pageNumber: pageNumber.toString(),
+        pageSize: pageSize.toString(),
+        filter: filter,
+      },
+    });
+  }
+
+  getUsuarioById(id: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.httpClient.get<any>(`${environment.apiUrl}User/GetUserById/${id}`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,

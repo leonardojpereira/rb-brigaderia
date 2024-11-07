@@ -22,6 +22,17 @@ export class LayoutComponent {
       month: 'long',
       day: 'numeric',
     };
-    return date.toLocaleDateString('pt-BR', options);
+
+    let formattedDate = date.toLocaleDateString('pt-BR', options);
+
+    formattedDate = formattedDate.replace(
+      /\b([a-záéíóúãõç]+\b)/gi,
+      (word, index) => {
+        if (word.toLowerCase() === 'de') return word.toLowerCase();
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+      }
+    );
+
+    return formattedDate;
   }
 }

@@ -106,7 +106,6 @@ export class EstoquePageComponent implements OnInit {
 
   getPermissao(): void {
     this.role = localStorage.getItem('role') || '';
-    console.log('Role:', this.role);
     if(this.role === 'User') {
      this.isDisabled = true;
      return;

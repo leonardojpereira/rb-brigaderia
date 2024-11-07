@@ -57,7 +57,7 @@ export class ModalCadastroProdutoComponent implements OnInit {
   getPermissao(): void {
     this.role = localStorage.getItem('role') || '';
     console.log('Role:', this.role);
-    if(this.role === 'Admin') {
+    if(this.role === 'User') {
      this.isDisabled = true;
      return;
     }

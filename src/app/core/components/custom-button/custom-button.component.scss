@@ -30,3 +30,13 @@ button {
     opacity: 1;
   }
 }
+
+.disabled {
+  cursor: not-allowed;
+  background-color: #ddd !important;
+  color: #fff !important;
+  border: black !important;
+  &:hover {
+    background-color: #ddd !important;
+  }
+}

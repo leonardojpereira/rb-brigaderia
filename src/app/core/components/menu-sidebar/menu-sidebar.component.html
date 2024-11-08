@@ -14,20 +14,25 @@
     </div>
     <div class="menu-body">
         <app-menu [isMenuExpanded]="isMenuExpanded"></app-menu>
-        <div class="menu-footer" (click)="openLogoutModal()">
-            <span class="material-symbols-outlined icon">
-                logout
-            </span>
-            <span class="logout-text" *ngIf="isMenuExpanded">Sair</span>
+        <div class="menu-footer">
+            <div class="config-container">
+                <span class="material-symbols-outlined icon">
+                    settings
+                </span>
+                <a href="/configuracoes" class="logout-text" *ngIf="isMenuExpanded">Configurações</a>
+            </div>
+            <div (click)="openLogoutModal()" class="logout-container">
+                <span class="material-symbols-outlined icon">
+                    logout
+                </span>
+                <span class="logout-text" *ngIf="isMenuExpanded">Sair</span>
+            </div>
         </div>
     </div>
 
     <!-- Modal de Confirmação de Logout -->
-    <app-modal-confirmacao
-        [openModal]="isLogoutModalOpen"
-        title="Confirmar logout"
-        subTitle="Tem certeza que deseja sair? Suas credenciais serão apagadas."
-        (cancelar)="closeLogoutModal()"
+    <app-modal-confirmacao [openModal]="isLogoutModalOpen" title="Confirmar logout"
+        subTitle="Tem certeza que deseja sair? Suas credenciais serão apagadas." (cancelar)="closeLogoutModal()"
         (confirmar)="confirmLogout()">
     </app-modal-confirmacao>
 </div>

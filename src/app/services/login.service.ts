@@ -56,6 +56,8 @@ export class LoginService {
         next: (res: any) => {
           if (res.isSuccess && res.data && res.data.token) {
             localStorage.setItem('token', res.data.token);
+            localStorage.setItem('nmUsuario', res.data.nome);
+            localStorage.setItem('role', res.data.role);
           } else {
             console.error('Token não encontrado na resposta');
           }
@@ -81,11 +83,7 @@ export class LoginService {
       .subscribe({
         next: (res: any) => {
           localStorage.setItem('token', res.Dados.Token);
-
-          localStorage.setItem(
-            'nmUsuario',
-            res.Dados.InformacoesToken.NomeUsuario
-          );
+          localStorage.setItem('nmUsuario', res.Dados.InformacoesToken.Nome);
           localStorage.setItem('idUsuario', res.Dados.InformacoesToken.Id);
           localStorage.setItem(
             'roles',
@@ -128,4 +126,17 @@ export class LoginService {
     this.setUserLoggedIn(false);
     this.router.navigate(['/login']);
   }
+
+  registerUser(user: { nome: string; username: string; password: string; email: string; roleId: string }): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.httpClient.post(`${environment.apiUrl}Authentication/Register`, user, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
+ 
+  
 }

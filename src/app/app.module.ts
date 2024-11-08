@@ -57,7 +57,9 @@ import { MatSelectModule } from '@angular/material/select';
     ModalCadastroReceitaComponent,
     CustomSelectComponent,
     ProducaoPageComponent,
-    ModalCadastroProducaoComponent
+    ModalCadastroProducaoComponent,
+    ConfiguracoesPageComponent,
+    ModalCadastroUsuarioComponent
   ],
   imports: [
     BrowserModule,
@@ -90,4 +92,6 @@ import { ModalCadastroReceitaComponent } from './core/components/modal-cadastro-
 import { CustomSelectComponent } from './core/components/custom-select/custom-select.component';
 import { ProducaoPageComponent } from './pages/producao-page/producao-page.component';
 import { ModalCadastroProducaoComponent } from './core/components/modal-cadastro-producao/modal-cadastro-producao.component';
+import { ConfiguracoesPageComponent } from './pages/configuracoes-page/configuracoes-page.component';
+import { ModalCadastroUsuarioComponent } from './core/components/modal-cadastro-usuario/modal-cadastro-usuario.component';
 

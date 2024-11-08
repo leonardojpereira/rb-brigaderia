@@ -19,6 +19,7 @@ export class ModalCadastroReceitaComponent implements OnInit, OnChanges {
   @Input() isVisible = false;
   @Input() isEditMode = false;
   @Input() recipeId: string | null = null;
+  @Input() isDisabled = false;
   @Output() onClose = new EventEmitter<void>();
   @Output() onSave = new EventEmitter<any>();
   @Output() onError = new EventEmitter<string>();
@@ -143,43 +144,53 @@ export class ModalCadastroReceitaComponent implements OnInit, OnChanges {
       };
 
       if (this.isEditMode && this.recipeId) {
-        this.recipeService.updateRecipe(this.recipeId, payload).subscribe({
-          next: (response) => {
-            this.recipeService.notifyRecipesUpdated();
-            this.onSave.emit(response);
-            this.resetRecipe();
-            this.closeModal();
-          },
-          error: (httpErrorResponse) => {
-            this.isLoading = false;
-            if (
-              httpErrorResponse.status === 400 &&
-              httpErrorResponse.error &&
-              httpErrorResponse.error.errors
-            ) {
-              this.onError.emit(httpErrorResponse.error.errors);
-            } else {
-              console.error('Erro inesperado:', httpErrorResponse);
-            }
-          },
-        });
+        this.updateRecipe(payload);
       } else {
-        this.recipeService.createRecipe(payload).subscribe({
-          next: (response) => {
-            this.recipeService.notifyRecipesUpdated(); 
-            this.onSave.emit(response);
-            this.resetRecipe();
-            this.closeModal();
-          },
-          error: () => {
-            this.onError.emit('Erro ao criar a receita.');
-          },
-        });
+        this.createRecipe(payload);
       }
     } else {
       this.onError.emit(
         'Preencha todos os campos obrigatórios antes de salvar.'
       );
     }
+  }
+
+  createRecipe(payload: any): void {
+    this.recipeService.createRecipe(payload).subscribe({
+      next: (response) => {
+        this.recipeService.notifyRecipesUpdated();
+        this.onSave.emit(response);
+        this.resetRecipe();
+        this.closeModal();
+      },
+      error: () => {
+        this.onError.emit('Erro ao criar a receita.');
+      },
+    });
+  }
+
+  updateRecipe(payload: any): void {
+    if (!this.recipeId) return;
+
+    this.recipeService.updateRecipe(this.recipeId, payload).subscribe({
+      next: (response) => {
+        this.recipeService.notifyRecipesUpdated();
+        this.onSave.emit(response);
+        this.resetRecipe();
+        this.closeModal();
+      },
+      error: (httpErrorResponse) => {
+        this.isLoading = false;
+        if (
+          httpErrorResponse.status === 400 &&
+          httpErrorResponse.error &&
+          httpErrorResponse.error.errors
+        ) {
+          this.onError.emit(httpErrorResponse.error.errors);
+        } else {
+          console.error('Erro inesperado:', httpErrorResponse);
+        }
+      },
+    });
   }
 }

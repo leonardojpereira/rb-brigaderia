@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductionService } from '../../services/production.service';
+import { LoginService } from '../../services/login.service';
 import { IPaginacaoModel } from '../../core/models/IPaginacaoModel';
 import { delay } from 'rxjs/operators';
+import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
-  selector: 'app-producao-page',
-  templateUrl: './producao-page.component.html',
-  styleUrls: ['./producao-page.component.scss'],
+  selector: 'app-configuracoes-page',
+  templateUrl: './configuracoes-page.component.html',
+  styleUrls: ['./configuracoes-page.component.scss'],
 })
-export class ProducaoPageComponent implements OnInit {
+export class ConfiguracoesPageComponent implements OnInit {
   columns = [
-    { header: 'Receita', field: 'nomeReceita', width: '50%' },
-    { header: 'Quantidade de produções', field: 'quantidadeProduzida' },
-    { header: 'Data da produção', field: 'dataProducao' },
+    { header: 'Nome', field: 'nome', width: '40%' },
+    { header: 'Email', field: 'email', width: '40%' },
+    { header: 'Perfil', field: 'role' },
   ];
   actions = [
     {
@@ -26,44 +27,38 @@ export class ProducaoPageComponent implements OnInit {
   ];
   isEditMode: boolean = false;
   isModalVisible: boolean = false;
-  productionId: string = '';
+  userId: string = '';
   filter: string = '';
   private filterTimeout: any;
   isDeleteModalOpen: boolean = false;
-  producoes: any[] = [];
+  usuarios: any[] = [];
   isLoading = false;
   paginacao: IPaginacaoModel = {
     pageNumber: 1,
-    pageSize: 7,
+    pageSize: 10,
     totalItem: 0,
   };
   modalError: boolean = false;
   subTitulo: string = '';
   titulo: string = '';
   modalSuccess: boolean = false;
-  role: string = '';
-  isDisabled: boolean = false;
+  user: { nome: any; email: any; role: any; senha: string } = {
+    nome: '',
+    email: '',
+    role: '',
+    senha: '',
+  };
 
-  constructor(private productionService: ProductionService) {}
+  constructor(private usuarioService: UsuarioService) {}
 
   ngOnInit(): void {
-    this.fetchProductions();
-    this.getPermissao();
+    this.fetchUsuarios();
   }
 
-  getPermissao(): void {
-    this.role = localStorage.getItem('role') || '';
-    console.log('Role:', this.role);
-    if (this.role === 'User') {
-      this.isDisabled = true;
-      return;
-    }
-  }
-
-  fetchProductions(): void {
+  fetchUsuarios(): void {
     this.isLoading = true;
-    this.productionService
-      .getAllProductions(
+    this.usuarioService
+      .getUsuarios(
         this.paginacao.pageNumber,
         this.paginacao.pageSize,
         this.filter
@@ -72,36 +67,30 @@ export class ProducaoPageComponent implements OnInit {
       .subscribe({
         next: (response) => {
           if (response.isSuccess) {
-            this.producoes = response.data.productions.map(
-              (production: any) => {
-                const dataProducao = new Date(production.dataProducao);
-                return {
-                  ...production,
-                  dataProducao: `${dataProducao.toLocaleDateString(
-                    'pt-BR'
-                  )} - ${dataProducao.toLocaleTimeString('pt-BR', {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  })}`,
-                };
-              }
-            );
-            this.paginacao.totalItem = response.data.totalRecords;
+            this.usuarios = response.data.users;
+            this.paginacao.totalItem = response.data.totalItems;
           }
         },
-        error: (error) => console.error('Erro ao buscar produções:', error),
+        error: (error) => console.error('Erro ao buscar usuários:', error),
         complete: () => (this.isLoading = false),
       });
   }
 
-  openModal(isEdit: boolean = false, production?: any): void {
+  openModal(isEdit: boolean = false, user?: any): void {
     this.isEditMode = isEdit;
     this.isModalVisible = true;
 
-    if (isEdit && production) {
-      this.productionId = production.id;
+    if (isEdit && user) {
+      this.userId = user.id;
+      this.user = {
+        nome: user.nome,
+        email: user.email,
+        role: user.role,
+        senha: '',
+      };
     } else {
-      this.productionId = '';
+      this.userId = '';
+      this.user = { nome: '', email: '', role: '', senha: '' };
     }
   }
 
@@ -113,7 +102,7 @@ export class ProducaoPageComponent implements OnInit {
     }
 
     this.filterTimeout = setTimeout(() => {
-      this.fetchProductions();
+      this.fetchUsuarios();
     }, 1000);
   }
 
@@ -123,9 +112,9 @@ export class ProducaoPageComponent implements OnInit {
     this.subTitulo = message;
   }
 
-  onProductionSaved(recipeData: any): void {
+  onUserSaved(userData: any): void {
     this.isModalVisible = false;
-    this.fetchProductions();
+    this.fetchUsuarios();
     this.handleSuccessModal();
   }
 
@@ -133,32 +122,32 @@ export class ProducaoPageComponent implements OnInit {
     this.modalSuccess = true;
     this.titulo = 'Sucesso!';
     this.subTitulo = this.isEditMode
-      ? 'Produção atualizada com sucesso!'
-      : 'Produção cadastrada com sucesso!';
+      ? 'Usuário atualizado com sucesso!'
+      : 'Usuário cadastrado com sucesso!';
   }
 
   handleDeleteSuccessModal(): void {
     this.modalSuccess = true;
     this.titulo = 'Sucesso!';
-    this.subTitulo = 'Produção deletada com sucesso!';
+    this.subTitulo = 'Usuário deletado com sucesso!';
   }
 
   openDeleteModal(id: string): void {
-    this.productionId = id;
+    this.userId = id;
     this.isDeleteModalOpen = true;
   }
 
   confirmDelete(): void {
     this.isLoading = true;
-    if (this.productionId) {
-      this.productionService.deleteProduction(this.productionId).subscribe({
+    if (this.userId) {
+      this.usuarioService.deleteUser(this.userId).subscribe({
         next: (response) => {
           this.isLoading = false;
           if (response.isSuccess) {
             this.handleDeleteSuccessModal();
-            this.fetchProductions();
+            this.fetchUsuarios();
           } else {
-            this.handleErrorModal('Erro ao deletar produção');
+            this.handleErrorModal('Erro ao deletar usuário');
           }
         },
         error: (httpErrorResponse) => {
@@ -185,7 +174,7 @@ export class ProducaoPageComponent implements OnInit {
   getPaginacao(event: any): void {
     this.paginacao.pageNumber = event.pageNumber;
     this.paginacao.pageSize = event.pageSize;
-    this.fetchProductions();
+    this.fetchUsuarios();
   }
 
   closeModal(): void {

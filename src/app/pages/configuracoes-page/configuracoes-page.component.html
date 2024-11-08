@@ -1,0 +1,26 @@
+<app-layout>
+  <div class="container">
+    <app-header placeholder="Pesquisar usuário" title="Configurações" buttonText="Criar novo usuário"
+      (filterChange)="onFilterChange($event)" (buttonClick)="openModal(false)"></app-header>
+
+    <app-custom-table minWidth="1000px" [columns]="columns" [data]="usuarios" [actions]="actions"
+      [noDataMessage]="'Nenhum usuário encontrado'"></app-custom-table>
+
+    <app-paginacao *ngIf="!isLoading" (valuePagination)="getPaginacao($event)" [paginacao]="paginacao">
+    </app-paginacao>
+  </div>
+
+  <app-brigadeiro-loading *ngIf="isLoading"></app-brigadeiro-loading>
+
+  <app-modal-cadastro-usuario [isVisible]="isModalVisible" [isEditMode]="isEditMode" (onClose)="closeModal()"
+    [userId]="userId" (onSave)="onUserSaved($event)"></app-modal-cadastro-usuario>
+
+  <app-modal-sucesso [openModal]="modalSuccess" [title]="titulo" [subTitle]="subTitulo"
+    (closeModal)="modalSuccess = !modalSuccess">
+  </app-modal-sucesso>
+
+  <app-modal-confirmacao [openModal]="isDeleteModalOpen" title="Excluir usuário"
+    subTitle="Tem certeza que deseja excluir esse usuário?" (cancelar)="closeDeleteModal()"
+    (confirmar)="confirmDelete()">
+  </app-modal-confirmacao>
+</app-layout>

@@ -1,21 +1,21 @@
 <app-layout>
     <div class="container">
-        <app-header placeholder="Digite o nome do produto" title="Estoque" buttonText="Adicionar produto" (filterChange)="onFilterChange($event)"
+        <app-header placeholder="Digite o nome do produto" title="Estoque" [isDisabled]="isDisabled"
+            buttonText="Adicionar produto" (filterChange)="onFilterChange($event)"
             (buttonClick)="openModal(false)"></app-header>
         <app-resumo-estoque-card></app-resumo-estoque-card>
         <app-custom-table minWidth="1000px" [columns]="columns" [data]="estoque" [actions]="actions"
             [noDataMessage]="'Nenhum produto encontrado'"></app-custom-table>
-
         <app-paginacao *ngIf="!isLoading" (valuePagination)="getPaginacao($event)" [paginacao]="paginacao">
         </app-paginacao>
     </div>
 
     <!-- Modal de cadastro de produto -->
-    <app-modal-cadastro-produto (onError)="onError($event)" [productId]="productId" [isVisible]="isModalVisible"
+    <app-modal-cadastro-produto [isDisabled]="false" (onError)="onError($event)" [productId]="productId" [isVisible]="isModalVisible"
         [isEditMode]="isEditMode" (onClose)="closeModal()" (onSave)="onProductSaved()" [produto]="selectedProduct">
     </app-modal-cadastro-produto>
 
-    <app-modal-confirmacao [openModal]="isDeleteModalOpen" title="Excluir"
+    <app-modal-confirmacao [disabledButton]="isDisabled" [openModal]="isDeleteModalOpen" title="Excluir"
         subTitle="Tem certeza que deseja excluir este produto?" (cancelar)="closeDeleteModal()"
         (confirmar)="deleteProduct()">
     </app-modal-confirmacao>

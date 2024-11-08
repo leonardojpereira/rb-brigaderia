@@ -14,10 +14,17 @@
         <tbody class="table-body">
             <tr *ngFor="let item of data" class="table-body-row">
                 <td *ngFor="let column of columns" [ngClass]="getClasses(column, item)" class="table-body-cell">
-                    <!-- Renderizando o valor diretamente -->
-                    {{ column.field === 'dataCriacao' ? (item[column.field] | date:'dd/MM/yyyy') :
-                        column.field === 'ativo' ? (item[column.field] ? 'Ativo' : 'Inativo') :
-                        item[column.field] }}
+                    <ng-container *ngIf="column.field === 'movementType'">
+                        <span
+                            [ngClass]="{'entrada-style': item.movementType === 'entrada', 'saida-style': item.movementType === 'saida'}">
+                            <span class="material-symbols-outlined">
+                                {{ item.movementType === 'entrada' ? 'trending_up' : 'trending_down' }}
+                            </span>
+                        </span>
+                    </ng-container>
+                    <span *ngIf="column.field !== 'movementType'">
+                        {{ item[column.field] }}
+                    </span>
                 </td>
 
                 <td *ngIf="actions.length > 0" class="table-body-cell actions-container hasBorder">

@@ -37,5 +37,22 @@
         width: 100%;
       }
     }
+
+    .date-filter {
+      display: flex;
+      gap: 18px;
+
+      .row {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        width: 200px;
+        
+        .label {
+          font-size: 14px;
+          color: #000;
+        }
+      }
+    }
   }
 }

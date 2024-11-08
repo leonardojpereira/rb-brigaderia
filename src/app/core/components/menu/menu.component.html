@@ -11,6 +11,12 @@
         </span>
         <span class="menu-link" *ngIf="isMenuExpanded">Estoque</span>
     </li>
+    <li class="menu-item" [ngClass]="{'expanded': isMenuExpanded}" (click)="navigate('/entrada-saida-estoque')">
+        <span class="material-symbols-outlined icon">
+            swap_vert
+        </span>
+        <span class="menu-link" *ngIf="isMenuExpanded">Entrada/Saída</span>
+    </li>
     <li class="menu-item" [ngClass]="{'expanded': isMenuExpanded}" (click)="navigate('/receitas')">
         <span class="material-symbols-outlined icon">
             grocery

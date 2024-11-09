@@ -1,10 +1,22 @@
 <div class="header">
     <h1 class="title">{{title}}</h1>
     <div class="controller">
-        <div class="filter">
-            <app-input (input)="onFilterInputChange($event)" [placeholder]="placeholder"
-                type="search"></app-input>
+      <div class="filter" *ngIf="isSearchFilterVisible">
+        <app-input (input)="onFilterInputChange($event)" [placeholder]="placeholder" type="search"></app-input>
+      </div>
+      <div class="date-filter" *ngIf="isDateFilterVisible">
+        <div class="row">
+          <label class="label">Data início</label>
+          <app-input type="date" (input)="onDataInicialChange($event)" [placeholder]="placeholder"></app-input>
         </div>
+        <div class="row">
+          <label class="label">Data fim</label>
+          <app-input type="date" (input)="onDataFinalChange($event)" [placeholder]="placeholder"></app-input>
+        </div>
+      </div>
+      <div *ngIf="isButtonVisible">
         <app-custom-button [isDisabled]="isDisabled" [text]="buttonText" (click)="onButtonClick()"></app-custom-button>
+      </div>
     </div>
-</div>
+  </div>
+  

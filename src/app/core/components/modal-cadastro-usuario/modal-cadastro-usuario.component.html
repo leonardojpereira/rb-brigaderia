@@ -5,23 +5,23 @@
         <form #userForm="ngForm" class="form-grid">
             <div class="form-row">
                 <div class="form-group">
-                    <app-input label="Nome*" type="text" id="nome" name="nome" [(ngModel)]="user.nome"
+                    <app-input label="Nome" type="text" id="nome" name="nome" [(ngModel)]="user.nome"
                         [required]="true"></app-input>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group">
-                    <app-input label="E-mail*" type="email" id="email" name="email" [(ngModel)]="user.email"
+                    <app-input label="E-mail" type="email" id="email" name="email" [(ngModel)]="user.email"
                         [required]="true"></app-input>
                 </div>
             </div>
             <div class="form-row responsive-row">
                 <div class="form-group" *ngIf="!isEditMode">
-                    <app-input [readonly]="isEditMode" label="Senha*" placeholder="*********" type="password" id="senha"
+                    <app-input [readonly]="isEditMode" label="Senha" placeholder="*********" type="password" id="senha"
                         name="senha" [(ngModel)]="user.senha" [required]="!isEditMode"></app-input>
                 </div>
                 <div class="form-group">
-                    <span class="label">Perfil*</span>
+                    <span class="label">Perfil<span class="required-symbol">*</span></span>
                     <app-custom-select label="Role*" id="role" name="role" [(ngModel)]="user.role"
                         [options]="roleOptions" [required]="true"></app-custom-select>
                 </div>

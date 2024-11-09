@@ -100,6 +100,29 @@ export class IngredientService {
     });
   }
 
+  getStockMovements(pageNumber: number, pageSize: number, dataInicial?: string, dataFinal?: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    let params = new HttpParams()
+      .set('pageNumber', pageNumber.toString())
+      .set('pageSize', pageSize.toString());
+  
+    if (dataInicial) {
+      params = params.set('dataInicial', dataInicial);
+    }
+    if (dataFinal) {
+      params = params.set('dataFinal', dataFinal);
+    }
+  
+    return this.httpClient.get(environment.apiUrl + 'StockMovement', {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+      params: params,
+    });
+  }
+  
+
   notifyIngredientsUpdated(): void {
     this.updateIngredientsList();
   }

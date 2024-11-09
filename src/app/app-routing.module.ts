@@ -7,6 +7,7 @@ import { ReceitaPageComponent } from './pages/receita-page/receita-page.componen
 import { ProducaoPageComponent } from './pages/producao-page/producao-page.component';
 import { AuthGuard } from './auth.guard';
 import { ConfiguracoesPageComponent } from './pages/configuracoes-page/configuracoes-page.component';
+import { EntradaSaidaPageComponent } from './pages/entrada-saida-page/entrada-saida-page.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -29,6 +30,11 @@ const routes: Routes = [
   {
     path: 'configuracoes',
     component: ConfiguracoesPageComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'entrada-saida-estoque',
+    component: EntradaSaidaPageComponent,
     canActivate: [AuthGuard],
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' },

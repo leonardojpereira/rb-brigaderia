@@ -1,6 +1,7 @@
 <app-layout [isDashboardPage]="true">
     <div class="container">
         <h2 class="title">Dashboard</h2>
+        <app-monthly-sales-chart [year]="2024"></app-monthly-sales-chart> <!-- Year can be dynamic -->
         <app-resumo-estoque-card></app-resumo-estoque-card>
         <app-card-receitas-produzidas></app-card-receitas-produzidas>
     </div>

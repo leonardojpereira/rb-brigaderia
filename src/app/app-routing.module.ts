@@ -8,6 +8,7 @@ import { ProducaoPageComponent } from './pages/producao-page/producao-page.compo
 import { AuthGuard } from './auth.guard';
 import { ConfiguracoesPageComponent } from './pages/configuracoes-page/configuracoes-page.component';
 import { EntradaSaidaPageComponent } from './pages/entrada-saida-page/entrada-saida-page.component';
+import { VendasPageComponent } from './pages/vendas-page/vendas-page.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -35,6 +36,11 @@ const routes: Routes = [
   {
     path: 'entrada-saida-estoque',
     component: EntradaSaidaPageComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'vendas',
+    component: VendasPageComponent,
     canActivate: [AuthGuard],
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' },

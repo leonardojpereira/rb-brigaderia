@@ -14,6 +14,12 @@
           <app-input type="date" (input)="onDataFinalChange($event)" [placeholder]="placeholder"></app-input>
         </div>
       </div>
+      <div class="date-filter" *ngIf="isUniqueDate">
+        <div class="row">
+          <label class="label">Data da venda</label>
+          <app-input type="date" (input)="onDataInicialChange($event)" [placeholder]="placeholder"></app-input>
+        </div>
+      </div>
       <div *ngIf="isButtonVisible">
         <app-custom-button [isDisabled]="isDisabled" [text]="buttonText" (click)="onButtonClick()"></app-custom-button>
       </div>

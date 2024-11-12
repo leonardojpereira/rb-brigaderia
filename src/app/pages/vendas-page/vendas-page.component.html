@@ -11,11 +11,16 @@
 
     <app-brigadeiro-loading *ngIf="isLoading"></app-brigadeiro-loading>
 
-    <app-modal-cadastro-vendas [vendaId]="vendaId" [isVisible]="isModalVisible" [isEditMode]="isEditMode" (onClose)="closeModal()"
-      (onSave)="onVendaSaved($event)" (onError)="handleErrorModal($event)"></app-modal-cadastro-vendas>
+    <app-modal-cadastro-vendas [vendaId]="vendaId" [isVisible]="isModalVisible" [isEditMode]="isEditMode"
+      (onClose)="closeModal()" (onSave)="onVendaSaved($event)"
+      (onError)="handleErrorModal($event)"></app-modal-cadastro-vendas>
 
     <app-modal-sucesso [openModal]="modalSuccess" [title]="titulo" [subTitle]="subTitulo"
       (closeModal)="modalSuccess = !modalSuccess">
     </app-modal-sucesso>
+
+    <app-modal-confirmacao [disabledButton]="isDisabled" [openModal]="isDeleteModalOpen" title="Excluir venda"
+      subTitle="Tem certeza que deseja excluir essa venda?" (cancelar)="closeDeleteModal()" (confirmar)="deleteVenda()">
+    </app-modal-confirmacao>
   </div>
 </app-layout>

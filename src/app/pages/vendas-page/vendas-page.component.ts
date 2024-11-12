@@ -44,6 +44,7 @@ export class VendasPageComponent implements OnInit {
   isModalVisible: boolean = false;
   isEditMode: boolean = false;
   selectedVenda: any = null;
+  isDisabled: boolean = false;
   vendaId: string = '';
   isDeleteModalOpen = false;
   modalSuccess: boolean = false;
@@ -123,27 +124,27 @@ export class VendasPageComponent implements OnInit {
     this.isDeleteModalOpen = false;
   }
 
-  // deleteVenda(): void {
-  //   this.vendasCaixinhasService.deleteVenda(this.vendaId).subscribe({
-  //     next: () => {
-  //       this.isDeleteModalOpen = false;
-  //       this.fetchVendas();
-  //       this.handleDeleteSuccessModal();
-  //     },
-  //     error: (httpErrorResponse) => {
-  //       this.isLoading = false;
-  //       if (
-  //         httpErrorResponse.status === 400 &&
-  //         httpErrorResponse.error &&
-  //         httpErrorResponse.error.errors
-  //       ) {
-  //         this.handleErrorModal(httpErrorResponse.error.errors);
-  //       } else {
-  //         console.error('Erro inesperado:', httpErrorResponse);
-  //       }
-  //     },
-  //   });
-  // }
+  deleteVenda(): void {
+    this.vendasCaixinhasService.deleteVenda(this.vendaId).subscribe({
+      next: () => {
+        this.isDeleteModalOpen = false;
+        this.fetchVendas();
+        this.handleDeleteSuccessModal();
+      },
+      error: (httpErrorResponse) => {
+        this.isLoading = false;
+        if (
+          httpErrorResponse.status === 400 &&
+          httpErrorResponse.error &&
+          httpErrorResponse.error.errors
+        ) {
+          this.handleErrorModal(httpErrorResponse.error.errors);
+        } else {
+          console.error('Erro inesperado:', httpErrorResponse);
+        }
+      },
+    });
+  }
 
   handleSuccessModal(): void {
     this.modalSuccess = true;

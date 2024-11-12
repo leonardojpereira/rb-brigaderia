@@ -67,4 +67,14 @@ export class VendasCaixinhasService {
       },
     });
   }
+
+  deleteVenda(vendaId: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.httpClient.delete(`${environment.apiUrl}VendasCaixinhas/${vendaId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+    });
+  }
 }

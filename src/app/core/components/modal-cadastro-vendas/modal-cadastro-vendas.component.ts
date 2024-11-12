@@ -37,9 +37,28 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['isVisible'] && this.isVisible && this.isEditMode && this.vendaId) {
-      this.loadVendaDetails();
+    if (changes['isVisible'] && this.isVisible) {
+      if (this.isEditMode && this.vendaId) {
+        this.loadVendaDetails();
+      } else {
+        this.resetVenda(); // Reset para cadastro de nova venda
+      }
     }
+  }
+
+  // Método para redefinir os valores de venda
+  resetVenda(): void {
+    this.venda = {
+      dataVenda: '',
+      quantidadeCaixinhas: 0,
+      precoTotalVenda: 0,
+      salario: 0,
+      custoTotal: 0,
+      lucro: 0,
+      localVenda: '',
+      horarioInicio: '',
+      horarioFim: '',
+    };
   }
 
   loadVendaDetails(): void {
@@ -51,7 +70,7 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
         if (response.isSuccess && response.data?.vendaCaixinhas) {
           const vendaData = response.data.vendaCaixinhas;
           this.venda = {
-            dataVenda: vendaData.dataVenda.split('T')[0], // Extrai apenas a data no formato 'yyyy-MM-dd'
+            dataVenda: vendaData.dataVenda.split('T')[0],
             quantidadeCaixinhas: vendaData.quantidadeCaixinhas,
             precoTotalVenda: vendaData.precoTotalVenda,
             salario: vendaData.salario,
@@ -71,7 +90,6 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
       },
     }); 
   }
-  
 
   closeModal(): void {
     this.onClose.emit();
@@ -100,6 +118,7 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
         if (response.isSuccess) {
           this.onSave.emit(response.data);
           this.closeModal();
+          this.resetVenda(); // Reset após salvar para limpar o modal
         } else {
           this.onError.emit('Erro ao salvar venda.');
         }

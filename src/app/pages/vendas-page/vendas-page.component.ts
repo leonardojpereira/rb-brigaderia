@@ -63,7 +63,7 @@ export class VendasPageComponent implements OnInit {
   fetchVendas(): void {
     this.isLoading = true;
     this.vendasCaixinhasService
-      .getVendas(this.paginacao.pageNumber, this.paginacao.pageSize, this.filter)
+      .getVendas(this.paginacao.pageNumber, this.paginacao.pageSize, this.date)  // Envia a data como parâmetro
       .pipe(delay(500))
       .subscribe({
         next: (response) => {
@@ -90,6 +90,11 @@ export class VendasPageComponent implements OnInit {
           this.isLoading = false;
         },
       });
+  }
+
+  onDateInicialChange(date: string): void {
+    this.date = date;  // Atualiza a data do filtro
+    this.fetchVendas();  // Recarrega as vendas com o novo filtro de data
   }
 
   openModal(isEdit: boolean = false, venda?: any): void {
@@ -200,13 +205,6 @@ export class VendasPageComponent implements OnInit {
   getPaginacao(event: any): void {
     this.paginacao.pageNumber = event.pageNumber;
     this.paginacao.pageSize = event.pageSize;
-    this.fetchVendas();
-  }
-
-
-
-  onDateInicialChange(date: string): void {
-    this.date = date;
     this.fetchVendas();
   }
   

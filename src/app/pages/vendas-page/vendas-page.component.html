@@ -11,7 +11,7 @@
 
     <app-brigadeiro-loading *ngIf="isLoading"></app-brigadeiro-loading>
 
-    <app-modal-cadastro-vendas [isVisible]="isModalVisible" [isEditMode]="isEditMode" (onClose)="closeModal()"
+    <app-modal-cadastro-vendas [vendaId]="vendaId" [isVisible]="isModalVisible" [isEditMode]="isEditMode" (onClose)="closeModal()"
       (onSave)="onVendaSaved($event)" (onError)="handleErrorModal($event)"></app-modal-cadastro-vendas>
 
     <app-modal-sucesso [openModal]="modalSuccess" [title]="titulo" [subTitle]="subTitulo"

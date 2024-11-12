@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { VendasCaixinhasService } from '../../../services/vendasCaixinhas.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { VendasCaixinhasService } from '../../../services/vendasCaixinhas.servic
   templateUrl: './modal-cadastro-vendas.component.html',
   styleUrls: ['./modal-cadastro-vendas.component.scss'],
 })
-export class ModalCadastroVendasComponent implements OnInit {
+export class ModalCadastroVendasComponent implements OnInit, OnChanges {
   @Input() isVisible: boolean = false;
   @Input() isEditMode: boolean = false;
   @Input() vendaId: string | null = null;
@@ -36,8 +36,42 @@ export class ModalCadastroVendasComponent implements OnInit {
     }
   }
 
-  loadVendaDetails(): void {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['isVisible'] && this.isVisible && this.isEditMode && this.vendaId) {
+      this.loadVendaDetails();
+    }
   }
+
+  loadVendaDetails(): void {
+    if (!this.vendaId) return;
+    
+    this.isLoading = true;
+    this.vendasCaixinhasService.getVendaById(this.vendaId).subscribe({
+      next: (response) => {
+        if (response.isSuccess && response.data?.vendaCaixinhas) {
+          const vendaData = response.data.vendaCaixinhas;
+          this.venda = {
+            dataVenda: vendaData.dataVenda.split('T')[0], // Extrai apenas a data no formato 'yyyy-MM-dd'
+            quantidadeCaixinhas: vendaData.quantidadeCaixinhas,
+            precoTotalVenda: vendaData.precoTotalVenda,
+            salario: vendaData.salario,
+            custoTotal: vendaData.custoTotal,
+            lucro: vendaData.lucro,
+            localVenda: vendaData.localVenda,
+            horarioInicio: vendaData.horarioInicio,
+            horarioFim: vendaData.horarioFim,
+          };
+        }
+      },
+      error: () => {
+        this.onError.emit('Erro ao carregar detalhes da venda.');
+      },
+      complete: () => {
+        this.isLoading = false;
+      },
+    }); 
+  }
+  
 
   closeModal(): void {
     this.onClose.emit();
@@ -47,11 +81,11 @@ export class ModalCadastroVendasComponent implements OnInit {
     if (form.valid) {
       const vendaData = {
         ...this.venda,
-        dataVenda: new Date().toISOString(),
+        dataVenda: new Date(this.venda.dataVenda).toISOString(),
       };
 
       if (this.isEditMode && this.vendaId) {
-        // this.updateVenda(vendaData);
+        this.updateVenda(vendaData);
       } else {
         this.createVenda(vendaData);
       }
@@ -60,23 +94,6 @@ export class ModalCadastroVendasComponent implements OnInit {
     }
   }
 
-  // updateVenda(vendaData: any): void {
-  //   this.vendasCaixinhasService.updateVenda(this.vendaId!, vendaData).subscribe({
-  //     next: (response) => {
-  //       if (response.isSuccess) {
-  //         this.onSave.emit(response.data);
-  //         this.closeModal();
-  //       } else {
-  //         this.onError.emit('Erro ao atualizar venda');
-  //       }
-  //     },
-  //     error: () => {
-  //       this.isLoading = false;
-  //       this.onError.emit('Erro inesperado ao atualizar venda');
-  //     },
-  //   });
-  // }
-
   createVenda(vendaData: any): void {
     this.vendasCaixinhasService.createVenda(vendaData).subscribe({
       next: (response) => {
@@ -84,12 +101,39 @@ export class ModalCadastroVendasComponent implements OnInit {
           this.onSave.emit(response.data);
           this.closeModal();
         } else {
-          this.onError.emit('Erro ao salvar venda');
+          this.onError.emit('Erro ao salvar venda.');
         }
       },
       error: () => {
         this.isLoading = false;
-        this.onError.emit('Erro inesperado ao salvar venda');
+        this.onError.emit('Erro inesperado ao salvar venda.');
+      },
+    });
+  }
+
+  updateVenda(vendaData: any): void {
+    if (!this.vendaId) return;
+
+    this.vendasCaixinhasService.updateVenda(this.vendaId, vendaData).subscribe({
+      next: (response) => {
+        if (response.isSuccess) {
+          this.onSave.emit(response.data);
+          this.closeModal();
+        } else {
+          this.onError.emit('Erro ao atualizar venda.');
+        }
+      },
+      error: (httpErrorResponse) => {
+        this.isLoading = false;
+        if (
+          httpErrorResponse.status === 400 &&
+          httpErrorResponse.error &&
+          httpErrorResponse.error.errors
+        ) {
+          this.onError.emit(httpErrorResponse.error.errors);
+        } else {
+          console.error('Erro inesperado:', httpErrorResponse);
+        }
       },
     });
   }

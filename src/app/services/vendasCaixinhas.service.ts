@@ -48,6 +48,16 @@ export class VendasCaixinhasService {
     });
   }
 
+  getVendaById(vendaId: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.httpClient.get(`${environment.apiUrl}VendasCaixinhas/${vendaId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+    });
+  }
+
   updateVenda(vendaId: string, vendaData: any): Observable<any> {
     const token = localStorage.getItem('token');
     return this.httpClient.put(`${environment.apiUrl}VendasCaixinhas/${vendaId}`, vendaData, {

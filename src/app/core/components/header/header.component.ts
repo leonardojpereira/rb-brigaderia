@@ -17,6 +17,8 @@ export class HeaderComponent {
   @Input() isButtonVisible: boolean = true;
   @Input() isSearchFilterVisible: boolean = true;
   @Input() isDateFilterVisible: boolean = false;
+  @Input() isUniqueDate: boolean = false;
+
 
   onButtonClick(): void {
     this.buttonClick.emit();

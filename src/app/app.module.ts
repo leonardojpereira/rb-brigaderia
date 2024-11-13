@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -26,7 +25,7 @@ import { ModalComponent } from './components/modal/modal.component';
 import { CustomButtonComponent } from './core/components/custom-button/custom-button.component';
 import { CardReceitasProduzidasComponent } from './core/components/card-receitas-produzidas/card-receitas-produzidas.component';
 import { MatSelectModule } from '@angular/material/select';
-
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -60,7 +59,10 @@ import { MatSelectModule } from '@angular/material/select';
     ModalCadastroProducaoComponent,
     ConfiguracoesPageComponent,
     ModalCadastroUsuarioComponent,
-    EntradaSaidaPageComponent
+    EntradaSaidaPageComponent,
+    VendasPageComponent,
+    MonthSalesChartComponent,
+    ModalCadastroVendasComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +74,7 @@ import { MatSelectModule } from '@angular/material/select';
     BrowserAnimationsModule,
     CommonModule,
     MatSelectModule,
-
+    NgxChartsModule,
   ],
   providers: [
     {
@@ -96,4 +98,6 @@ import { ModalCadastroProducaoComponent } from './core/components/modal-cadastro
 import { ConfiguracoesPageComponent } from './pages/configuracoes-page/configuracoes-page.component';
 import { ModalCadastroUsuarioComponent } from './core/components/modal-cadastro-usuario/modal-cadastro-usuario.component';
 import { EntradaSaidaPageComponent } from './pages/entrada-saida-page/entrada-saida-page.component';
-
+import { VendasPageComponent } from './pages/vendas-page/vendas-page.component';
+import { MonthSalesChartComponent } from './core/components/month-sales-chart/month-sales-chart.component';
+import { ModalCadastroVendasComponent } from './core/components/modal-cadastro-vendas/modal-cadastro-vendas.component';

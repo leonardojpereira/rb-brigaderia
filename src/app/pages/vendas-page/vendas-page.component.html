@@ -1,0 +1,26 @@
+<app-layout>
+  <div class="container">
+    <app-header [isUniqueDate]="true" [isSearchFilterVisible]="false" [buttonText]="'Adicionar venda'"
+      (buttonClick)="openModal(false)" title="Vendas de caixinhas" (dataInicialChange)="onDateInicialChange($event)">
+    </app-header>
+
+    <app-custom-table minWidth="1000px" [columns]="columns" [data]="vendas" [actions]="actions"
+      [noDataMessage]="'Nenhuma venda registrada.'"></app-custom-table>
+
+    <app-paginacao *ngIf="!isLoading" (valuePagination)="getPaginacao($event)" [paginacao]="paginacao"></app-paginacao>
+
+    <app-brigadeiro-loading *ngIf="isLoading"></app-brigadeiro-loading>
+
+    <app-modal-cadastro-vendas [vendaId]="vendaId" [isVisible]="isModalVisible" [isEditMode]="isEditMode"
+      (onClose)="closeModal()" (onSave)="onVendaSaved($event)"
+      (onError)="handleErrorModal($event)"></app-modal-cadastro-vendas>
+
+    <app-modal-sucesso [openModal]="modalSuccess" [title]="titulo" [subTitle]="subTitulo"
+      (closeModal)="modalSuccess = !modalSuccess">
+    </app-modal-sucesso>
+    
+    <app-modal-confirmacao [disabledButton]="isDisabled" [openModal]="isDeleteModalOpen" title="Excluir venda"
+      subTitle="Tem certeza que deseja excluir essa venda?" (cancelar)="closeDeleteModal()" (confirmar)="deleteVenda()">
+    </app-modal-confirmacao>
+  </div>
+</app-layout>

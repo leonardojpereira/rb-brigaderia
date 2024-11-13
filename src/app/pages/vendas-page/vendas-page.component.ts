@@ -17,7 +17,7 @@ export class VendasPageComponent implements OnInit {
 
   columns = [
     { field: 'dataVenda', header: 'Data da venda' },
-    { field: 'quantidadeCaixinhas', header: 'Quantidade' },
+    { field: 'quantidadeCaixinhas', header: 'Quantidade de vendas' },
     { field: 'precoTotalVenda', header: 'Total da venda' },
     { field: 'salario', header: 'Salário' },
     { field: 'custoTotal', header: 'Custo total' },
@@ -63,7 +63,7 @@ export class VendasPageComponent implements OnInit {
   fetchVendas(): void {
     this.isLoading = true;
     this.vendasCaixinhasService
-      .getVendas(this.paginacao.pageNumber, this.paginacao.pageSize, this.date)  // Envia a data como parâmetro
+      .getVendas(this.paginacao.pageNumber, this.paginacao.pageSize, this.date)  
       .pipe(delay(500))
       .subscribe({
         next: (response) => {
@@ -93,8 +93,8 @@ export class VendasPageComponent implements OnInit {
   }
 
   onDateInicialChange(date: string): void {
-    this.date = date;  // Atualiza a data do filtro
-    this.fetchVendas();  // Recarrega as vendas com o novo filtro de data
+    this.date = date;  
+    this.fetchVendas();  
   }
 
   openModal(isEdit: boolean = false, venda?: any): void {

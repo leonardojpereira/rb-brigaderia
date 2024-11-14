@@ -1,7 +1,7 @@
 .card-resumo-estoque-dashboard {
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.13);
   border-radius: 8px;
-  padding: 16px;
+  padding: 22px 16px;
   background-color: #fff;
 
   .header {
@@ -27,7 +27,7 @@
   .product-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
 
     .product-details {
       display: flex;

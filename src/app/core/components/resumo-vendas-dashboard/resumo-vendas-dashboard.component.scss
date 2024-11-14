@@ -1,0 +1,73 @@
+.resume-container {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.13);
+  border-radius: 8px;
+  padding: 22px;
+  background-color: #fff;
+  margin-top: 22px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e0e0e0;
+
+    .title {
+      font-size: 22px;
+      width: 100%;
+      color: #383e49;
+      margin: 0;
+
+    }
+
+    .date-filter {
+        display: flex;
+        gap: 12px;
+
+        .filter-month {
+            width: 150px;
+        }
+
+        .filter-year {
+            width: 95px;
+        }
+    }
+  }
+
+  .body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .resume-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+
+      .total-count {
+        font-size: 32px;
+        color: #383e49;
+        margin: 0;
+      }
+
+      .icon {
+        font-size: 42px;
+        color: #383e49;
+      }
+
+      .vendas {
+        color: #ffaa00;
+      }
+
+      .lucro {
+        color: #2dff5b;
+      }
+
+      .custo {
+        color: #eb4e43;
+      }
+    }
+  }
+}

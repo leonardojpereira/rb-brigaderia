@@ -38,6 +38,23 @@ export class VendasCaixinhasService {
     });
   }
 
+  getMonthlySalesSummary(year: number, month: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token,
+    });
+
+    const params = new HttpParams()
+      .set('year', year.toString())
+      .set('month', month.toString());
+
+    return this.httpClient.get(`${environment.apiUrl}VendasCaixinhasMetrics/monthly-sales`, {
+      headers: headers,
+      params: params,
+    });
+  }
+
   createVenda(vendaData: any): Observable<any> {
     const token = localStorage.getItem('token');
     return this.httpClient.post(`${environment.apiUrl}VendasCaixinhas`, vendaData, {

@@ -1,15 +1,18 @@
 <app-layout [isDashboardPage]="true">
     <div class="container">
         <h2 class="title">Dashboard</h2>
-        <app-monthly-sales-chart [year]="2024"></app-monthly-sales-chart>
         <div class="wrap">
             <div class="resumo-receita-container">
-                <app-card-receitas-produzidas></app-card-receitas-produzidas>
+                <app-resumo-vendas-dashboard></app-resumo-vendas-dashboard>
+
             </div>
             <div class="resumo-estoque-container">
                 <app-card-resumo-estoque-dashboard></app-card-resumo-estoque-dashboard>
             </div>
         </div>
+        <app-monthly-sales-chart [year]="2024"></app-monthly-sales-chart>
+       
+        <app-card-receitas-produzidas></app-card-receitas-produzidas>
 
     </div>
 </app-layout>

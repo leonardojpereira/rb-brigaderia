@@ -1,0 +1,45 @@
+<div class="resume-container">
+    <div class="header">
+      <h3 class="title">Resumo do mês</h3>
+      <div class="date-filter">
+        <div class="filter-month">
+          <app-custom-select
+            [(ngModel)]="selectedMonth"
+            (ngModelChange)="applyFilter()"
+            [options]="monthOptions"
+            name="month"
+            #month="ngModel"
+            [required]="true">
+          </app-custom-select>
+        </div>
+        <div class="filter-year">
+          <app-custom-select
+            [(ngModel)]="selectedYear"
+            (ngModelChange)="applyFilter()"
+            [options]="yearOptions"
+            name="year"
+            #year="ngModel"
+            [required]="true">
+          </app-custom-select>
+        </div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="resume-item">
+        <span class="total-count">{{ quantidadeVendas }}</span>
+        <span class="material-symbols-outlined icon vendas">shopping_bag</span>
+        <span class="resume-item-label">Vendas</span>
+      </div>
+      <div class="resume-item">
+        <span class="total-count">{{ totalLucro }}</span>
+        <span class="material-symbols-outlined icon lucro">paid</span>
+        <span class="resume-item-label">Lucro</span>
+      </div>
+      <div class="resume-item">
+        <span class="total-count">{{ totalCusto }}</span>
+        <span class="material-symbols-outlined icon custo">money_off</span>
+        <span class="resume-item-label">Custo</span>
+      </div>
+    </div>
+  </div>
+  

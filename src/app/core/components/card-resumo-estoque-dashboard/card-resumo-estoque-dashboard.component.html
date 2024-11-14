@@ -1,0 +1,18 @@
+<div class="card-resumo-estoque-dashboard">
+    <div class="header">
+        <h3 class="title">Estoque</h3>
+        <a href="/estoque" class="see-more-link">Ver mais</a>
+    </div>
+    <div class="product-list">
+      <div *ngFor="let product of visibleProducts" class="product-item">
+        <div class="product-details">
+          <span class="product-name">{{ product.name }}</span>
+          <span class="product-quantity">Quantidade: {{ product.quantity }} unidades</span>
+        </div>
+        <div class="status" [ngClass]="getStatusClass(product.status)">
+          <span class="status-text">{{ product.status }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  

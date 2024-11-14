@@ -2,3 +2,19 @@
     font-size: 36px;
     color: #000;
   }
+
+  .wrap {
+    display: flex;
+    gap: 20px;
+    align-items: end;
+    width: 100%;
+
+    .resumo-receita-container {
+      width: 75%;
+    }
+
+    .resumo-estoque-container {
+      width: 25%;
+      height: 100%;
+    }
+  }

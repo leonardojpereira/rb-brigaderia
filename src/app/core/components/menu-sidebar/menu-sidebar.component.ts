@@ -43,4 +43,10 @@ export class MenuSidebarComponent implements OnInit {
     this.router.navigate(['/']);
     localStorage.clear();
   }
+
+  navigate(route: string) {
+    if (route) {
+      this.router.navigate([route]);
+    }
+  }
 }

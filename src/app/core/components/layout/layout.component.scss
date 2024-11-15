@@ -37,7 +37,7 @@
   margin: 20px;
   margin-bottom: 60px;
 
-  @media (min-width: 1400px) {
+  @media (min-height: 1400px) {
     height: calc(100% - 80px);
   }
 }

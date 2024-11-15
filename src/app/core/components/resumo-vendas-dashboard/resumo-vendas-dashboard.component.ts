@@ -11,8 +11,8 @@ export class ResumoVendasDashboardComponent implements OnInit {
   totalLucro: number = 0;
   quantidadeVendas: number = 0;
 
-  selectedMonth: number = new Date().getMonth() + 1; // Default to current month
-  selectedYear: number = new Date().getFullYear();   // Default to current year
+  selectedMonth: number = new Date().getMonth() + 1; 
+  selectedYear: number = new Date().getFullYear();   
 
   monthOptions = [
     { label: 'Janeiro', value: 1 },
@@ -34,7 +34,6 @@ export class ResumoVendasDashboardComponent implements OnInit {
   constructor(private vendasCaixinhasService: VendasCaixinhasService) {}
 
   ngOnInit(): void {
-    // Load data for the current month and year on initialization
     this.getMonthlySalesSummary(this.selectedYear, this.selectedMonth);
   }
 
@@ -65,7 +64,6 @@ export class ResumoVendasDashboardComponent implements OnInit {
   }
 
   applyFilter(): void {
-    // Call the service with the selected year and month
     this.getMonthlySalesSummary(this.selectedYear, this.selectedMonth);
   }
 }

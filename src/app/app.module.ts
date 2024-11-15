@@ -6,7 +6,6 @@ import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthComponent } from './core/components/auth/auth.component';
 import { InputComponent } from './core/components/input/input.component';
-import { CertificadoComponent } from './core/components/certificado/certificado.component';
 import { FormsModule } from '@angular/forms';
 import { LoaderComponent } from './core/components/loader/loader.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -34,7 +33,6 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     HomeComponent,
     AuthComponent,
     InputComponent,
-    CertificadoComponent,
     LoaderComponent,
     MenuSidebarComponent,
     LayoutComponent,

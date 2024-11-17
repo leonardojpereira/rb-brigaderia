@@ -6,7 +6,6 @@ import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthComponent } from './core/components/auth/auth.component';
 import { InputComponent } from './core/components/input/input.component';
-import { CertificadoComponent } from './core/components/certificado/certificado.component';
 import { FormsModule } from '@angular/forms';
 import { LoaderComponent } from './core/components/loader/loader.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -34,7 +33,6 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     HomeComponent,
     AuthComponent,
     InputComponent,
-    CertificadoComponent,
     LoaderComponent,
     MenuSidebarComponent,
     LayoutComponent,
@@ -62,7 +60,9 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     EntradaSaidaPageComponent,
     VendasPageComponent,
     MonthSalesChartComponent,
-    ModalCadastroVendasComponent
+    ModalCadastroVendasComponent,
+    CardResumoEstoqueDashboardComponent,
+    ResumoVendasDashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -101,3 +101,5 @@ import { EntradaSaidaPageComponent } from './pages/entrada-saida-page/entrada-sa
 import { VendasPageComponent } from './pages/vendas-page/vendas-page.component';
 import { MonthSalesChartComponent } from './core/components/month-sales-chart/month-sales-chart.component';
 import { ModalCadastroVendasComponent } from './core/components/modal-cadastro-vendas/modal-cadastro-vendas.component';
+import { CardResumoEstoqueDashboardComponent } from './core/components/card-resumo-estoque-dashboard/card-resumo-estoque-dashboard.component';
+import { ResumoVendasDashboardComponent } from './core/components/resumo-vendas-dashboard/resumo-vendas-dashboard.component';

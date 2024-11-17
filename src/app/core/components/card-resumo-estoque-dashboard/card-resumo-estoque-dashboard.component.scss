@@ -1,0 +1,81 @@
+.card-resumo-estoque-dashboard {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.13);
+  border-radius: 8px;
+  padding: 22px 16px;
+  background-color: #fff;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+
+    .title {
+      font-size: 18px;
+      color: #383e49;
+      margin: 0;
+    }
+
+    .see-more-link {
+      font-size: 12px;
+      color: #1a73e8;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+
+  .product-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .product-details {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .product-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .product-name {
+    font-size: 14px;
+    font-weight: bold;
+    color: #383e49;
+  }
+
+  .product-quantity {
+    font-size: 12px;
+    color: #667085;
+  }
+
+  .status {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .status-alto {
+    background-color: #e0f7e9;
+    color: #1a7f37;
+  }
+  .status-baixo {
+    background-color: #feeceb;
+    color: #aa3028;
+  }
+
+  .view-all-button {
+    margin-top: 12px;
+    background: none;
+    border: none;
+    color: #1a73e8;
+    font-size: 12px;
+    cursor: pointer;
+  }
+}

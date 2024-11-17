@@ -9,7 +9,8 @@ import { VendasCaixinhasService } from '../../../services/vendasCaixinhas.servic
 export class MonthSalesChartComponent implements OnInit {
   @Input() year: number = new Date().getFullYear();
   chartData: any[] = [];
-  view: [number, number] = [window.innerWidth * 0.9, 300]; 
+  view: [number, number] = [window.innerWidth * 0.9, 300];
+  customColors: any[] = [{ name: 'Vendas Mensais', value: '#000000' }]; // Cor preta para a linha
 
   constructor(private vendasCaixinhasService: VendasCaixinhasService) {}
 
@@ -19,7 +20,7 @@ export class MonthSalesChartComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
-    this.view = [event.target.innerWidth * 0.85, 300]; 
+    this.view = [event.target.innerWidth * 0.85, 300];
   }
 
   getMonthlySales(year: number): void {
@@ -27,13 +28,22 @@ export class MonthSalesChartComponent implements OnInit {
       next: (response) => {
         if (response.isSuccess) {
           const monthlySales = response.data.monthlySales;
-          this.chartData = monthlySales.map((monthData: any) => ({
-            name: `Mês ${monthData.month}`,
-            value: monthData.totalSales,
-          }));
+          this.chartData = [
+            {
+              name: 'Vendas Mensais',
+              series: monthlySales.map((monthData: any) => ({
+                name: `Mês ${monthData.month}`,
+                value: monthData.totalSales,
+              })),
+            },
+          ];
         }
       },
       error: (error) => console.error('Erro ao carregar vendas mensais:', error),
     });
+  }
+
+  formatYAxisTicks(value: number): string {
+    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
   }
 }

@@ -75,7 +75,7 @@
     width: 60px;
     transform: translateX(-60px); 
     transition: width 0.3s ease-in-out, transform 0.3s ease;
-    background-color: #fff;
+    background-color: var(--background-color-menu-sidebar);
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px;
 
 

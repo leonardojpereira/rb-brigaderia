@@ -12,6 +12,12 @@
     padding-bottom: 12px;
     border-bottom: 1px solid #e0e0e0;
 
+    @media screen and (max-width: 530px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
     .title {
       font-size: 22px;
       width: 100%;
@@ -38,6 +44,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @media screen and (max-width: 530px) {
+      flex-direction: column;
+      gap: 38px;
+    }
 
     .resume-item {
       display: flex;

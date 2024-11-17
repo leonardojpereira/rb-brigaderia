@@ -6,7 +6,7 @@
 
   .input-label {
     margin-bottom: 0.5rem;
-    color: #000;
+    color: var(--label-color);
   }
 
   .boldLabel {
@@ -15,25 +15,47 @@
 
   input {
     padding: 10px;
-    border: 2px solid var(--Grayscale-200, #f0f0f0);
+    border: 2px solid var(--input-border-color);
     border-radius: 5px;
     width: 100%;
     outline: none;
+    background-color: var(--input-background-color);
+    color: var(--input-text-color);
   }
 
   input[type="date"],
   input[type="time"],
   input[type="datetime-local"] {
-    border: 2px solid var(--Grayscale-200, #f0f0f0);
-    background-color: #fff;
-    color: #000;
+    border: 2px solid var(--input-border-color);
+    background-color: var(--input-background-color);
+    color: var(--input-text-color);
+  }
+
+ ::ng-deep input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: var(--calendar-icon-filter);
+    cursor: pointer;
+  }
+
+  ::ng-deep input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: var(--calendar-icon-filter);
+    cursor: pointer;
+  }
+
+  ::ng-deep input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: var(--calendar-icon-filter);
+    cursor: pointer;
+  }
+  
+
+  ::ng-deep input[type="date"]::-moz-calendar-picker-indicator {
+    filter: var(--calendar-icon-filter)
   }
 
   input[type="search"]::-webkit-search-cancel-button {
     -webkit-appearance: none;
     appearance: none;
   }
-  
+
   .required-asterisk {
     color: #bb2d3b;
   }

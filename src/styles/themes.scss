@@ -1,0 +1,79 @@
+/* src/styles/themes.scss */
+
+:root {
+    /* Tema claro */
+    --background-color-menu-sidebar: #ffffff;
+    --text-color-menu-sidebar: #5D6679;
+    --content-background-color: #f2f2f2;
+    --main-content-background-color: #fff;
+    --card-background-color: #fff;
+    --text-color: #2c2f34;
+    --small-text-color: #667085;
+    --see-more-text-color: #1a73e8;
+    --button-text-color: #fff;
+    --button-background-color: #000;
+    --button-background-color: #000;
+    --button-disabled-background-color: #ddd;
+    --button-border-color: #000;
+    --button-hover-disabled-background-color: #000;
+    --input-background-color: #fff;
+    --selected-option-background-color: #ececec;
+    --input-border-color: #f0f0f0;
+    --label-color: #000;
+    --modal-color: #fff;
+    --table-header-color: #000;
+    --table-even-color: #fff6f6;
+    --table-odd-color: #fff;
+    --table-body-cell-color: #333;
+    --table-box-shadow-color: rgb(0 0 0 / 13%);
+    --pagination-text-color: #000;
+    --pagination-navigation-color: rgba(0, 0, 0, 0.5)
+    --input-icon-color: #000000; 
+    --input-icon-hover-color: #333333; 
+    --calendar-icon-filter: invert(0); 
+    --toggle-background-color: #111;
+    --toggle-ball-color: #fff;
+    --icon-color: #ccc;
+    --toggle-background-active-color: #444;
+    --icon-active-color: #f1c40f; /* Cor ativa para o ícone */
+  }
+  
+  .dark-theme {
+    /* Tema escuro */
+    --background-color-menu-sidebar: #1E1E1E;
+    --text-color-menu-sidebar: #fff;
+    --content-background-color: #2E2E2E;
+    --main-content-background-color: #3b3b3b;
+    --card-background-color: #414141;
+    --text-color: #fff;
+    --see-more-text-color: #fff;
+    --small-text-color: #c1c1c1;
+    --button-text-color: #2b2b2b;
+    --button-background-color: #ffffff;
+    --button-border-color: #2b2b2b;
+    --button-hover-disabled-background-color: #313131;
+    --button-disabled-background-color: #3b3b3b;
+    --button-cancel-background-color: #2b2b2b;
+    --input-background-color: #2f2f2f;
+    --selected-option-background-color: #1e1e1e;
+    --input-text-color: #fff;
+    --input-border-color: #2d2d2d;
+    --label-color: #fff;
+    --modal-color: #414141;
+    --table-header-color: #1e1e1e;
+    --table-even-color: #2f2f2f;
+    --table-odd-color: #3a3a3a;
+    --table-body-cell-color: #d8d8d8;
+    --table-box-shadow-color: #101010;
+    --pagination-text-color: #fff;
+    --pagination-navigation-color: rgba(255, 255, 255, 0.5);
+    --input-icon-color: #ffffff;
+    --input-icon-hover-color: #aaaaaa;
+    --calendar-icon-filter: invert(1);
+    --toggle-background-color: #fff;
+    --toggle-ball-color: #333;
+    --icon-color: #000;
+    --toggle-background-active-color: #ccc;
+    --icon-active-color: #f39c12;
+  }
+  

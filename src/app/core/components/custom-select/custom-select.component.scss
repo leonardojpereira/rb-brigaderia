@@ -1,6 +1,7 @@
 .custom-select-container {
     position: relative;
-    border: 2px solid var(--Grayscale-200, #f0f0f0);
+    border: 2px solid var(--input-border-color);
+    background-color: var(--input-background-color);
     padding: 10px;
     height: 16px;
     display: flex;
@@ -11,19 +12,37 @@
   ::ng-deep mat-mdc-select-min-line {
     color: #003166 !important;
   }
+
+  ::ng-deep .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled):not(.mat-mdc-option-multiple) {
+    background-color: var(--selected-option-background-color) !important;
+    color: var(--text-color) !important;
+  }
+
+  ::ng-deep .mat-mdc-option .mdc-list-item__primary-text {
+    color: var(--text-color) !important;
+  }
+
+  ::ng-deep .mat-mdc-select-panel {
+    background-color: var(--input-background-color) !important;
+    color: var(--text-color) !important;
+  }
+
+  ::ng-deep .mat-mdc-select-value-text {
+    color: var(--text-color) !important;
+  }
   
   ::ng-deep .cdk-overlay-container {
     z-index: 100000 !important;
   }
   
   ::ng-deep .mat-mdc-select-arrow {
-    color: #d9d9d9 !important;
+    color: var(--text-color) !important;
   }
   
   ::ng-deep
     .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled)
     .mdc-list-item__primary-text {
-    color: #003166 !important;
+    color: var(--text-color) !important;
   }
   
   ::ng-deep div.mat-mdc-select-panel {
@@ -32,7 +51,7 @@
   
   ::ng-deep .mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-checked::after,
   .mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-indeterminate::after {
-    color: #003166 !important;
+    color: var(--text-color) !important;
   }
   
   .custom-select-container.no-border  {

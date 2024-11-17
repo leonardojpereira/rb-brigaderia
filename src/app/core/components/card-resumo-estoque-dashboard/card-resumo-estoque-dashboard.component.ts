@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IngredientService } from '../../../services/ingredient.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-card-resumo-estoque-dashboard',
@@ -10,10 +11,16 @@ export class CardResumoEstoqueDashboardComponent implements OnInit {
   products: any[] = [];
   visibleProducts: any[] = [];
 
-  constructor(private ingredientService: IngredientService) {}
+  constructor(private ingredientService: IngredientService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadProductData();
+  }
+
+  navigate(route: string) {
+    if (route) {
+      this.router.navigate([route]);
+    }
   }
 
   loadProductData(): void {
@@ -33,7 +40,7 @@ export class CardResumoEstoqueDashboardComponent implements OnInit {
             .sort(
               (a: { quantity: number }, b: { quantity: number }) =>
                 a.quantity - b.quantity
-            ); // Sort by quantity in ascending order
+            ); 
 
           this.visibleProducts = this.products.slice(0, 4);
         } else {

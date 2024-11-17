@@ -10,7 +10,7 @@
 <!-- Menu deslizante -->
 <div class="menu-container" [class.expanded]="isMenuExpanded">
     <div class="menu-header" *ngIf="isMenuExpanded">
-        <img src="assets/logo_brigaderia.png" />
+        <img [src]="menuLogo" />
     </div>
     <div class="menu-body">
         <app-menu [isMenuExpanded]="isMenuExpanded"></app-menu>

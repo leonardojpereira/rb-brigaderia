@@ -22,6 +22,10 @@
   flex-direction: column;
   width: 100%;
   gap: 8px;
+
+  .label {
+    color: var(--label-color);
+  }
 }
 
 .required-symbol {

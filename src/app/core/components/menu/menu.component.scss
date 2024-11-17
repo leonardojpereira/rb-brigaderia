@@ -4,7 +4,7 @@
   padding: 0;
   align-items: center; 
   gap: 50px; 
-  margin-top: 210px;
+  margin-top: 170px;
 
   &.expanded {
     align-items: start;
@@ -23,7 +23,7 @@
     }
 
     .icon {
-      color: #5D6679;
+      color: var(--text-color-menu-sidebar);
       font-size: 22px;
       transition: all 0.3s ease;
 
@@ -34,7 +34,7 @@
 
     .menu-link {
       text-decoration: none;
-      color: #5D6679;
+      color: var(--text-color-menu-sidebar);
       font-weight: 700;
       font-size: 16px;
       transition: all 0.3s ease;

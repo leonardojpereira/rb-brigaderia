@@ -1,7 +1,7 @@
 <div class="card-resumo-estoque-dashboard">
     <div class="header">
         <h3 class="title">Estoque</h3>
-        <a href="/estoque" class="see-more-link">Ver mais</a>
+        <span (click)="navigate('/estoque')" class="see-more-link">Ver mais</span>
     </div>
     <div class="product-list">
       <div *ngFor="let product of visibleProducts" class="product-item">

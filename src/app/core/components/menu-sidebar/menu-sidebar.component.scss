@@ -6,6 +6,7 @@
   height: 100vh;
   transition: all 0.3s ease-in-out;
   z-index: 1000;
+  background-color: var(--background-color-menu-sidebar);
   &.expanded {
     width: 220px;
   }
@@ -14,11 +15,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 8px 0 22px 0;
+    margin: 48px 0 42px 0;
 
     img {
-      width: 180px;
-      height: 180px;
+      width: 120px;
+      height: 80px;
     }
   }
 
@@ -52,13 +53,13 @@
     }
 
       .icon {
-        color: #5D6679;
+        color: var(--text-color-menu-sidebar);
         font-size: 22px;
         transition: all 0.3s ease;
       }
 
       .logout-text {
-        color: #5D6679;
+        color: var(--text-color-menu-sidebar);
         font-weight: 700;
         font-size: 16px;
         transition: all 0.3s ease;
@@ -92,7 +93,7 @@
   position: fixed; 
   top: 8px;
   left: 13px;
-  color: #5e7d9f;
+  color: var(--text-color-menu-sidebar);
   z-index: 1100; 
   outline: none;
 
@@ -102,5 +103,7 @@
     cursor: pointer;
     font-size: 24px;
     outline: none;
+    color: var(--text-color-menu-sidebar);
+
   }
 }

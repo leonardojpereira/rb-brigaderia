@@ -1,8 +1,8 @@
 .resume-container {
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.13);
+  box-shadow: 0 2px 12px var(--table-box-shadow-color);
   border-radius: 8px;
   padding: 22px;
-  background-color: #fff;
+  background-color: var(--card-background-color);
 
   .header {
     display: flex;
@@ -15,7 +15,7 @@
     .title {
       font-size: 22px;
       width: 100%;
-      color: #383e49;
+      color: var(--text-color);
       margin: 0;
 
     }
@@ -47,13 +47,13 @@
 
       .total-count {
         font-size: 32px;
-        color: #383e49;
+        color: var(--text-color);
         margin: 0;
       }
 
       .icon {
         font-size: 42px;
-        color: #383e49;
+        color: var(--text-color);
       }
 
       .vendas {
@@ -66,6 +66,10 @@
 
       .custo {
         color: #eb4e43;
+      }
+
+      .resume-item-label {
+        color: var(--text-color)
       }
     }
   }

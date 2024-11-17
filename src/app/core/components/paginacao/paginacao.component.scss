@@ -4,8 +4,77 @@
   justify-content: end;
   gap: 5px;
   margin-top: 20px;
+  background-color: var(--main-content-background-color);
 }
 
 ::ng-deep .mat-mdc-paginator-container {
   padding: 0 !important;
 }
+
+::ng-deep .mat-mdc-paginator-page-size-label,
+::ng-deep .mat-mdc-paginator-range-label,
+::ng-deep .mat-mdc-icon-button {
+  color: var(--pagination-text-color) !important;
+}
+
+::ng-deep .mat-mdc-icon-button.mat-mdc-button-disabled {
+  color: var(--pagination-text-color) !important;
+}
+
+::ng-deep .mat-mdc-select-value-text {
+  color: var(--pagination-text-color) !important;
+}
+
+::ng-deep .mat-mdc-paginator-page-size-select .mat-mdc-select-arrow {
+  color: var(--pagination-text-color) !important;
+}
+
+::ng-deep .mat-mdc-paginator-navigation-previous,
+::ng-deep .mat-mdc-paginator-navigation-next,
+::ng-deep .mat-mdc-paginator-navigation-first,
+::ng-deep .mat-mdc-paginator-navigation-last {
+  color: var(--pagination-text-color) !important;
+}
+
+::ng-deep .mat-mdc-icon-button .mat-mdc-button-disabled {
+  color: rgba(255, 255, 255, 0.5) !important; 
+}
+
+::ng-deep .mat-mdc-paginator-container {
+  padding: 0 !important;
+}
+
+::ng-deep .mat-mdc-paginator-page-size-label,
+::ng-deep .mat-mdc-paginator-range-label,
+::ng-deep .mat-mdc-select-value-text {
+  color: var(--pagination-text-color) !important;
+}
+
+::ng-deep .mat-mdc-paginator-navigation-first .mat-mdc-button-focus-overlay,
+::ng-deep .mat-mdc-paginator-navigation-previous .mat-mdc-button-focus-overlay,
+::ng-deep .mat-mdc-paginator-navigation-next .mat-mdc-button-focus-overlay,
+::ng-deep .mat-mdc-paginator-navigation-last .mat-mdc-button-focus-overlay,
+::ng-deep .mat-mdc-paginator-navigation-first .mat-mdc-button-ripple,
+::ng-deep .mat-mdc-paginator-navigation-previous .mat-mdc-button-ripple,
+::ng-deep .mat-mdc-paginator-navigation-next .mat-mdc-button-ripple,
+::ng-deep .mat-mdc-paginator-navigation-last .mat-mdc-button-ripple,
+::ng-deep .mat-mdc-paginator-navigation-first svg,
+::ng-deep .mat-mdc-paginator-navigation-previous svg,
+::ng-deep .mat-mdc-paginator-navigation-next svg,
+::ng-deep .mat-mdc-paginator-navigation-last svg {
+  color: var(--pagination-text-color) !important;
+  fill: var(--pagination-text-color) !important;
+}
+
+::ng-deep .mat-mdc-paginator-navigation-first.mat-mdc-button-disabled svg,
+::ng-deep .mat-mdc-paginator-navigation-previous.mat-mdc-button-disabled svg,
+::ng-deep .mat-mdc-paginator-navigation-next.mat-mdc-button-disabled svg,
+::ng-deep .mat-mdc-paginator-navigation-last.mat-mdc-button-disabled svg {
+  color: var(--pagination-navigation-color) !important;
+  fill: var(--pagination-navigation-color)  !important;
+}
+
+::ng-deep .mdc-text-field--outlined .mdc-notched-outline {
+  border: solid 2px var(--pagination-navigation-color) !important;
+}
+

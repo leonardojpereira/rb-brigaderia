@@ -10,12 +10,20 @@ export class MonthSalesChartComponent implements OnInit {
   @Input() year: number = new Date().getFullYear();
   chartData: any[] = [];
   view: [number, number] = [window.innerWidth * 0.9, 300];
-  customColors: any[] = [{ name: 'Vendas Mensais', value: '#000000' }]; // Cor preta para a linha
+  customColors: any[] = [];
 
   constructor(private vendasCaixinhasService: VendasCaixinhasService) {}
 
   ngOnInit(): void {
+    this.updateChartColors(); // Atualiza as cores ao inicializar o componente
     this.getMonthlySales(this.year);
+
+    // Monitora alterações no tema
+    const observer = new MutationObserver(() => {
+      this.updateChartColors();
+    });
+
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -41,6 +49,13 @@ export class MonthSalesChartComponent implements OnInit {
       },
       error: (error) => console.error('Erro ao carregar vendas mensais:', error),
     });
+  }
+
+  updateChartColors(): void {
+    const isDarkMode = document.body.classList.contains('dark-theme');
+    this.customColors = [
+      { name: 'Vendas Mensais', value: isDarkMode ? '#ffffff' : '#000000' }, 
+    ];
   }
 
   formatYAxisTicks(value: number): string {

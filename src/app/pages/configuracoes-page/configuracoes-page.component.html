@@ -3,6 +3,8 @@
     <app-header placeholder="Pesquisar usuário" title="Configurações" buttonText="Criar novo usuário"
       (filterChange)="onFilterChange($event)" (buttonClick)="openModal(false)"></app-header>
 
+    
+
     <app-custom-table minWidth="1000px" [columns]="columns" [data]="usuarios" [actions]="actions"
       [noDataMessage]="'Nenhum usuário encontrado'"></app-custom-table>
 

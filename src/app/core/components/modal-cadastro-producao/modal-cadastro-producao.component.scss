@@ -9,6 +9,10 @@
         display: flex;
         flex-direction: column;
         gap: 8px;
+
+        .label {
+            color: var(--label-color);
+        }
     }
 
     .quantity-input {

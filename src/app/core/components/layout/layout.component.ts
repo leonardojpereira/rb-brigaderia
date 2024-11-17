@@ -13,6 +13,20 @@ export class LayoutComponent {
   }
 
   @Input() isDashboardPage: boolean = false;
+  isDarkMode = false;
+
+  toggleDarkMode(): void {
+    this.isDarkMode = !this.isDarkMode;
+    document.body.classList.toggle('dark-theme', this.isDarkMode);
+    localStorage.setItem('isDarkMode', JSON.stringify(this.isDarkMode));
+  }
+
+  loadThemePreference(): void {
+    const savedTheme = localStorage.getItem('isDarkMode');
+    this.isDarkMode = savedTheme ? JSON.parse(savedTheme) : false;
+    document.body.classList.toggle('dark-theme', this.isDarkMode);
+  }
+
 
   currentDate() {
     const date = new Date();

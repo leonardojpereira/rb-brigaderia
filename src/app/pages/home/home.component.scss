@@ -1,3 +1,6 @@
+.container {
+  background-color: var(--content-background-color);
+}
 
 
 .wrap {
@@ -5,13 +8,26 @@
     gap: 20px;
     align-items: end;
     width: 100%;
+    
+    @media (max-width: 1180px) {
+      flex-direction: column;
+      align-items: initial;
+    }
 
     .resumo-receita-container {
       width: 75%;
+
+      @media (max-width: 1180px) {
+        width: 100%;
+      }
     }
 
     .resumo-estoque-container {
       width: 25%;
       height: 100%;
+
+      @media (max-width: 1180px) {
+        width: 100%;
+      }
     }
   }

@@ -1,30 +1,28 @@
-import { animate, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MatAccordion } from '@angular/material/expansion';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu-sidebar',
   templateUrl: './menu-sidebar.component.html',
   styleUrls: ['./menu-sidebar.component.scss'],
-  animations: [
-    trigger('delayedDisplay', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('50ms 230ms ease-in', style({ opacity: 1 })),
-      ]),
-    ]),
-  ],
 })
 export class MenuSidebarComponent implements OnInit {
-  @ViewChild(MatAccordion) accordion: MatAccordion | undefined;
-  
   @Input() isMenuExpanded: boolean = false;
   isLogoutModalOpen: boolean = false;
+  menuLogo: string = 'assets/logo_brigaderia.png'; 
 
   constructor(private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit(): void {
+    this.updateLogo();
+    const observer = new MutationObserver(() => this.updateLogo());
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+  }
+
+  updateLogo(): void {
+    const isDarkMode = document.body.classList.contains('dark-theme');
+    this.menuLogo = isDarkMode ? 'assets/logo_brigaderia_dark_mode.png' : 'assets/logo_brigaderia.png';
+  }
 
   toggleMenu() {
     this.isMenuExpanded = !this.isMenuExpanded;

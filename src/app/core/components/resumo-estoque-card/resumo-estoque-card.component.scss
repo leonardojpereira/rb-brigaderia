@@ -1,16 +1,16 @@
 .resume-container {
-  box-shadow: 0 2px 12px rgb(0 0 0 / 13%);
+  box-shadow: 0 2px 12px var(--table-box-shadow-color);
   border-radius: 12px;
   padding: 18px;
   margin-top: 22px;
   display: flex;
   flex-direction: column;
   gap: 26px;
-  background-color: #fff;
+  background-color: var(--card-background-color);
 
   .title {
     font-size: 22px;
-    color: #383e49;
+    color: var(--text-color);
     margin: 0;
   }
 
@@ -67,13 +67,13 @@
 
         .product-name {
           font-size: 16px;
-          color: #383e49;
+          color: var(--text-color);
           font-weight: bold;
         }
 
         .product-quantity {
           font-size: 14px;
-          color: #667085;
+          color: var(--small-text-color);
         }
       }
 

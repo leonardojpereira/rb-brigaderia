@@ -1,21 +1,43 @@
 .chart-container {
-    box-shadow: 0 2px 12px rgb(0 0 0 / 13%);
-    border-radius: 12px;
-    margin-top: 22px;
-    display: block;
-    flex-direction: column;
-    background-color: #fff;
+  box-shadow: 0 2px 12px var(--table-box-shadow-color);
+  border-radius: 12px;
+  margin-top: 22px;
+  display: block;
+  flex-direction: column;
+  background-color: var(--card-background-color);
 
-    .title-chart {
-        font-size: 22px;
-        color: #383e49;
-        margin: 0;
-        padding: 18px;
-        border-bottom: 1px solid #e0e0e0;
-    }
+  .title-chart {
+    font-size: 22px;
+    color: var(--text-color);
+    margin: 0;
+    padding: 18px;
   }
+}
 
-  ::ng-deep .bar {
-    fill: #000;
-  }
-  
+::ng-deep .bar {
+  fill: var(--text-color);
+}
+
+::ng-deep .ngx-charts text {
+  fill: var(--text-color) !important;
+  font-size: 12px;
+}
+
+::ng-deep .ngx-charts .axis text,
+::ng-deep .ngx-charts .tick text {
+  fill: var(--text-color) !important;
+}
+
+::ng-deep .ngx-charts .axis line,
+::ng-deep .ngx-charts .gridline-path {
+  stroke: var(--text-color) !important;
+  opacity: 0.3;
+}
+
+::ng-deep .circle {
+  stroke: var(--text-color) !important;
+}
+
+::ng-deep .legend-label {
+  fill: var(--text-color) !important;
+}

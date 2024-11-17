@@ -16,7 +16,7 @@
   }
   
   h1 {
-    color: #000;
+    color: var(--text-color);
   }
   
   .body {
@@ -28,6 +28,7 @@
   
     p {
       text-align: center;
+      color: var(--small-text-color);
     }
   
     @media (max-width: 768px) {
@@ -40,6 +41,6 @@
 
   .close {
     font-size: 100px;
-    color: #000;
+    color: var(--text-color);
   }
   

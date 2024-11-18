@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: HomeComponent, canActivate: [AuthGuard] },
   {
-    path: 'estoque',
+    path: 'estoque/cadastrar',
     component: EstoquePageComponent,
     canActivate: [AuthGuard],
   },
@@ -34,7 +34,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'entrada-saida-estoque',
+    path: 'estoque/entrada-saida',
     component: EntradaSaidaPageComponent,
     canActivate: [AuthGuard],
   },

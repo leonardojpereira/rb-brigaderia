@@ -12,8 +12,15 @@ export class MenuComponent {
 
   constructor(private router: Router) {}
 
+  isDropdownOpen: boolean = false;
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
   navigate(route: string) {
     if (route) {
+      this.isDropdownOpen = false; 
       this.router.navigate([route]);
     }
   }

@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   padding: 0;
-  align-items: center; 
-  gap: 50px; 
+  align-items: center;
+  gap: 50px;
   margin-top: 170px;
 
   &.expanded {
@@ -13,13 +13,14 @@
 
   .menu-item {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0; 
+    justify-content: flex-start;
+    margin: 0;
+    padding: 0;
+    gap: 0;
     cursor: pointer;
 
     &.expanded {
-      gap: 14px; 
+      gap: 14px;
     }
 
     .icon {
@@ -44,13 +45,84 @@
       }
     }
 
-    &:hover {
-      .icon {
-        color: #000;
+    &:hover > .icon,
+    &:hover > .menu-link {
+      color: #000; /* Apenas aplica hover diretamente no menu pai */
+    }
+  }
+
+  .menu-item.dropdown {
+    position: relative;
+    display: flex;
+    gap: 0 !important;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+    transition: gap 0.3s ease;
+
+    &.open {
+      gap: 18px !important;
+    }
+
+    .menu-link-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between !important;
+      cursor: pointer;
+
+      &:hover .wrap .icon,
+      &:hover .wrap .menu-link,
+      &:hover .dropdown-icon {
+        color: #000; /* Aplica hover apenas no pai */
       }
-      .menu-link {
-        color: #000;
+
+      .wrap {
+        display: flex;
+        align-items: center;
+        gap: 14px;
       }
+
+      .dropdown-icon {
+        font-size: 24px;
+        color: var(--text-color-menu-sidebar);
+        position: absolute;
+        right: 0;
+        margin-left: auto;
+        transition: color 0.3s ease;
+      }
+    }
+
+    .submenu {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+
+      .submenu-item {
+        cursor: pointer;
+        display: flex;
+        padding-left: 32px;
+        gap: 8px;
+        align-items: center;
+        color: var(--text-color-menu-sidebar);
+        font-size: 14px;
+        transition: all 0.3s ease;
+
+        &:hover {
+          color: #000;
+        }
+      }
+    }
+
+    &.open .submenu {
+      max-height: 200px;
+      opacity: 1;
     }
   }
 }

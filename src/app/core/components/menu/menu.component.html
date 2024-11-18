@@ -11,18 +11,30 @@
         </span>
         <span class="menu-link" *ngIf="isMenuExpanded">Vendas</span>
     </li>
-    <li class="menu-item" [ngClass]="{'expanded': isMenuExpanded}" (click)="navigate('/estoque')">
-        <span class="material-symbols-outlined icon">
-            inventory_2
-        </span>
-        <span class="menu-link" *ngIf="isMenuExpanded">Estoque</span>
-    </li>
-    <li class="menu-item" [ngClass]="{'expanded': isMenuExpanded}" (click)="navigate('/entrada-saida-estoque')">
-        <span class="material-symbols-outlined icon">
-            swap_vert
-        </span>
-        <span class="menu-link" *ngIf="isMenuExpanded">Entrada/Saída</span>
-    </li>
+    <li class="menu-item dropdown" (click)="toggleDropdown()" [ngClass]="{'expanded': isMenuExpanded, 'open': isDropdownOpen}">
+        <div class="menu-link-container" >
+          <div class="wrap">
+            <span class="material-symbols-outlined icon">inventory_2</span>
+            <span class="menu-link" *ngIf="isMenuExpanded">Estoque</span>
+          </div>
+          <span class="material-symbols-outlined dropdown-icon" *ngIf="isMenuExpanded">
+            {{ isDropdownOpen ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
+          </span>
+        </div>
+      
+        <!-- Submenu -->
+        <ul class="submenu" *ngIf="isMenuExpanded">
+          <li class="submenu-item" (click)="navigate('/estoque/cadastrar')">
+            <span>Cadastrar estoque</span>
+          </li>
+          <li class="submenu-item" (click)="navigate('/estoque/entrada-saida')">
+            <span>Entrada/Saída</span>
+          </li>
+        </ul>
+      </li>
+      
+      
+      
     <li class="menu-item" [ngClass]="{'expanded': isMenuExpanded}" (click)="navigate('/receitas')">
         <span class="material-symbols-outlined icon">
             menu_book

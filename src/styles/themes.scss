@@ -4,6 +4,7 @@
     /* Tema claro */
     --background-color-menu-sidebar: #ffffff;
     --text-color-menu-sidebar: #5D6679;
+    --text-color-hover-menu-sidebar: #000;
     --content-background-color: #f2f2f2;
     --main-content-background-color: #fff;
     --card-background-color: #fff;
@@ -35,13 +36,14 @@
     --toggle-ball-color: #fff;
     --icon-color: #ccc;
     --toggle-background-active-color: #444;
-    --icon-active-color: #f1c40f; /* Cor ativa para o ícone */
+    --icon-active-color: #f1c40f;
   }
   
   .dark-theme {
     /* Tema escuro */
     --background-color-menu-sidebar: #1E1E1E;
-    --text-color-menu-sidebar: #fff;
+    --text-color-menu-sidebar: #a3a3a3;
+    --text-color-hover-menu-sidebar: #fff;
     --content-background-color: #2E2E2E;
     --main-content-background-color: #3b3b3b;
     --card-background-color: #414141;

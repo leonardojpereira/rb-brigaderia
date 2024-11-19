@@ -26,7 +26,15 @@ export class MenuSidebarComponent implements OnInit {
 
   toggleMenu() {
     this.isMenuExpanded = !this.isMenuExpanded;
+  
+    if (!this.isMenuExpanded) {
+      const menuComponent = document.querySelector('app-menu');
+      if (menuComponent) {
+        (menuComponent as any).resetDropdowns();
+      }
+    }
   }
+  
 
   openLogoutModal() {
     this.isLogoutModalOpen = true;

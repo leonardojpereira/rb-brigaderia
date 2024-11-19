@@ -1,6 +1,5 @@
 .menu-container {
   display: flex;
-  align-items: center;
   flex-direction: column;
   width: 60px;
   height: 100vh;
@@ -8,7 +7,8 @@
   z-index: 1000;
   background-color: var(--background-color-menu-sidebar);
   &.expanded {
-    width: 220px;
+    width: 185px;
+    padding: 0 16px 0 22px;
   }
 
   .menu-header {
@@ -28,6 +28,11 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    align-items: center;
+
+    &.expanded {
+      align-items: initial;
+    }
 
     .menu-footer {
       display: flex;
@@ -37,20 +42,21 @@
       cursor: pointer;
       transition: all 0.3s ease;
 
-      .config-container, .logout-container {
+      .config-container,
+      .logout-container {
         display: flex;
         align-items: center;
         gap: 10px;
 
         &:hover {
           .icon {
-            color: #000;
+            color: var(--text-color-hover-menu-sidebar);
           }
           .logout-text {
-            color: #000;
+            color: var(--text-color-hover-menu-sidebar);
           }
+        }
       }
-    }
 
       .icon {
         color: var(--text-color-menu-sidebar);
@@ -73,15 +79,14 @@
     top: 0;
     left: 0;
     width: 60px;
-    transform: translateX(-60px); 
+    transform: translateX(-60px);
     transition: width 0.3s ease-in-out, transform 0.3s ease;
     background-color: var(--background-color-menu-sidebar);
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px;
 
-
     &.expanded {
       width: 220px;
-      transform: translateX(0); 
+      transform: translateX(0);
     }
   }
 }
@@ -90,11 +95,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed; 
+  position: fixed;
   top: 8px;
   left: 13px;
   color: var(--text-color-menu-sidebar);
-  z-index: 1100; 
+  z-index: 1100;
   outline: none;
 
   .toggle-button {
@@ -104,6 +109,5 @@
     font-size: 24px;
     outline: none;
     color: var(--text-color-menu-sidebar);
-
   }
 }

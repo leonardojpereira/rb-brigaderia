@@ -1,27 +1,38 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss']
+  styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent {
-
   @Input() isMenuExpanded: boolean = false;
+  activeDropdown: string | null = null;
+
 
   constructor(private router: Router) {}
 
-  isDropdownOpen: boolean = false;
-
-  toggleDropdown() {
-    this.isDropdownOpen = !this.isDropdownOpen;
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['isMenuExpanded'] && !changes['isMenuExpanded'].currentValue) {
+      this.resetDropdowns(); 
+    }
   }
 
-  navigate(route: string) {
-    if (route) {
-      this.isDropdownOpen = false; 
-      this.router.navigate([route]);
-    }
+  toggleDropdown(menu: string): void {
+    this.activeDropdown = this.activeDropdown === menu ? null : menu;
+  }
+
+  isDropdownOpen(menu: string): boolean {
+    return this.activeDropdown === menu;
+  }
+
+  navigate(route: string): void {
+    this.activeDropdown = null;
+    this.router.navigate([route]);
+  }
+
+  resetDropdowns(): void {
+    this.activeDropdown = null;
   }
 }

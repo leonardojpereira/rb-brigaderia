@@ -12,23 +12,16 @@
     <div class="menu-header" *ngIf="isMenuExpanded">
         <img [src]="menuLogo" />
     </div>
-    <div class="menu-body">
+    <div class="menu-body" [class.expanded]="isMenuExpanded">
         <app-menu [isMenuExpanded]="isMenuExpanded"></app-menu>
         <div class="menu-footer">
-            <div class="config-container" (click)="navigate('/configuracoes')">
-                <span class="material-symbols-outlined icon">
-                    settings
-                </span>
-                <span class="logout-text" *ngIf="isMenuExpanded">Configurações</span>
-            </div>
             <div (click)="openLogoutModal()" class="logout-container">
-                <span class="material-symbols-outlined icon">
-                    logout
-                </span>
+                <span class="material-symbols-outlined icon">logout</span>
                 <span class="logout-text" *ngIf="isMenuExpanded">Sair</span>
             </div>
         </div>
     </div>
+    
 
     <!-- Modal de Confirmação de Logout -->
     <app-modal-confirmacao [openModal]="isLogoutModalOpen" title="Confirmar logout"

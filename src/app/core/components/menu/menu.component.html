@@ -1,52 +1,67 @@
 <ul class="menu-list" [ngClass]="{'expanded': isMenuExpanded}">
-    <li class="menu-item" [ngClass]="{'expanded': isMenuExpanded}" (click)="navigate('/dashboard')">
-        <span class="material-symbols-outlined icon">
-            dashboard
-        </span>
-        <span class="menu-link" *ngIf="isMenuExpanded">Dashboard</span>
-    </li>
-    <li class="menu-item" [ngClass]="{'expanded': isMenuExpanded}" (click)="navigate('/vendas')">
-        <span class="material-symbols-outlined icon">
-            paid
-        </span>
-        <span class="menu-link" *ngIf="isMenuExpanded">Vendas</span>
-    </li>
-    <li class="menu-item dropdown" (click)="toggleDropdown()" [ngClass]="{'expanded': isMenuExpanded, 'open': isDropdownOpen}">
-        <div class="menu-link-container" >
-          <div class="wrap">
-            <span class="material-symbols-outlined icon">inventory_2</span>
-            <span class="menu-link" *ngIf="isMenuExpanded">Estoque</span>
-          </div>
-          <span class="material-symbols-outlined dropdown-icon" *ngIf="isMenuExpanded">
-            {{ isDropdownOpen ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
-          </span>
-        </div>
-      
-        <!-- Submenu -->
-        <ul class="submenu" *ngIf="isMenuExpanded">
-          <li class="submenu-item" (click)="navigate('/estoque/cadastrar')">
-            <span>Cadastrar estoque</span>
-          </li>
-          <li class="submenu-item" (click)="navigate('/estoque/entrada-saida')">
-            <span>Entrada/Saída</span>
-          </li>
-        </ul>
+  <!-- Dashboard -->
+  <li class="menu-item" [ngClass]="{'expanded': isMenuExpanded}" (click)="navigate('/dashboard')">
+    <span class="material-symbols-outlined icon">dashboard</span>
+    <span class="menu-link" *ngIf="isMenuExpanded">Dashboard</span>
+  </li>
+
+  <!-- Vendas -->
+  <li class="menu-item" [ngClass]="{'expanded': isMenuExpanded}" (click)="navigate('/vendas')">
+    <span class="material-symbols-outlined icon">paid</span>
+    <span class="menu-link" *ngIf="isMenuExpanded">Vendas</span>
+  </li>
+
+  <!-- Estoque Dropdown -->
+  <li class="menu-item dropdown" [ngClass]="{'expanded': isMenuExpanded, 'open': isDropdownOpen('estoque')}" (click)="toggleDropdown('estoque')">
+    <div class="menu-link-container">
+      <div class="wrap">
+        <span class="material-symbols-outlined icon">inventory_2</span>
+        <span class="menu-link" *ngIf="isMenuExpanded">Estoque</span>
+      </div>
+      <span class="material-symbols-outlined dropdown-icon" *ngIf="isMenuExpanded">
+        {{ isDropdownOpen('estoque') ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
+      </span>
+    </div>
+    <ul class="submenu">
+      <li class="submenu-item" (click)="navigate('/estoque/cadastrar')">
+        <span>Cadastrar estoque</span>
       </li>
-      
-      
-      
-    <li class="menu-item" [ngClass]="{'expanded': isMenuExpanded}" (click)="navigate('/receitas')">
-        <span class="material-symbols-outlined icon">
-            menu_book
-        </span>
-        <div class="cadastro-item-container">
-            <span class="menu-link" *ngIf="isMenuExpanded">Receitas</span>
-        </div>
-    </li>
-    <li class="menu-item" [ngClass]="{'expanded': isMenuExpanded}" (click)="navigate('/producoes')">
-        <span class="material-symbols-outlined icon">
-            skillet
-        </span>
-        <span class="menu-link" *ngIf="isMenuExpanded">Produções</span>
-    </li>
+      <li class="submenu-item" (click)="navigate('/estoque/entrada-saida')">
+        <span>Entrada/Saída</span>
+      </li>
+    </ul>
+  </li>
+
+  <!-- Receitas -->
+  <li class="menu-item" [ngClass]="{'expanded': isMenuExpanded}" (click)="navigate('/receitas')">
+    <span class="material-symbols-outlined icon">menu_book</span>
+    <span class="menu-link" *ngIf="isMenuExpanded">Receitas</span>
+  </li>
+
+  <!-- Produções -->
+  <li class="menu-item" [ngClass]="{'expanded': isMenuExpanded}" (click)="navigate('/producoes')">
+    <span class="material-symbols-outlined icon">skillet</span>
+    <span class="menu-link" *ngIf="isMenuExpanded">Produções</span>
+  </li>
+
+  <!-- Configurações Dropdown -->
+  <li class="menu-item dropdown" [ngClass]="{'expanded': isMenuExpanded, 'open': isDropdownOpen('configuracoes')}" (click)="toggleDropdown('configuracoes')">
+    <div class="menu-link-container">
+      <div class="wrap">
+        <span class="material-symbols-outlined icon">settings</span>
+        <span class="menu-link" *ngIf="isMenuExpanded">Configurações</span>
+      </div>
+      <span class="material-symbols-outlined dropdown-icon" *ngIf="isMenuExpanded">
+        {{ isDropdownOpen('configuracoes') ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
+      </span>
+    </div>
+    <ul class="submenu">
+      <li class="submenu-item" (click)="navigate('/configuracoes/cadastro-usuario')">
+        <span>Cadastrar usuário</span>
+      </li>
+      <li class="submenu-item" (click)="navigate('/configuracoes/parametrizacao')">
+        <span>Parametrização</span>
+      </li>
+    </ul>
+  </li>
 </ul>

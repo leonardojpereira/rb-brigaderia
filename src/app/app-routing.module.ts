@@ -29,7 +29,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'configuracoes',
+    path: 'configuracoes/cadastro-usuario',
     component: ConfiguracoesPageComponent,
     canActivate: [AuthGuard],
   },

@@ -11,10 +11,10 @@
   
       <app-brigadeiro-loading *ngIf="isLoading"></app-brigadeiro-loading>
   
-      <!-- <app-modal-cadastro-parametrizacao [parametrizacaoId]="parametrizacaoId" [isVisible]="isModalVisible" [isEditMode]="isEditMode"
+      <app-modal-cadastro-parametrizacao [parametrizacaoId]="parametrizacaoId" [isVisible]="isModalVisible" [isEditMode]="isEditMode"
         (onClose)="closeModal()" (onSave)="onParametrizacaoSaved($event)"
         (onError)="handleErrorModal($event)"></app-modal-cadastro-parametrizacao>
-   -->
+  
       <app-modal-sucesso [openModal]="modalSuccess" [title]="titulo" [subTitle]="subTitulo"
         (closeModal)="modalSuccess = !modalSuccess">
       </app-modal-sucesso>

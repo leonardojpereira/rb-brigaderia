@@ -16,12 +16,12 @@ export class ParametrizacaoPageComponent implements OnInit {
   };
 
   columns = [
-    { field: 'nomeVendedor', header: 'Nome do Vendedor' },
+    { field: 'nomeVendedor', header: 'Nome do vendedor(a)' },
     { field: 'custo', header: 'Custo' },
     { field: 'lucro', header: 'Lucro' },
-    { field: 'localVenda', header: 'Local de Venda' },
-    { field: 'horarioInicio', header: 'Horário de Início' },
-    { field: 'horarioFim', header: 'Horário de Fim' },
+    { field: 'localVenda', header: 'Local de venda' },
+    { field: 'horarioInicio', header: 'Horário de início' },
+    { field: 'horarioFim', header: 'Horário de fim' },
   ];
 
   actions = [
@@ -45,6 +45,7 @@ export class ParametrizacaoPageComponent implements OnInit {
   modalSuccess: boolean = false;
   titulo: string = '';
   subTitulo: string = '';
+  modalError: boolean = false;
 
   constructor(private parametrizacaoService: ParametrizacaoService) {}
 
@@ -92,11 +93,17 @@ export class ParametrizacaoPageComponent implements OnInit {
     }
   }
 
+  handleErrorModal(message: string): void {
+    this.modalError = true;
+    this.titulo = 'Erro!';
+    this.subTitulo = message;
+  }
+
   closeModal(): void {
     this.isModalVisible = false;
   }
 
-  onParametrizacaoSaved(): void {
+  onParametrizacaoSaved(parametrizacao: any): void {
     this.closeModal();
     this.fetchParametrizacoes();
     this.handleSuccessModal();

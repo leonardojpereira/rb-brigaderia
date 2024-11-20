@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -16,9 +16,10 @@ export class ParametrizacaoService {
       Authorization: `Bearer ${token}`,
     });
 
-    const params = new HttpParams()
-      .set('pageNumber', pageNumber.toString())
-      .set('pageSize', pageSize.toString());
+    const params = {
+      pageNumber: pageNumber.toString(),
+      pageSize: pageSize.toString(),
+    };
 
     return this.httpClient.get(`${environment.apiUrl}Parametrizacao`, {
       headers: headers,
@@ -33,7 +34,7 @@ export class ParametrizacaoService {
       Authorization: `Bearer ${token}`,
     });
 
-    return this.httpClient.post(`${environment.apiUrl}v1/Parametrizacao`, parametrizacaoData, {
+    return this.httpClient.post(`${environment.apiUrl}Parametrizacao`, parametrizacaoData, {
       headers: headers,
     });
   }
@@ -46,6 +47,30 @@ export class ParametrizacaoService {
     });
 
     return this.httpClient.delete(`${environment.apiUrl}Parametrizacao/${id}`, {
+      headers: headers,
+    });
+  }
+
+  getParametrizacaoById(id: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.httpClient.get(`${environment.apiUrl}Parametrizacao/${id}`, {
+      headers: headers,
+    });
+  }
+
+  updateParametrizacao(id: string, parametrizacaoData: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.httpClient.put(`${environment.apiUrl}Parametrizacao/${id}`, parametrizacaoData, {
       headers: headers,
     });
   }

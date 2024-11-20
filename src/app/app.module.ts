@@ -62,7 +62,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     MonthSalesChartComponent,
     ModalCadastroVendasComponent,
     CardResumoEstoqueDashboardComponent,
-    ResumoVendasDashboardComponent
+    ResumoVendasDashboardComponent,
+    ParametrizacaoPageComponent
   ],
   imports: [
     BrowserModule,
@@ -103,3 +104,4 @@ import { MonthSalesChartComponent } from './core/components/month-sales-chart/mo
 import { ModalCadastroVendasComponent } from './core/components/modal-cadastro-vendas/modal-cadastro-vendas.component';
 import { CardResumoEstoqueDashboardComponent } from './core/components/card-resumo-estoque-dashboard/card-resumo-estoque-dashboard.component';
 import { ResumoVendasDashboardComponent } from './core/components/resumo-vendas-dashboard/resumo-vendas-dashboard.component';
+import { ParametrizacaoPageComponent } from './pages/parametrizacao-page/parametrizacao-page.component';

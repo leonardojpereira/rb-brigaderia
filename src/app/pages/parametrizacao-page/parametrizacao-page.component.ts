@@ -1,0 +1,146 @@
+import { Component, OnInit } from '@angular/core';
+import { IPaginacaoModel } from '../../core/models/IPaginacaoModel';
+import { delay } from 'rxjs/operators';
+import { ParametrizacaoService } from '../../services/parametrizacao.service';
+
+@Component({
+  selector: 'app-parametrizacao-page',
+  templateUrl: './parametrizacao-page.component.html',
+  styleUrls: ['./parametrizacao-page.component.scss'],
+})
+export class ParametrizacaoPageComponent implements OnInit {
+  paginacao: IPaginacaoModel = {
+    pageNumber: 1,
+    pageSize: 7,
+    totalItem: 0,
+  };
+
+  columns = [
+    { field: 'nomeVendedor', header: 'Nome do Vendedor' },
+    { field: 'custo', header: 'Custo' },
+    { field: 'lucro', header: 'Lucro' },
+    { field: 'localVenda', header: 'Local de Venda' },
+    { field: 'horarioInicio', header: 'Horário de Início' },
+    { field: 'horarioFim', header: 'Horário de Fim' },
+  ];
+
+  actions = [
+    {
+      icon: 'edit',
+      action: (item: any) => this.openModal(true, item),
+    },
+    {
+      icon: 'delete',
+      action: (item: any) => this.openDeleteModal(item.id),
+    },
+  ];
+
+  isLoading = false;
+  parametrizacoes: any[] = [];
+  isModalVisible: boolean = false;
+  isEditMode: boolean = false;
+  parametrizacaoId: string = '';
+  isDeleteModalOpen: boolean = false;
+  isDisabled: boolean = false;
+  modalSuccess: boolean = false;
+  titulo: string = '';
+  subTitulo: string = '';
+
+  constructor(private parametrizacaoService: ParametrizacaoService) {}
+
+  ngOnInit(): void {
+    this.fetchParametrizacoes();
+  }
+
+  fetchParametrizacoes(): void {
+    this.isLoading = true;
+    this.parametrizacaoService
+      .getParametrizacoes(this.paginacao.pageNumber, this.paginacao.pageSize)
+      .pipe(delay(500))
+      .subscribe({
+        next: (response) => {
+          if (response.isSuccess) {
+            this.parametrizacoes = response.data.parametrizacoes.map((item: any) => ({
+              id: item.id,
+              nomeVendedor: item.nomeVendedor,
+              custo: this.formatCurrency(item.custo),
+              lucro: this.formatCurrency(item.lucro),
+              localVenda: item.localVenda,
+              horarioInicio: item.horarioInicio,
+              horarioFim: item.horarioFim,
+            }));
+            this.paginacao.totalItem = response.data.totalItems;
+          }
+        },
+        error: (error) => {
+          console.error('Erro ao buscar parametrizações:', error);
+        },
+        complete: () => {
+          this.isLoading = false;
+        },
+      });
+  }
+
+  openModal(isEdit: boolean = false, parametrizacao?: any): void {
+    this.isEditMode = isEdit;
+    this.isModalVisible = true;
+
+    if (isEdit && parametrizacao) {
+      this.parametrizacaoId = parametrizacao.id;
+    } else {
+      this.resetSelectedParametrizacao();
+    }
+  }
+
+  closeModal(): void {
+    this.isModalVisible = false;
+  }
+
+  onParametrizacaoSaved(): void {
+    this.closeModal();
+    this.fetchParametrizacoes();
+    this.handleSuccessModal();
+  }
+
+  openDeleteModal(id: string): void {
+    this.parametrizacaoId = id;
+    this.isDeleteModalOpen = true;
+  }
+
+  closeDeleteModal(): void {
+    this.isDeleteModalOpen = false;
+  }
+
+  deleteParametrizacao(): void {
+    this.parametrizacaoService.deleteParametrizacao(this.parametrizacaoId).subscribe({
+      next: () => {
+        this.closeDeleteModal();
+        this.fetchParametrizacoes();
+        this.handleSuccessModal('Parametrização deletada com sucesso!');
+      },
+      error: (error) => {
+        console.error('Erro ao deletar parametrização:', error);
+      },
+    });
+  }
+
+  handleSuccessModal(subTitle: string = 'Parametrização salva com sucesso!'): void {
+    this.modalSuccess = true;
+    this.titulo = 'Sucesso!';
+    this.subTitulo = subTitle;
+  }
+
+  resetSelectedParametrizacao(): void {
+    this.parametrizacaoId = '';
+  }
+
+  formatCurrency(value: number): string {
+    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+  }
+
+  getPaginacao(event: any): void {
+    this.paginacao.pageNumber = event.pageNumber;
+    this.paginacao.pageSize = event.pageSize;
+    this.fetchParametrizacoes();
+  }
+}

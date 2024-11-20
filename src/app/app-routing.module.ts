@@ -9,6 +9,7 @@ import { AuthGuard } from './auth.guard';
 import { ConfiguracoesPageComponent } from './pages/configuracoes-page/configuracoes-page.component';
 import { EntradaSaidaPageComponent } from './pages/entrada-saida-page/entrada-saida-page.component';
 import { VendasPageComponent } from './pages/vendas-page/vendas-page.component';
+import { ParametrizacaoPageComponent } from './pages/parametrizacao-page/parametrizacao-page.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -43,6 +44,13 @@ const routes: Routes = [
     component: VendasPageComponent,
     canActivate: [AuthGuard],
   },
+
+  {
+    path: 'configuracoes/parametrizacao',
+    component: ParametrizacaoPageComponent,
+    canActivate: [AuthGuard],
+  },
+
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];
 

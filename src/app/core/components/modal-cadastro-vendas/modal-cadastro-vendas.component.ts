@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { VendasCaixinhasService } from '../../../services/vendasCaixinhas.service';
 import { ParametrizacaoService } from '../../../services/parametrizacao.service';
+import { debounceTime, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-modal-cadastro-vendas',
@@ -38,6 +39,11 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
   };
   vendedorOptions: { value: string; label: string }[] = [];
   isLoading: boolean = false;
+  precoCaixinha: number = 0;
+  custoUnitario: number = 0;
+  lucroUnitario: number = 0;
+
+  private quantidadeSubject = new Subject<number>();
 
   constructor(
     private vendasCaixinhasService: VendasCaixinhasService,
@@ -46,6 +52,8 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.loadVendedores();
+    this.setupQuantidadeListener();
+
     if (this.isEditMode && this.vendaId) {
       this.loadVendaDetails();
     }
@@ -65,10 +73,12 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
     this.parametrizacaoService.getVendedores().subscribe({
       next: (response) => {
         if (response.isSuccess && response.data?.vendedores) {
-          this.vendedorOptions = response.data.vendedores.map((vendedor: { id: string; nomeVendedor: string }) => ({
-            value: vendedor.id,
-            label: vendedor.nomeVendedor, 
-          }));
+          this.vendedorOptions = response.data.vendedores.map(
+            (vendedor: { id: string; nomeVendedor: string }) => ({
+              value: vendedor.id,
+              label: vendedor.nomeVendedor,
+            })
+          );
         }
       },
       error: () => {
@@ -76,19 +86,43 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
       },
     });
   }
-  
+
+  setupQuantidadeListener(): void {
+    this.quantidadeSubject.pipe(debounceTime(500)).subscribe((quantidade) => {
+      this.calculateTotals(quantidade);
+    });
+  }
+
+  onQuantidadeChange(): void {
+    this.quantidadeSubject.next(this.venda.quantidadeCaixinhas);
+  }
+
+  calculateTotals(quantidade: number): void {
+    if (quantidade > 0) {
+      this.venda.precoTotalVenda = quantidade * this.precoCaixinha;
+      this.venda.custoTotal = quantidade * this.custoUnitario;
+      this.venda.lucro = quantidade * this.lucroUnitario;
+      this.venda.salario = quantidade * 3;
+    } else {
+      this.venda.precoTotalVenda = 0;
+      this.venda.custoTotal = 0;
+      this.venda.lucro = 0;
+      this.venda.salario = 0;
+    }
+  }
 
   onVendedorChange(vendedorId: string): void {
     if (!vendedorId) return;
-  
-    this.isLoading = true; // Indica carregamento enquanto busca os dados
+
+    this.isLoading = true;
     this.parametrizacaoService.getParametrizacaoById(vendedorId).subscribe({
       next: (response) => {
         if (response.isSuccess && response.data?.parametrizacao) {
           const data = response.data.parametrizacao;
-          // Atualiza os campos com os dados retornados
-          this.venda.custoTotal = data.custo;
-          this.venda.lucro = data.lucro;
+          this.precoCaixinha = data.precoCaixinha;
+          this.custoUnitario = data.custo;
+          this.lucroUnitario = data.lucro;
+
           this.venda.localVenda = data.localVenda;
           this.venda.horarioInicio = data.horarioInicio;
           this.venda.horarioFim = data.horarioFim;
@@ -98,11 +132,10 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
         this.onError.emit('Erro ao carregar detalhes do vendedor.');
       },
       complete: () => {
-        this.isLoading = false; 
+        this.isLoading = false;
       },
     });
   }
-  
 
   resetVenda(): void {
     this.venda = {
@@ -117,6 +150,9 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
       horarioInicio: '',
       horarioFim: '',
     };
+    this.precoCaixinha = 0;
+    this.custoUnitario = 0;
+    this.lucroUnitario = 0;
   }
 
   loadVendaDetails(): void {

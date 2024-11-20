@@ -17,6 +17,7 @@ export class ParametrizacaoPageComponent implements OnInit {
 
   columns = [
     { field: 'nomeVendedor', header: 'Nome do vendedor(a)' },
+    { field: 'precoCaixinha', header: 'Preço da caixinha' },
     { field: 'custo', header: 'Custo' },
     { field: 'lucro', header: 'Lucro' },
     { field: 'localVenda', header: 'Local de venda' },
@@ -64,6 +65,7 @@ export class ParametrizacaoPageComponent implements OnInit {
             this.parametrizacoes = response.data.parametrizacoes.map((item: any) => ({
               id: item.id,
               nomeVendedor: item.nomeVendedor,
+              precoCaixinha: this.formatCurrency(item.precoCaixinha),
               custo: this.formatCurrency(item.custo),
               lucro: this.formatCurrency(item.lucro),
               localVenda: item.localVenda,

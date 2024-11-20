@@ -17,6 +17,7 @@ export class ModalCadastroParametrizacaoComponent implements OnInit, OnChanges {
 
   parametrizacao = {
     nomeVendedor: '',
+    precoCaixinha: 0,
     custo: 0,
     lucro: 0,
     localVenda: '',
@@ -46,6 +47,7 @@ export class ModalCadastroParametrizacaoComponent implements OnInit, OnChanges {
   resetParametrizacao(): void {
     this.parametrizacao = {
       nomeVendedor: '',
+      precoCaixinha: 0,
       custo: 0,
       lucro: 0,
       localVenda: '',
@@ -64,6 +66,7 @@ export class ModalCadastroParametrizacaoComponent implements OnInit, OnChanges {
           const data = response.data.parametrizacao;
           this.parametrizacao = {
             nomeVendedor: data.nomeVendedor || '',
+            precoCaixinha: data.precoCaixinha || 0,
             custo: data.custo || 0,
             lucro: data.lucro || 0,
             localVenda: data.localVenda || '',

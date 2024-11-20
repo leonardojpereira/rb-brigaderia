@@ -74,4 +74,17 @@ export class ParametrizacaoService {
       headers: headers,
     });
   }
+
+  getVendedores(): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+  
+    return this.httpClient.get(`${environment.apiUrl}Parametrizacao/Vendedores`, {
+      headers: headers,
+    });
+  }
+  
 }

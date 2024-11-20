@@ -1,5 +1,14 @@
-import { Component, EventEmitter, Input, Output, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { VendasCaixinhasService } from '../../../services/vendasCaixinhas.service';
+import { ParametrizacaoService } from '../../../services/parametrizacao.service';
 
 @Component({
   selector: 'app-modal-cadastro-vendas',
@@ -16,6 +25,7 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
   @Output() onError = new EventEmitter<string>();
 
   venda = {
+    nomeVendedor: '',
     dataVenda: '',
     quantidadeCaixinhas: 0,
     precoTotalVenda: 0,
@@ -26,11 +36,16 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
     horarioInicio: '',
     horarioFim: '',
   };
+  vendedorOptions: { value: string; label: string }[] = [];
   isLoading: boolean = false;
 
-  constructor(private vendasCaixinhasService: VendasCaixinhasService) {}
+  constructor(
+    private vendasCaixinhasService: VendasCaixinhasService,
+    private parametrizacaoService: ParametrizacaoService
+  ) {}
 
   ngOnInit(): void {
+    this.loadVendedores();
     if (this.isEditMode && this.vendaId) {
       this.loadVendaDetails();
     }
@@ -41,14 +56,57 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
       if (this.isEditMode && this.vendaId) {
         this.loadVendaDetails();
       } else {
-        this.resetVenda(); // Reset para cadastro de nova venda
+        this.resetVenda();
       }
     }
   }
 
-  // Método para redefinir os valores de venda
+  loadVendedores(): void {
+    this.parametrizacaoService.getVendedores().subscribe({
+      next: (response) => {
+        if (response.isSuccess && response.data?.vendedores) {
+          this.vendedorOptions = response.data.vendedores.map((vendedor: { id: string; nomeVendedor: string }) => ({
+            value: vendedor.id,
+            label: vendedor.nomeVendedor, 
+          }));
+        }
+      },
+      error: () => {
+        this.onError.emit('Erro ao carregar lista de vendedores.');
+      },
+    });
+  }
+  
+
+  onVendedorChange(vendedorId: string): void {
+    if (!vendedorId) return;
+  
+    this.isLoading = true; // Indica carregamento enquanto busca os dados
+    this.parametrizacaoService.getParametrizacaoById(vendedorId).subscribe({
+      next: (response) => {
+        if (response.isSuccess && response.data?.parametrizacao) {
+          const data = response.data.parametrizacao;
+          // Atualiza os campos com os dados retornados
+          this.venda.custoTotal = data.custo;
+          this.venda.lucro = data.lucro;
+          this.venda.localVenda = data.localVenda;
+          this.venda.horarioInicio = data.horarioInicio;
+          this.venda.horarioFim = data.horarioFim;
+        }
+      },
+      error: () => {
+        this.onError.emit('Erro ao carregar detalhes do vendedor.');
+      },
+      complete: () => {
+        this.isLoading = false; 
+      },
+    });
+  }
+  
+
   resetVenda(): void {
     this.venda = {
+      nomeVendedor: '',
       dataVenda: '',
       quantidadeCaixinhas: 0,
       precoTotalVenda: 0,
@@ -63,13 +121,14 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
 
   loadVendaDetails(): void {
     if (!this.vendaId) return;
-    
+
     this.isLoading = true;
     this.vendasCaixinhasService.getVendaById(this.vendaId).subscribe({
       next: (response) => {
         if (response.isSuccess && response.data?.vendaCaixinhas) {
           const vendaData = response.data.vendaCaixinhas;
           this.venda = {
+            nomeVendedor: vendaData.nomeVendedor,
             dataVenda: vendaData.dataVenda.split('T')[0],
             quantidadeCaixinhas: vendaData.quantidadeCaixinhas,
             precoTotalVenda: vendaData.precoTotalVenda,
@@ -88,7 +147,7 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
       complete: () => {
         this.isLoading = false;
       },
-    }); 
+    });
   }
 
   closeModal(): void {
@@ -108,7 +167,9 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
         this.createVenda(vendaData);
       }
     } else {
-      this.onError.emit('Preencha todos os campos obrigatórios antes de salvar.');
+      this.onError.emit(
+        'Preencha todos os campos obrigatórios antes de salvar.'
+      );
     }
   }
 
@@ -118,7 +179,7 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
         if (response.isSuccess) {
           this.onSave.emit(response.data);
           this.closeModal();
-          this.resetVenda(); // Reset após salvar para limpar o modal
+          this.resetVenda();
         } else {
           this.onError.emit('Erro ao salvar venda.');
         }
@@ -142,17 +203,8 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
           this.onError.emit('Erro ao atualizar venda.');
         }
       },
-      error: (httpErrorResponse) => {
-        this.isLoading = false;
-        if (
-          httpErrorResponse.status === 400 &&
-          httpErrorResponse.error &&
-          httpErrorResponse.error.errors
-        ) {
-          this.onError.emit(httpErrorResponse.error.errors);
-        } else {
-          console.error('Erro inesperado:', httpErrorResponse);
-        }
+      error: (error) => {
+        this.onError.emit('Erro inesperado ao atualizar venda.');
       },
     });
   }

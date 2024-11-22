@@ -36,6 +36,8 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
     localVenda: '',
     horarioInicio: '',
     horarioFim: '',
+    precoPassagem: 0,
+    precisaPassagem: false,
   };
   vendedorOptions: { value: string; label: string }[] = [];
   isLoading: boolean = false;
@@ -88,8 +90,7 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
   }
 
   setupQuantidadeListener(): void {
-    this.quantidadeSubject.pipe(debounceTime(500)).subscribe((quantidade) => {
-      this.calculateTotals(quantidade);
+    this.quantidadeSubject.pipe(debounceTime(1000)).subscribe((quantidade) => {
     });
   }
 
@@ -102,6 +103,11 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
       this.venda.precoTotalVenda = quantidade * this.precoCaixinha;
       this.venda.custoTotal = quantidade * this.custoUnitario;
       this.venda.lucro = quantidade * this.lucroUnitario;
+
+      if (this.venda.precisaPassagem) {
+        this.venda.lucro -= this.venda.precoPassagem;
+      }
+
       this.venda.salario = quantidade * 3;
     } else {
       this.venda.precoTotalVenda = 0;
@@ -119,6 +125,7 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
       next: (response) => {
         if (response.isSuccess && response.data?.parametrizacao) {
           const data = response.data.parametrizacao;
+
           this.precoCaixinha = data.precoCaixinha;
           this.custoUnitario = data.custo;
           this.lucroUnitario = data.lucro;
@@ -126,6 +133,10 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
           this.venda.localVenda = data.localVenda;
           this.venda.horarioInicio = data.horarioInicio;
           this.venda.horarioFim = data.horarioFim;
+          this.venda.precoPassagem = data.precoPassagem;
+
+          this.venda.precisaPassagem = data.precisaPassagem;
+          this.venda.precoPassagem = data.precoPassagem;
         }
       },
       error: () => {
@@ -149,6 +160,8 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
       localVenda: '',
       horarioInicio: '',
       horarioFim: '',
+      precoPassagem: 0,
+      precisaPassagem: false,
     };
     this.precoCaixinha = 0;
     this.custoUnitario = 0;
@@ -174,6 +187,8 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
             localVenda: vendaData.localVenda,
             horarioInicio: vendaData.horarioInicio,
             horarioFim: vendaData.horarioFim,
+            precoPassagem: vendaData.precoPassagem,
+            precisaPassagem: vendaData.precisaPassagem,
           };
         }
       },

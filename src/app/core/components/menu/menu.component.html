@@ -45,7 +45,7 @@
   </li>
 
   <!-- Configurações Dropdown -->
-  <li class="menu-item dropdown" [ngClass]="{'expanded': isMenuExpanded, 'open': isDropdownOpen('configuracoes')}" (click)="toggleDropdown('configuracoes')">
+  <li *ngIf="role !== 'User'" class="menu-item dropdown" [ngClass]="{'expanded': isMenuExpanded, 'open': isDropdownOpen('configuracoes')}" (click)="toggleDropdown('configuracoes')">
     <div class="menu-link-container">
       <div class="wrap">
         <span class="material-symbols-outlined icon">settings</span>

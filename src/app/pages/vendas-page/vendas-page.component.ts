@@ -56,14 +56,25 @@ export class VendasPageComponent implements OnInit {
   filterTimeout: any;
   date: string = '';
   vendedorOptions: { value: string; label: string }[] = [];
+  role: string = '';
 
   constructor(private vendasCaixinhasService: VendasCaixinhasService, private parametrizacaoService: ParametrizacaoService
   ) {}
 
   ngOnInit(): void {
+    this.getPermissao();
     this.loadVendedores();
     this.fetchVendas();
   }
+
+  getPermissao(): void {
+    this.role = localStorage.getItem('role') || '';
+    if (this.role === 'User') {
+      this.isDisabled = true;
+      return;
+    }
+  }
+
 
   fetchVendas(): void {
     this.isLoading = true;

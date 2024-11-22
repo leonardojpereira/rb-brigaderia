@@ -1,6 +1,6 @@
 <app-layout>
   <div class="container">
-    <app-header [isSelectFilterVisible]="true" [selectOptions]="vendedorOptions" [isUniqueDate]="true" [isSearchFilterVisible]="false" [buttonText]="'Adicionar venda'"
+    <app-header [isSelectFilterVisible]="true" [isDisabled]="isDisabled" [selectOptions]="vendedorOptions" [isUniqueDate]="true" [isSearchFilterVisible]="false" [buttonText]="'Adicionar venda'"
       (buttonClick)="openModal(false)" title="Vendas" (filterChange)="onSelectChange($event)" (dataInicialChange)="onDateInicialChange($event)">
     </app-header>
 
@@ -11,7 +11,7 @@
 
     <app-brigadeiro-loading *ngIf="isLoading"></app-brigadeiro-loading>
 
-    <app-modal-cadastro-vendas [vendaId]="vendaId" [isVisible]="isModalVisible" [isEditMode]="isEditMode"
+    <app-modal-cadastro-vendas [isDisabled]="isDisabled" [vendaId]="vendaId" [isVisible]="isModalVisible" [isEditMode]="isEditMode"
       (onClose)="closeModal()" (onSave)="onVendaSaved($event)"
       (onError)="handleErrorModal($event)"></app-modal-cadastro-vendas>
 

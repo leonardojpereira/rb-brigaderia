@@ -50,11 +50,21 @@ export class ParametrizacaoPageComponent implements OnInit {
   modalError: boolean = false;
   filter: string = '';
   filterTimeout: any;
+  role: string = '';
 
   constructor(private parametrizacaoService: ParametrizacaoService) {}
 
   ngOnInit(): void {
+    this.getPermissao();
     this.fetchParametrizacoes();
+  }
+
+  getPermissao(): void {
+    this.role = localStorage.getItem('role') || '';
+    if (this.role === 'User') {
+      this.isDisabled = true;
+      return;
+    }
   }
 
   fetchParametrizacoes(): void {

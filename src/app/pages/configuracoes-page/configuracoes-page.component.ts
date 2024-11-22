@@ -55,8 +55,6 @@ export class ConfiguracoesPageComponent implements OnInit {
     this.fetchUsuarios();
   }
 
- 
-
   fetchUsuarios(): void {
     this.isLoading = true;
     this.usuarioService

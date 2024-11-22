@@ -1,7 +1,7 @@
 <app-layout>
   <div class="container">
-    <app-header [isUniqueDate]="true" [isSearchFilterVisible]="false" [buttonText]="'Adicionar venda'"
-      (buttonClick)="openModal(false)" title="Vendas" (dataInicialChange)="onDateInicialChange($event)">
+    <app-header [isSelectFilterVisible]="true" [selectOptions]="vendedorOptions" [isUniqueDate]="true" [isSearchFilterVisible]="false" [buttonText]="'Adicionar venda'"
+      (buttonClick)="openModal(false)" title="Vendas" (filterChange)="onSelectChange($event)" (dataInicialChange)="onDateInicialChange($event)">
     </app-header>
 
     <app-custom-table minWidth="1400px" [columns]="columns" [data]="vendas" [actions]="actions"

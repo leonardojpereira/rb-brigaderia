@@ -48,6 +48,10 @@
   ::ng-deep div.mat-mdc-select-panel {
     padding: 0 !important;
   }
+
+  ::ng-deep .mat-mdc-select-placeholder {
+    color: var(--placeholder-text-color) !important;
+  }
   
   ::ng-deep .mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-checked::after,
   .mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-indeterminate::after {

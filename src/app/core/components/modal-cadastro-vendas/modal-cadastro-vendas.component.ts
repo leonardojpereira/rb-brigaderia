@@ -44,7 +44,7 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
   precoCaixinha: number = 0;
   custoUnitario: number = 0;
   lucroUnitario: number = 0;
-  showSalary: boolean = true; // Controla a visibilidade do campo Salário
+  showSalary: boolean = true;
 
 
   private quantidadeSubject = new Subject<number>();

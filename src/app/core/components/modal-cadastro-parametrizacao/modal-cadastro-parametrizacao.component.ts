@@ -64,9 +64,6 @@ export class ModalCadastroParametrizacaoComponent implements OnInit, OnChanges {
     } else {
       this.parametrizacao.precoPassagem = null;
     }
-
-    console.log('precisaPassagem:', this.parametrizacao.precisaPassagem);
-    console.log('precoPassagem:', this.parametrizacao.precoPassagem);
   }
 
   resetParametrizacao(): void {

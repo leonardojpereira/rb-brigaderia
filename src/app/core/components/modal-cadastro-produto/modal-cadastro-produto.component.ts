@@ -63,7 +63,6 @@ export class ModalCadastroProdutoComponent implements OnInit {
 
   getPermissao(): void {
     this.role = localStorage.getItem('role') || '';
-    console.log('Role:', this.role);
     if (this.role === 'User') {
       this.isDisabled = true;
       return;
@@ -152,9 +151,6 @@ export class ModalCadastroProdutoComponent implements OnInit {
       minimumStock: this.produto.quantidadeMinima,
       unitPrice: this.produto.precoUnitario,
     };
-
-    console.log('Enviando payload para atualização:', payload);
-
     this.ingredientService.updateIngredient(this.productId, payload).subscribe({
       next: () => {
         this.ingredientService.notifyIngredientsUpdated();

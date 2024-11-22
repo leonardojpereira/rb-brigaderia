@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IPaginacaoModel } from '../../core/models/IPaginacaoModel';
 import { delay } from 'rxjs/operators';
 import { VendasCaixinhasService } from '../../services/vendasCaixinhas.service';
+import { ParametrizacaoService } from '../../services/parametrizacao.service';
 
 @Component({
   selector: 'app-vendas-page',
@@ -54,17 +55,22 @@ export class VendasPageComponent implements OnInit {
   subTitulo: string = '';
   filterTimeout: any;
   date: string = '';
+  vendedorOptions: { value: string; label: string }[] = [];
 
-  constructor(private vendasCaixinhasService: VendasCaixinhasService) {}
+  constructor(private vendasCaixinhasService: VendasCaixinhasService, private parametrizacaoService: ParametrizacaoService
+  ) {}
 
   ngOnInit(): void {
+    this.loadVendedores();
     this.fetchVendas();
   }
 
   fetchVendas(): void {
     this.isLoading = true;
+    const vendedorFiltro = this.filter || null; 
+  
     this.vendasCaixinhasService
-      .getVendas(this.paginacao.pageNumber, this.paginacao.pageSize, this.date)  
+      .getVendas(this.paginacao.pageNumber, this.paginacao.pageSize, this.date, this.filter)  
       .pipe(delay(500))
       .subscribe({
         next: (response) => {
@@ -93,9 +99,15 @@ export class VendasPageComponent implements OnInit {
         },
       });
   }
+  
 
   onDateInicialChange(date: string): void {
     this.date = date;  
+    this.fetchVendas();  
+  }
+
+  onSelectChange(nomeVendedor: string): void {
+    this.filter = nomeVendedor;  
     this.fetchVendas();  
   }
 
@@ -116,7 +128,6 @@ export class VendasPageComponent implements OnInit {
   }
 
   onVendaSaved(vendaData: any): void {
-    console.log('Venda saved:', vendaData);
     this.isModalVisible = false;
     this.fetchVendas();
     this.handleSuccessModal();
@@ -209,5 +220,25 @@ export class VendasPageComponent implements OnInit {
     this.paginacao.pageSize = event.pageSize;
     this.fetchVendas();
   }
+
+  loadVendedores(): void {
+    this.parametrizacaoService.getVendedores().subscribe({
+      next: (response) => {
+        if (response.isSuccess && response.data?.vendedores) {
+          this.vendedorOptions = [
+            { value: '', label: 'Todos' }, // Adiciona a opção "Todos"
+            ...response.data.vendedores.map((vendedor: { id: string; nomeVendedor: string }) => ({
+              value: vendedor.nomeVendedor,
+              label: vendedor.nomeVendedor,
+            })),
+          ];
+        }
+      },
+      error: () => {
+        console.error('Erro ao buscar os vendedores');
+      },
+    });
+  }
+  
   
 }

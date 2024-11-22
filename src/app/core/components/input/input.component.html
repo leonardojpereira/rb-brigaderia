@@ -2,16 +2,48 @@
   <label *ngIf="label" [ngClass]="{'boldLabel' : boldLabel}" class="input-label">
     {{ label }}<span class="required-asterisk" *ngIf="required">*</span>
   </label>
-  <div class="input-wrapper">
-    <input [required]="required" [attr.name]="name" [ngClass]="{'readonly' : readonly}" min="0" [type]="getInputType()"
-      [placeholder]="placeholder" [(ngModel)]="value" (input)="onInputChange($event)" [readonly]="readonly" />
 
-    <!-- Ícone de olho para alternar visibilidade -->
-    <span *ngIf="type === 'password'" class="material-symbols-outlined eye-icon" (click)="togglePasswordVisibility()">
+  <div class="input-wrapper">
+    <ng-container *ngIf="type === 'checkbox'; else defaultInput">
+      <input
+        [required]="required"
+        [attr.name]="name"
+        [checked]="value"
+        (change)="onInputChange($event)"
+        type="checkbox"
+        [readonly]="readonly"
+        [ngClass]="{'readonly': readonly}"
+      />
+    </ng-container>
+
+    <ng-template #defaultInput>
+      <input
+        [required]="required"
+        [attr.name]="name"
+        [ngClass]="{'readonly': readonly}"
+        min="0"
+        [type]="getInputType()"
+        [placeholder]="placeholder"
+        [(ngModel)]="value"
+        (input)="onInputChange($event)"
+        [readonly]="readonly"
+      />
+    </ng-template>
+
+    <!-- Ícone para alternar visibilidade da senha -->
+    <span
+      *ngIf="type === 'password'"
+      class="material-symbols-outlined eye-icon"
+      (click)="togglePasswordVisibility()">
       {{ isPasswordVisible ? 'visibility_off' : 'visibility' }}
     </span>
   </div>
 
-  <span [ngClass]="{'inputWithLabel': label}" *ngIf="type === 'search'"
-    class="material-symbols-outlined search-icon">search</span>
+  <!-- Ícone de busca para campos de pesquisa -->
+  <span
+    [ngClass]="{'inputWithLabel': label}"
+    *ngIf="type === 'search'"
+    class="material-symbols-outlined search-icon">
+    search
+  </span>
 </div>

@@ -1,0 +1,27 @@
+<app-layout>
+    <div class="container">
+      <app-header [isDateFilterVisible]="false" (filterChange)="onFilterChange($event)" [placeholder]="'Pesquisar por vendedor(a)'" [buttonText]="'Adicionar parametrização'"
+        (buttonClick)="openModal(false)" title="Parametrizações">
+      </app-header>
+  
+      <app-custom-table minWidth="1000px" [columns]="columns" [data]="parametrizacoes" [actions]="actions"
+        [noDataMessage]="'Nenhuma parametrização encontrada.'"></app-custom-table>
+  
+      <app-paginacao *ngIf="!isLoading" (valuePagination)="getPaginacao($event)" [paginacao]="paginacao"></app-paginacao>
+  
+      <app-brigadeiro-loading *ngIf="isLoading"></app-brigadeiro-loading>
+  
+      <app-modal-cadastro-parametrizacao [parametrizacaoId]="parametrizacaoId" [isVisible]="isModalVisible" [isEditMode]="isEditMode"
+        (onClose)="closeModal()" (onSave)="onParametrizacaoSaved($event)"
+        (onError)="handleErrorModal($event)"></app-modal-cadastro-parametrizacao>
+  
+      <app-modal-sucesso [openModal]="modalSuccess" [title]="titulo" [subTitle]="subTitulo"
+        (closeModal)="modalSuccess = !modalSuccess">
+      </app-modal-sucesso>
+      
+      <app-modal-confirmacao [disabledButton]="isDisabled" [openModal]="isDeleteModalOpen" title="Excluir parametrização"
+        subTitle="Tem certeza que deseja excluir essa parametrização?" (cancelar)="closeDeleteModal()" (confirmar)="deleteParametrizacao()">
+      </app-modal-confirmacao>
+    </div>
+  </app-layout>
+  

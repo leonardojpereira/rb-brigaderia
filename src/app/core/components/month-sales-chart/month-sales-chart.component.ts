@@ -38,7 +38,7 @@ export class MonthSalesChartComponent implements OnInit {
           const monthlySales = response.data.monthlySales;
           this.chartData = [
             {
-              name: 'Vendas Mensais',
+              name: 'Faturamento',
               series: monthlySales.map((monthData: any) => ({
                 name: `Mês ${monthData.month}`,
                 value: monthData.totalSales,
@@ -54,7 +54,7 @@ export class MonthSalesChartComponent implements OnInit {
   updateChartColors(): void {
     const isDarkMode = document.body.classList.contains('dark-theme');
     this.customColors = [
-      { name: 'Vendas Mensais', value: isDarkMode ? '#ffffff' : '#000000' }, 
+      { name: 'Faturamento', value: isDarkMode ? '#ffffff' : '#000000' }, 
     ];
   }
 

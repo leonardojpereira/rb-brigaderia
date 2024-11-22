@@ -30,7 +30,7 @@ export class InputComponent implements ControlValueAccessor, OnInit {
   @Input() boldLabel?: boolean = false;
   @Input() readonly: boolean = false;
   @Input() name: string = '';     
-@Input() required: boolean = false; 
+  @Input() required: boolean = false; 
 
   isPassword: boolean = false;
 
@@ -39,13 +39,14 @@ export class InputComponent implements ControlValueAccessor, OnInit {
   @HostBinding('style.width') get getWidth() {
     return this.currentWidth;
   }
-  private innerValue: string = '';
+  
+  private innerValue: any = ''; 
 
-  get value(): string {
+  get value(): any {
     return this.innerValue;
   }
 
-  set value(val: string) {
+  set value(val: any) {
     this.innerValue = val;
     this.onChange(val);
     this.onTouched();
@@ -83,7 +84,7 @@ export class InputComponent implements ControlValueAccessor, OnInit {
   onChange: any = () => {};
   onTouched: any = () => {};
 
-  writeValue(value: string): void {
+  writeValue(value: any): void {
     this.innerValue = value;
   }
 
@@ -98,6 +99,10 @@ export class InputComponent implements ControlValueAccessor, OnInit {
   setDisabledState?(isDisabled: boolean): void {}
 
   onInputChange(event: any) {
-    this.value = event.target.value;
+    if (this.type === 'checkbox') {
+      this.value = event.target.checked; 
+    } else {
+      this.value = event.target.value;
+    }
   }
 }

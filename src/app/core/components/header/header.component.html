@@ -14,6 +14,17 @@
           <app-input type="date" (input)="onDataFinalChange($event)" [placeholder]="placeholder"></app-input>
         </div>
       </div>
+      <div class="select-filter" *ngIf="isSelectFilterVisible">
+        <div class="row">
+          <label class="label">Vendedor(a)</label>
+          <app-custom-select 
+          [value]="selectOptions.values" 
+          [placeholder]="'Selecionar'" 
+          [options]="selectOptions" 
+          (valueChange)="onSelectChange($event)">
+        </app-custom-select>
+        </div>
+      </div>
       <div class="date-filter" *ngIf="isUniqueDate">
         <div class="row">
           <label class="label">Data da venda</label>

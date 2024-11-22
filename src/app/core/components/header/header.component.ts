@@ -18,7 +18,8 @@ export class HeaderComponent {
   @Input() isSearchFilterVisible: boolean = true;
   @Input() isDateFilterVisible: boolean = false;
   @Input() isUniqueDate: boolean = false;
-
+  @Input() isSelectFilterVisible: boolean = false;
+  @Input () selectOptions: { value: string; label: string }[] = [{ value: '', label: '' }];
 
   onButtonClick(): void {
     this.buttonClick.emit();
@@ -28,6 +29,11 @@ export class HeaderComponent {
     const filterValue = (event.target as HTMLInputElement).value;
     this.filterChange.emit(filterValue);
   }
+
+  onSelectChange(event: string): void {
+    this.filterChange.emit(event);
+  }
+  
 
   onDataInicialChange(event: Event): void {
     const dataInicial = (event.target as HTMLInputElement).value;

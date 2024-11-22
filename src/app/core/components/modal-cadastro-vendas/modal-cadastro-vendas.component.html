@@ -5,29 +5,44 @@
 
     <ng-container modal-body>
         <form #vendaForm="ngForm" class="form-grid">
+
+            <div class="form-group">
+                <label for="nomeVendedor" class="label">Vendedor(a)<span class="required-symbol">*</span></label>
+                <app-custom-select  (ngModelChange)="onVendedorChange($event)" label="Nome do vendedor(a)" type="text" id="nomeVendedor" name="nomeVendedor"
+                    [(ngModel)]="venda.nomeVendedor" [options]="vendedorOptions"  [required]="true"></app-custom-select>
+            </div>
             <div class="form-row responsive-row">
+               
+
                 <div class="form-group date-input">
                     <app-input label="Data da venda" type="date" id="dataVenda" name="dataVenda" [(ngModel)]="venda.dataVenda"
                         [required]="true"></app-input>
                 </div>
                 <div class="form-group quantity-input">
-                    <app-input label="Quantidade de vendas" type="number" id="quantidadeCaixinhas"
-                        name="quantidadeCaixinhas" [(ngModel)]="venda.quantidadeCaixinhas" [required]="true"></app-input>
+                    <app-input
+                    label="Quantidade de vendas"
+                    type="number"
+                    id="quantidadeCaixinhas"
+                    name="quantidadeCaixinhas"
+                    [(ngModel)]="venda.quantidadeCaixinhas"
+                    [required]="true"
+                    (ngModelChange)="onQuantidadeChange()"
+                  ></app-input>
                 </div>
             </div>
             <div class="form-row responsive-row">
                 <div class="form-group">
-                    <app-input label="Preço total" type="number" id="precoTotalVenda" name="precoTotalVenda"
+                    <app-input label="Faturamento" type="number" id="precoTotalVenda" name="precoTotalVenda"
                         [(ngModel)]="venda.precoTotalVenda" [required]="true"></app-input>
                 </div>
-                <div class="form-group">
+                <div class="form-group" *ngIf="showSalary">
                     <app-input label="Salário" type="number" id="salario" name="salario"
                         [(ngModel)]="venda.salario" [required]="true"></app-input>
                 </div>
             </div>
             <div class="form-row responsive-row">
                 <div class="form-group">
-                    <app-input label="Custo total" type="number" id="custoTotal" name="custoTotal"
+                    <app-input label="Custo" type="number" id="custoTotal" name="custoTotal"
                         [(ngModel)]="venda.custoTotal" [required]="true"></app-input>
                 </div>
                 <div class="form-group">

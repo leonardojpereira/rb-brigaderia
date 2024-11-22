@@ -1,0 +1,64 @@
+<app-modal width="600px" [saveButtonText]="isEditMode ? 'Salvar' : 'Cadastrar parametrização'" [isVisible]="isVisible"
+    [isAlert]="false" [isDisabled]="isDisabled || !parametrizacaoForm.valid" (onClose)="closeModal()"
+    (onSave)="save(parametrizacaoForm)" title="{{ isEditMode ? 'Editar parametrização' : 'Cadastrar parametrização' }}">
+
+    <ng-container modal-body>
+        <form #parametrizacaoForm="ngForm" class="form-grid">
+            <div class="form-row responsive-row">
+                <div class="form-group">
+                    <app-input label="Nome do vendedor(a)" type="text" id="nomeVendedor" name="nomeVendedor"
+                        [(ngModel)]="parametrizacao.nomeVendedor" [required]="true"></app-input>
+                </div>
+            </div>
+            <div class="form-row responsive-row">
+                <div class="form-group">
+                    <app-input label="Preço caixinha" type="number" id="precoCaixinha" name="precoCaixinha"
+                        [(ngModel)]="parametrizacao.precoCaixinha" [required]="true"></app-input>
+                </div>
+                <div class="form-group">
+                    <app-input label="Custo" type="number" id="custo" name="custo" [(ngModel)]="parametrizacao.custo"
+                        [required]="true"></app-input>
+                </div>
+                <div class="form-group">
+                    <app-input label="Lucro" type="number" id="lucro" name="lucro" [(ngModel)]="parametrizacao.lucro"
+                        [required]="true"></app-input>
+                </div>
+            </div>
+            <div class="form-row responsive-row">
+                <div class="form-group">
+                    <app-input label="Local de venda" type="text" id="localVenda" name="localVenda"
+                        [(ngModel)]="parametrizacao.localVenda"  [required]="true"></app-input>
+                </div>
+
+                <div class="form-group " *ngIf="parametrizacao.precisaPassagem">
+                    <app-input label="Preço da passagem" type="number" id="precoPassagem" name="precoPassagem"
+                        [(ngModel)]="parametrizacao.precoPassagem" value="precoPassagem" [required]="true">
+                    </app-input>
+                </div>
+            </div>
+            <div class="form-row responsive-row">
+                <div class="form-group">
+                    <app-input label="Horário de entrada" type="time" id="horarioInicio" name="horarioInicio"
+                        [(ngModel)]="parametrizacao.horarioInicio" [required]="true"></app-input>
+                </div>
+                <div class="form-group">
+                    <app-input label="Horário de saída" type="time" id="horarioFim" name="horarioFim"
+                        [(ngModel)]="parametrizacao.horarioFim" [required]="true"></app-input>
+                </div>
+            </div>
+
+            <div class="form-row responsive-row">
+                <div class="form-group checkbox-group">
+                    <label for="precisaPassagem" class="label">Precisa de passagem?</label>
+                    <div class="checkbox-container">
+                        <app-input type="checkbox" (ngModelChange)="handlePrecisaPassagemChange($event)" id="precisaPassagem" name="precisaPassagem"
+                            [(ngModel)]="parametrizacao.precisaPassagem">
+                        </app-input>
+                    </div>
+                </div>
+               
+            </div>
+        </form>
+
+    </ng-container>
+</app-modal>

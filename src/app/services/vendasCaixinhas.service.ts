@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
 export class VendasCaixinhasService {
   constructor(private httpClient: HttpClient) {}
 
-  getVendas(pageNumber: number, pageSize: number, date?: string): Observable<any> {
+  getVendas(pageNumber: number, pageSize: number, date?: string, nomeVendedor?: string): Observable<any> {
     const token = localStorage.getItem('token');
     let params = new HttpParams()
       .set('pageNumber', pageNumber.toString())
@@ -17,6 +17,10 @@ export class VendasCaixinhasService {
 
     if (date) {
       params = params.set('date', date);
+    }
+
+    if (nomeVendedor) {
+      params = params.set('nomeVendedor', nomeVendedor);
     }
 
     return this.httpClient.get(`${environment.apiUrl}VendasCaixinhas`, {

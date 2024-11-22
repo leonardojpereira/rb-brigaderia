@@ -152,7 +152,6 @@ export class ReceitaPageComponent implements OnInit {
   }
 
   onRecipeSaved(recipeData: any): void {
-    console.log('Recipe saved:', recipeData);
     this.isModalVisible = false;
     this.fetchRecipes();
     this.handleSuccessModal();

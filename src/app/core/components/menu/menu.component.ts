@@ -20,8 +20,12 @@ export class MenuComponent {
   }
 
   toggleDropdown(menu: string): void {
+    if (!this.isMenuExpanded) {
+      return; 
+    }
     this.activeDropdown = this.activeDropdown === menu ? null : menu;
   }
+  
 
   isDropdownOpen(menu: string): boolean {
     return this.activeDropdown === menu;

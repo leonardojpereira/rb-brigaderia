@@ -21,6 +21,7 @@ export class ParametrizacaoPageComponent implements OnInit {
     { field: 'custo', header: 'Custo' },
     { field: 'lucro', header: 'Lucro' },
     { field: 'localVenda', header: 'Local de venda' },
+    { field: 'hasPassagem', header: 'Passagem' },
     { field: 'horarioInicio', header: 'Horário de início' },
     { field: 'horarioFim', header: 'Horário de fim' },
   ];
@@ -47,6 +48,8 @@ export class ParametrizacaoPageComponent implements OnInit {
   titulo: string = '';
   subTitulo: string = '';
   modalError: boolean = false;
+  filter: string = '';
+  filterTimeout: any;
 
   constructor(private parametrizacaoService: ParametrizacaoService) {}
 
@@ -57,7 +60,7 @@ export class ParametrizacaoPageComponent implements OnInit {
   fetchParametrizacoes(): void {
     this.isLoading = true;
     this.parametrizacaoService
-      .getParametrizacoes(this.paginacao.pageNumber, this.paginacao.pageSize)
+      .getParametrizacoes(this.paginacao.pageNumber, this.paginacao.pageSize, this.filter)
       .pipe(delay(500))
       .subscribe({
         next: (response) => {
@@ -71,6 +74,7 @@ export class ParametrizacaoPageComponent implements OnInit {
               localVenda: item.localVenda,
               horarioInicio: item.horarioInicio,
               horarioFim: item.horarioFim,
+              hasPassagem: item.precisaPassagem ? 'Sim' : 'Não',
             }));
             this.paginacao.totalItem = response.data.totalItems;
           }
@@ -83,6 +87,7 @@ export class ParametrizacaoPageComponent implements OnInit {
         },
       });
   }
+  
 
   openModal(isEdit: boolean = false, parametrizacao?: any): void {
     this.isEditMode = isEdit;
@@ -151,5 +156,17 @@ export class ParametrizacaoPageComponent implements OnInit {
     this.paginacao.pageNumber = event.pageNumber;
     this.paginacao.pageSize = event.pageSize;
     this.fetchParametrizacoes();
+  }
+
+  onFilterChange(filterValue: string): void {
+    this.filter = filterValue;
+
+    if (this.filterTimeout) {
+      clearTimeout(this.filterTimeout);
+    }
+
+    this.filterTimeout = setTimeout(() => {
+      this.fetchParametrizacoes();
+    }, 1000);
   }
 }

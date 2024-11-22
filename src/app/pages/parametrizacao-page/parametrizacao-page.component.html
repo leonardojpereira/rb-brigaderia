@@ -1,6 +1,6 @@
 <app-layout>
     <div class="container">
-      <app-header [isDateFilterVisible]="false" [buttonText]="'Adicionar parametrização'"
+      <app-header [isDateFilterVisible]="false" (filterChange)="onFilterChange($event)" [placeholder]="'Pesquisar por vendedor(a)'" [buttonText]="'Adicionar parametrização'"
         (buttonClick)="openModal(false)" title="Parametrizações">
       </app-header>
   

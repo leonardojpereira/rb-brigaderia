@@ -17,10 +17,11 @@ export class VendasPageComponent implements OnInit {
 
   columns = [
     { field: 'dataVenda', header: 'Data da venda' },
+    { field: 'nomeVendedor', header: 'Vendedor(a)' },
     { field: 'quantidadeCaixinhas', header: 'Quantidade de vendas' },
-    { field: 'precoTotalVenda', header: 'Total da venda' },
+    { field: 'precoTotalVenda', header: 'Faturamento' },
     { field: 'salario', header: 'Salário' },
-    { field: 'custoTotal', header: 'Custo total' },
+    { field: 'custoTotal', header: 'Custo' },
     { field: 'lucro', header: 'Lucro' },
     { field: 'localVenda', header: 'Local' },
     { field: 'horarioInicio', header: 'Horário de entrada' },
@@ -73,12 +74,13 @@ export class VendasPageComponent implements OnInit {
               dataVenda: new Date(venda.dataVenda).toLocaleDateString(),
               quantidadeCaixinhas: venda.quantidadeCaixinhas,
               precoTotalVenda: this.formatCurrency(venda.precoTotalVenda),
-              salario: this.formatCurrency(venda.salario),
+              salario: venda.nomeVendedor != "Rebeca" ? this.formatCurrency(venda.salario) : "---",
               custoTotal: this.formatCurrency(venda.custoTotal),
               lucro: this.formatCurrency(venda.lucro),
               localVenda: venda.localVenda,
               horarioInicio: venda.horarioInicio,
               horarioFim: venda.horarioFim,
+              nomeVendedor: venda.nomeVendedor,
             }));
             this.paginacao.totalItem = response.data.totalItems;
           }

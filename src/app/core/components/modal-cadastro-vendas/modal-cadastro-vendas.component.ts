@@ -44,6 +44,8 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
   precoCaixinha: number = 0;
   custoUnitario: number = 0;
   lucroUnitario: number = 0;
+  showSalary: boolean = true; // Controla a visibilidade do campo Salário
+
 
   private quantidadeSubject = new Subject<number>();
 
@@ -91,6 +93,7 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
 
   setupQuantidadeListener(): void {
     this.quantidadeSubject.pipe(debounceTime(1000)).subscribe((quantidade) => {
+      this.calculateTotals(quantidade);
     });
   }
 
@@ -119,24 +122,33 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
 
   onVendedorChange(vendedorId: string): void {
     if (!vendedorId) return;
-
+  
+    const vendedorSelecionado = this.vendedorOptions.find(
+      (vendedor) => vendedor.value === vendedorId
+    );
+  
+    if (vendedorSelecionado) {
+      this.venda.nomeVendedor = vendedorSelecionado.label;
+  
+      this.showSalary = vendedorSelecionado.label !== 'Rebeca';
+    }
+  
     this.isLoading = true;
+  
     this.parametrizacaoService.getParametrizacaoById(vendedorId).subscribe({
       next: (response) => {
         if (response.isSuccess && response.data?.parametrizacao) {
           const data = response.data.parametrizacao;
-
+  
           this.precoCaixinha = data.precoCaixinha;
           this.custoUnitario = data.custo;
           this.lucroUnitario = data.lucro;
-
+  
           this.venda.localVenda = data.localVenda;
           this.venda.horarioInicio = data.horarioInicio;
           this.venda.horarioFim = data.horarioFim;
           this.venda.precoPassagem = data.precoPassagem;
-
           this.venda.precisaPassagem = data.precisaPassagem;
-          this.venda.precoPassagem = data.precoPassagem;
         }
       },
       error: () => {
@@ -147,6 +159,8 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
       },
     });
   }
+  
+  
 
   resetVenda(): void {
     this.venda = {
@@ -170,14 +184,19 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
 
   loadVendaDetails(): void {
     if (!this.vendaId) return;
-
+  
     this.isLoading = true;
     this.vendasCaixinhasService.getVendaById(this.vendaId).subscribe({
       next: (response) => {
         if (response.isSuccess && response.data?.vendaCaixinhas) {
           const vendaData = response.data.vendaCaixinhas;
+  
+          const vendedorEncontrado = this.vendedorOptions.find(
+            (vendedor) => vendedor.label === vendaData.nomeVendedor
+          );
+  
           this.venda = {
-            nomeVendedor: vendaData.nomeVendedor,
+            nomeVendedor: vendedorEncontrado?.value || '', 
             dataVenda: vendaData.dataVenda.split('T')[0],
             quantidadeCaixinhas: vendaData.quantidadeCaixinhas,
             precoTotalVenda: vendaData.precoTotalVenda,
@@ -200,6 +219,7 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
       },
     });
   }
+  
 
   closeModal(): void {
     this.onClose.emit();
@@ -207,22 +227,32 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
 
   save(form: any): void {
     if (form.valid) {
-      const vendaData = {
+      const vendedorSelecionado = this.vendedorOptions.find(
+        (vendedor) => vendedor.value === this.venda.nomeVendedor
+      );
+  
+      this.venda.nomeVendedor = vendedorSelecionado?.label || '';
+  
+      const vendaData: any = {
         ...this.venda,
         dataVenda: new Date(this.venda.dataVenda).toISOString(),
       };
-
+  
+      if (vendedorSelecionado?.label === 'Rebeca') {
+        delete vendaData.salario;
+      }
+  
       if (this.isEditMode && this.vendaId) {
         this.updateVenda(vendaData);
       } else {
         this.createVenda(vendaData);
       }
     } else {
-      this.onError.emit(
-        'Preencha todos os campos obrigatórios antes de salvar.'
-      );
+      this.onError.emit('Preencha todos os campos obrigatórios antes de salvar.');
     }
   }
+  
+  
 
   createVenda(vendaData: any): void {
     this.vendasCaixinhasService.createVenda(vendaData).subscribe({

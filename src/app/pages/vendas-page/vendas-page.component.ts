@@ -110,7 +110,7 @@ export class VendasPageComponent implements OnInit {
         },
       });
   }
-  
+
 
   onDateInicialChange(date: string): void {
     this.date = date;  
@@ -142,6 +142,10 @@ export class VendasPageComponent implements OnInit {
     this.isModalVisible = false;
     this.fetchVendas();
     this.handleSuccessModal();
+  }
+
+  onError(message: string): void {
+    this.handleErrorModal(message);
   }
 
   openDeleteModal(id: string): void {
@@ -193,6 +197,7 @@ export class VendasPageComponent implements OnInit {
     this.modalError = true;
     this.titulo = 'Erro!';
     this.subTitulo = message;
+    this.isModalVisible = false;
   }
 
   private resetSelectedVenda(): void {

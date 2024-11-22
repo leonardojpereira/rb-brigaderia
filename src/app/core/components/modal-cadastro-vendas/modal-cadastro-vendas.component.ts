@@ -120,6 +120,11 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
     }
   }
 
+  handleErrorModal(message: string): void {
+    this.onError.emit(message);
+    this.closeModal();
+  }
+
   onVendedorChange(vendedorId: string): void {
     if (!vendedorId) return;
   
@@ -265,10 +270,18 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
           this.onError.emit('Erro ao salvar venda.');
         }
       },
-      error: () => {
+      error: (httpErrorResponse) => {
         this.isLoading = false;
-        this.onError.emit('Erro inesperado ao salvar venda.');
-      },
+        if (
+          httpErrorResponse.status === 400 &&
+          httpErrorResponse.error &&
+          httpErrorResponse.error.errors
+        ) {
+          this.onError.emit(httpErrorResponse.error.errors);
+        } else {
+          console.error('Erro inesperado:', httpErrorResponse);
+        }
+      }
     });
   }
 
@@ -284,9 +297,18 @@ export class ModalCadastroVendasComponent implements OnInit, OnChanges {
           this.onError.emit('Erro ao atualizar venda.');
         }
       },
-      error: (error) => {
-        this.onError.emit('Erro inesperado ao atualizar venda.');
-      },
+      error: (httpErrorResponse) => {
+        this.isLoading = false;
+        if (
+          httpErrorResponse.status === 400 &&
+          httpErrorResponse.error &&
+          httpErrorResponse.error.errors
+        ) {
+          this.onError.emit(httpErrorResponse.error.errors);
+        } else {
+          console.error('Erro inesperado:', httpErrorResponse);
+        }
+      }
     });
   }
 }

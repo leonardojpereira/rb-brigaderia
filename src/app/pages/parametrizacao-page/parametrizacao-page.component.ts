@@ -50,11 +50,21 @@ export class ParametrizacaoPageComponent implements OnInit {
   modalError: boolean = false;
   filter: string = '';
   filterTimeout: any;
+  role: string = '';
 
   constructor(private parametrizacaoService: ParametrizacaoService) {}
 
   ngOnInit(): void {
+    this.getPermissao();
     this.fetchParametrizacoes();
+  }
+
+  getPermissao(): void {
+    this.role = localStorage.getItem('role') || '';
+    if (this.role === 'User') {
+      this.isDisabled = true;
+      return;
+    }
   }
 
   fetchParametrizacoes(): void {
@@ -104,16 +114,21 @@ export class ParametrizacaoPageComponent implements OnInit {
     this.modalError = true;
     this.titulo = 'Erro!';
     this.subTitulo = message;
+    this.isModalVisible = false;
   }
 
   closeModal(): void {
     this.isModalVisible = false;
   }
 
-  onParametrizacaoSaved(parametrizacao: any): void {
+  onParametrizacaoSaved(): void {
     this.closeModal();
     this.fetchParametrizacoes();
     this.handleSuccessModal();
+  }
+
+  onError(message: string): void {
+    this.handleErrorModal(message);
   }
 
   openDeleteModal(id: string): void {
@@ -132,8 +147,17 @@ export class ParametrizacaoPageComponent implements OnInit {
         this.fetchParametrizacoes();
         this.handleSuccessModal('Parametrização deletada com sucesso!');
       },
-      error: (error) => {
-        console.error('Erro ao deletar parametrização:', error);
+      error: (httpErrorResponse) => {
+        this.isLoading = false;
+        if (
+          httpErrorResponse.status === 400 &&
+          httpErrorResponse.error &&
+          httpErrorResponse.error.errors
+        ) {
+          this.handleErrorModal(httpErrorResponse.error.errors);
+        } else {
+          console.error('Erro inesperado:', httpErrorResponse);
+        }
       },
     });
   }

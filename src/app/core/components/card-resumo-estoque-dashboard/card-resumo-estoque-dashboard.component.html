@@ -3,6 +3,11 @@
         <h3 class="title">Estoque</h3>
         <span (click)="navigate('/estoque')" class="see-more-link">Ver mais</span>
     </div>
+
+    <div *ngIf="visibleProducts.length === 0" class="no-data">
+      <p>Não há registros no estoque.</p>
+    </div>
+
     <div class="product-list">
       <div *ngFor="let product of visibleProducts" class="product-item">
         <div class="product-details">

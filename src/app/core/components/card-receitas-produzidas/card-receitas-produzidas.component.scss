@@ -74,3 +74,14 @@ tr {
 tbody tr:last-child {
   border-bottom: none;
 }
+
+.no-data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px; /* Altura para ocupar o espaço da tabela */
+  text-align: center;
+  color: var(--small-text-color); /* Cor sutil */
+  font-size: 14px;
+  font-style: italic;
+}

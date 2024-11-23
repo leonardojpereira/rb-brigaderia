@@ -23,6 +23,10 @@
       gap: 14px;
     }
 
+    &:not(.expanded) {
+      cursor: default; 
+    }
+
     .icon {
       color: var(--text-color-menu-sidebar);
       font-size: 22px;

@@ -1,7 +1,7 @@
 <app-layout>
     <div class="container">
       <app-header [isDateFilterVisible]="false" (filterChange)="onFilterChange($event)" [placeholder]="'Pesquisar por vendedor(a)'" [buttonText]="'Adicionar parametrização'"
-        (buttonClick)="openModal(false)" title="Parametrizações">
+        (buttonClick)="openModal(false)" [isDisabled]="isDisabled" title="Parametrizações">
       </app-header>
   
       <app-custom-table minWidth="1000px" [columns]="columns" [data]="parametrizacoes" [actions]="actions"
@@ -11,8 +11,8 @@
   
       <app-brigadeiro-loading *ngIf="isLoading"></app-brigadeiro-loading>
   
-      <app-modal-cadastro-parametrizacao [parametrizacaoId]="parametrizacaoId" [isVisible]="isModalVisible" [isEditMode]="isEditMode"
-        (onClose)="closeModal()" (onSave)="onParametrizacaoSaved($event)"
+      <app-modal-cadastro-parametrizacao [isDisabled]="isDisabled" [parametrizacaoId]="parametrizacaoId" [isVisible]="isModalVisible" [isEditMode]="isEditMode"
+        (onClose)="closeModal()" (onSave)="onParametrizacaoSaved()"
         (onError)="handleErrorModal($event)"></app-modal-cadastro-parametrizacao>
   
       <app-modal-sucesso [openModal]="modalSuccess" [title]="titulo" [subTitle]="subTitulo"

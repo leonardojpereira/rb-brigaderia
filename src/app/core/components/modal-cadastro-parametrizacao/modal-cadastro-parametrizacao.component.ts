@@ -145,8 +145,17 @@ export class ModalCadastroParametrizacaoComponent implements OnInit, OnChanges {
             this.onError.emit('Erro ao salvar parametrização.');
           }
         },
-        error: () => {
-          this.onError.emit('Erro inesperado ao salvar parametrização.');
+        error: (httpErrorResponse) => {
+          this.isLoading = false;
+          if (
+            httpErrorResponse.status === 400 &&
+            httpErrorResponse.error &&
+            httpErrorResponse.error.errors
+          ) {
+            this.onError.emit(httpErrorResponse.error.errors);
+          } else {
+            console.error('Erro inesperado:', httpErrorResponse);
+          }
         },
       });
   }
@@ -165,9 +174,17 @@ export class ModalCadastroParametrizacaoComponent implements OnInit, OnChanges {
             this.onError.emit('Erro ao atualizar parametrização.');
           }
         },
-        error: (error) => {
-          this.onError.emit('Erro inesperado ao atualizar parametrização.');
-          console.error(error);
+        error: (httpErrorResponse) => {
+          this.isLoading = false;
+          if (
+            httpErrorResponse.status === 400 &&
+            httpErrorResponse.error &&
+            httpErrorResponse.error.errors
+          ) {
+            this.onError.emit(httpErrorResponse.error.errors);
+          } else {
+            console.error('Erro inesperado:', httpErrorResponse);
+          }
         },
       });
   }

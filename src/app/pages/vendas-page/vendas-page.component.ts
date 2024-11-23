@@ -56,14 +56,25 @@ export class VendasPageComponent implements OnInit {
   filterTimeout: any;
   date: string = '';
   vendedorOptions: { value: string; label: string }[] = [];
+  role: string = '';
 
   constructor(private vendasCaixinhasService: VendasCaixinhasService, private parametrizacaoService: ParametrizacaoService
   ) {}
 
   ngOnInit(): void {
+    this.getPermissao();
     this.loadVendedores();
     this.fetchVendas();
   }
+
+  getPermissao(): void {
+    this.role = localStorage.getItem('role') || '';
+    if (this.role === 'User') {
+      this.isDisabled = true;
+      return;
+    }
+  }
+
 
   fetchVendas(): void {
     this.isLoading = true;
@@ -99,7 +110,7 @@ export class VendasPageComponent implements OnInit {
         },
       });
   }
-  
+
 
   onDateInicialChange(date: string): void {
     this.date = date;  
@@ -131,6 +142,10 @@ export class VendasPageComponent implements OnInit {
     this.isModalVisible = false;
     this.fetchVendas();
     this.handleSuccessModal();
+  }
+
+  onError(message: string): void {
+    this.handleErrorModal(message);
   }
 
   openDeleteModal(id: string): void {
@@ -182,6 +197,7 @@ export class VendasPageComponent implements OnInit {
     this.modalError = true;
     this.titulo = 'Erro!';
     this.subTitulo = message;
+    this.isModalVisible = false;
   }
 
   private resetSelectedVenda(): void {

@@ -1,6 +1,13 @@
 <div class="chart-container">
   <h3 class="title-chart">Faturamento</h3>
+
+  <div *ngIf="!isLoading && !hasData" class="no-data">
+    <p>Não há vendas registradas.</p>
+  </div>
+
+  <!-- Gráfico -->
   <ngx-charts-line-chart
+    *ngIf="!isLoading && hasData"
     [results]="chartData"
     [view]="view"
     [scheme]="'vivid'"

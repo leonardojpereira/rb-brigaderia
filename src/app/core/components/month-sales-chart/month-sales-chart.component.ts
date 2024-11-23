@@ -11,14 +11,15 @@ export class MonthSalesChartComponent implements OnInit {
   chartData: any[] = [];
   view: [number, number] = [window.innerWidth * 0.9, 300];
   customColors: any[] = [];
+  isLoading: boolean = true; 
+  hasData: boolean = false;
 
   constructor(private vendasCaixinhasService: VendasCaixinhasService) {}
 
   ngOnInit(): void {
-    this.updateChartColors(); // Atualiza as cores ao inicializar o componente
+    this.updateChartColors();
     this.getMonthlySales(this.year);
 
-    // Monitora alterações no tema
     const observer = new MutationObserver(() => {
       this.updateChartColors();
     });
@@ -32,29 +33,46 @@ export class MonthSalesChartComponent implements OnInit {
   }
 
   getMonthlySales(year: number): void {
+    this.isLoading = true; 
+    this.hasData = false; 
+
     this.vendasCaixinhasService.getMonthlySales(year).subscribe({
       next: (response) => {
         if (response.isSuccess) {
           const monthlySales = response.data.monthlySales;
-          this.chartData = [
-            {
-              name: 'Faturamento',
-              series: monthlySales.map((monthData: any) => ({
-                name: `Mês ${monthData.month}`,
-                value: monthData.totalSales,
-              })),
-            },
-          ];
+
+          if (monthlySales && monthlySales.length > 0) {
+            this.chartData = [
+              {
+                name: 'Faturamento',
+                series: monthlySales.map((monthData: any) => ({
+                  name: `Mês ${monthData.month}`,
+                  value: monthData.totalSales,
+                })),
+              },
+            ];
+            this.hasData = true; 
+          } else {
+            this.chartData = [];
+            this.hasData = false;
+          }
         }
       },
-      error: (error) => console.error('Erro ao carregar vendas mensais:', error),
+      error: (error) => {
+        console.error('Erro ao carregar vendas mensais:', error);
+        this.chartData = [];
+        this.hasData = false;
+      },
+      complete: () => {
+        this.isLoading = false; 
+      },
     });
   }
 
   updateChartColors(): void {
     const isDarkMode = document.body.classList.contains('dark-theme');
     this.customColors = [
-      { name: 'Faturamento', value: isDarkMode ? '#ffffff' : '#000000' }, 
+      { name: 'Faturamento', value: isDarkMode ? '#ffffff' : '#000000' },
     ];
   }
 

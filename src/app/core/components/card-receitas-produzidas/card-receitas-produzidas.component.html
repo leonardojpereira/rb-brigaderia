@@ -1,21 +1,28 @@
 <div class="card-receitas">
     <h3 class="title">Receitas mais produzidas</h3>
     <div class="table-container">
-        <table class="receitas-table">
-            <thead>
-                <tr>
-                    <th>Receita</th>
-                    <th>Quantidade de produção</th>
-                    <th>Custo da receita</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let receita of receitas; let i = index">
-                    <td><strong>{{ (i + 1) + 'º ' + receita.nome }}</strong></td>
-                    <td>{{ receita.quantidade }}</td>
-                    <td>{{ receita.custo | currency: 'BRL':'symbol':'1.2-2' }}</td>
-                </tr>
-            </tbody>
-        </table>
+      <!-- Mensagem de "sem dados" -->
+      <div *ngIf="!receitas || receitas.length === 0" class="no-data">
+        <p>Não há registros de receitas.</p>
+      </div>
+  
+      <!-- Tabela de receitas -->
+      <table class="receitas-table" *ngIf="receitas && receitas.length > 0">
+        <thead>
+          <tr>
+            <th>Receita</th>
+            <th>Quantidade de produção</th>
+            <th>Custo da receita</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let receita of receitas; let i = index">
+            <td><strong>{{ (i + 1) + 'º ' + receita.nome }}</strong></td>
+            <td>{{ receita.quantidade }}</td>
+            <td>{{ receita.custo | currency: 'BRL':'symbol':'1.2-2' }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-</div>
+  </div>
+  

@@ -1,6 +1,11 @@
 <div class="resume-container">
-    <h3 class="title">Resumo</h3>
-    <div class="resume-body">
+  <h3 class="title">Resumo</h3>
+  <div class="resume-body">
+    <div *ngIf="!visibleProducts || visibleProducts.length === 0" class="no-data">
+      <p>Não há dados disponíveis no momento.</p>
+    </div>
+
+    <ng-container *ngIf="visibleProducts && visibleProducts.length > 0">
       <div
         class="column"
         *ngFor="let product of visibleProducts; let i = index"
@@ -23,6 +28,6 @@
           </div>
         </div>
       </div>
-    </div>
+    </ng-container>
   </div>
-  
+</div>

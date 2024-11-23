@@ -41,3 +41,15 @@
 ::ng-deep .legend-label {
   fill: var(--text-color) !important;
 }
+
+.no-data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  width: 100%;
+  text-align: center;
+  color: var(--small-text-color); 
+  font-size: 16px;
+  font-style: italic;
+}

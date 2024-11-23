@@ -8,7 +8,7 @@ import { AuthComponent } from './core/components/auth/auth.component';
 import { InputComponent } from './core/components/input/input.component';
 import { FormsModule } from '@angular/forms';
 import { LoaderComponent } from './core/components/loader/loader.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MenuSidebarComponent } from './core/components/menu-sidebar/menu-sidebar.component';
 import { LayoutComponent } from './core/components/layout/layout.component';
@@ -83,6 +83,11 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
       provide: MatPaginatorIntl,
       useClass: PaginacaoComponent,
     },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent]
 })
@@ -106,4 +111,5 @@ import { ModalCadastroVendasComponent } from './core/components/modal-cadastro-v
 import { CardResumoEstoqueDashboardComponent } from './core/components/card-resumo-estoque-dashboard/card-resumo-estoque-dashboard.component';
 import { ResumoVendasDashboardComponent } from './core/components/resumo-vendas-dashboard/resumo-vendas-dashboard.component';
 import { ParametrizacaoPageComponent } from './pages/parametrizacao-page/parametrizacao-page.component';
-import { ModalCadastroParametrizacaoComponent } from './core/components/modal-cadastro-parametrizacao/modal-cadastro-parametrizacao.component';
+import { ModalCadastroParametrizacaoComponent } from './core/components/modal-cadastro-parametrizacao/modal-cadastro-parametrizacao.component';import { AuthInterceptor } from './auth.interceptor';
+

@@ -1,6 +1,6 @@
 <app-layout>
   <div class="container">
-    <app-header [isSelectFilterVisible]="true" [isDisabled]="isDisabled" [selectOptions]="vendedorOptions" [isUniqueDate]="true" [isSearchFilterVisible]="false" [buttonText]="'Adicionar venda'"
+    <app-header [isSearchFilterVisible]="false" [isSelectFilterVisible]="true" [isDisabled]="isDisabled" [selectOptions]="vendedorOptions" [isSearchFilterVisible]="false" [buttonText]="'Adicionar venda'"
       (buttonClick)="openModal(false)" title="Vendas" (filterChange)="onSelectChange($event)" (dataInicialChange)="onDateInicialChange($event)">
     </app-header>
 

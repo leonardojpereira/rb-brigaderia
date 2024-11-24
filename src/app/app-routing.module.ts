@@ -10,6 +10,7 @@ import { ConfiguracoesPageComponent } from './pages/configuracoes-page/configura
 import { EntradaSaidaPageComponent } from './pages/entrada-saida-page/entrada-saida-page.component';
 import { VendasPageComponent } from './pages/vendas-page/vendas-page.component';
 import { ParametrizacaoPageComponent } from './pages/parametrizacao-page/parametrizacao-page.component';
+import { ResumoPageComponent } from './pages/resumo-page/resumo-page.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -40,8 +41,13 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'vendas',
+    path: 'vendas/cadastrar',
     component: VendasPageComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'vendas/resumo',
+    component: ResumoPageComponent,
     canActivate: [AuthGuard],
   },
 

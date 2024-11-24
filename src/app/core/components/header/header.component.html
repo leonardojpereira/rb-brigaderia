@@ -31,6 +31,25 @@
           <app-input type="date" (input)="onDataInicialChange($event)" [placeholder]="placeholder"></app-input>
         </div>
       </div>
+      <div class="month-filter-container" *ngIf="isMonthFilterVisible">
+        <div class="filter-month">
+          <app-custom-select
+            [(ngModel)]="selectedMonth"
+            [options]="monthOptions"
+            [placeholder]="'Mês'"
+            (ngModelChange)="onMonthChange($event)">
+          </app-custom-select>
+        </div>
+        <div class="filter-year">
+          <app-custom-select
+            [(ngModel)]="selectedYear"
+            [options]="yearOptions"
+            [placeholder]="'Ano'"
+            (ngModelChange)="onYearChange($event)">
+          </app-custom-select>
+        </div>
+      </div>
+      
       <div *ngIf="isButtonVisible">
         <app-custom-button [isDisabled]="isDisabled" [text]="buttonText" (click)="onButtonClick()"></app-custom-button>
       </div>

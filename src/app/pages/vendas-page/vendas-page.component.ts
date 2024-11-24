@@ -242,7 +242,7 @@ export class VendasPageComponent implements OnInit {
       next: (response) => {
         if (response.isSuccess && response.data?.vendedores) {
           this.vendedorOptions = [
-            { value: '', label: 'Todos' }, // Adiciona a opção "Todos"
+            { value: '', label: 'Todos' },
             ...response.data.vendedores.map((vendedor: { id: string; nomeVendedor: string }) => ({
               value: vendedor.nomeVendedor,
               label: vendedor.nomeVendedor,

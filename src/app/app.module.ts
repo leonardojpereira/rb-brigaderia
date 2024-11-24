@@ -64,7 +64,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     CardResumoEstoqueDashboardComponent,
     ResumoVendasDashboardComponent,
     ParametrizacaoPageComponent,
-    ModalCadastroParametrizacaoComponent
+    ModalCadastroParametrizacaoComponent,
+    ResumoPageComponent
   ],
   imports: [
     BrowserModule,
@@ -112,4 +113,5 @@ import { CardResumoEstoqueDashboardComponent } from './core/components/card-resu
 import { ResumoVendasDashboardComponent } from './core/components/resumo-vendas-dashboard/resumo-vendas-dashboard.component';
 import { ParametrizacaoPageComponent } from './pages/parametrizacao-page/parametrizacao-page.component';
 import { ModalCadastroParametrizacaoComponent } from './core/components/modal-cadastro-parametrizacao/modal-cadastro-parametrizacao.component';import { AuthInterceptor } from './auth.interceptor';
+import { ResumoPageComponent } from './pages/resumo-page/resumo-page.component';
 

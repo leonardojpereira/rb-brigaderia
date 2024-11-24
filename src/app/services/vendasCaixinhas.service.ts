@@ -98,4 +98,31 @@ export class VendasCaixinhasService {
       },
     });
   }
+
+  getResumeVendas(nomeVendedor: string, mes?: number, ano?: number, pageNumber: number = 1, pageSize: number = 7): Observable<any> {
+    const token = localStorage.getItem('token');
+    let params = new HttpParams()
+      .set('pageNumber', pageNumber.toString())
+      .set('pageSize', pageSize.toString());
+  
+    if (nomeVendedor) {
+      params = params.set('nomeVendedor', nomeVendedor);
+    }
+    if (mes) {
+      params = params.set('mes', mes.toString());
+    }
+    if (ano) {
+      params = params.set('ano', ano.toString());
+    }
+  
+    return this.httpClient.get(`${environment.apiUrl}VendasCaixinhas/Resume`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+      params,
+    });
+  }
+  
+  
 }

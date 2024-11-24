@@ -5,11 +5,27 @@
     <span class="menu-link" *ngIf="isMenuExpanded">Dashboard</span>
   </li>
 
-  <!-- Vendas -->
-  <li class="menu-item" [ngClass]="{'expanded': isMenuExpanded}" (click)="navigate('/vendas')">
-    <span class="material-symbols-outlined icon">paid</span>
-    <span class="menu-link" *ngIf="isMenuExpanded">Vendas</span>
-  </li>
+ <!-- Vendas Dropdown -->
+<li class="menu-item dropdown" [ngClass]="{'expanded': isMenuExpanded, 'open': isDropdownOpen('vendas')}" (click)="toggleDropdown('vendas')">
+  <div class="menu-link-container">
+    <div class="wrap">
+      <span class="material-symbols-outlined icon">paid</span>
+      <span class="menu-link" *ngIf="isMenuExpanded">Vendas</span>
+    </div>
+    <span class="material-symbols-outlined dropdown-icon" *ngIf="isMenuExpanded">
+      {{ isDropdownOpen('vendas') ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
+    </span>
+  </div>
+  <ul class="submenu">
+    <li class="submenu-item" (click)="navigate('/vendas/cadastrar')">
+      <span>Cadastrar venda</span>
+    </li>
+    <li class="submenu-item" (click)="navigate('/vendas/resumo')">
+      <span>Resumo</span>
+    </li>
+  </ul>
+</li>
+
 
   <!-- Estoque Dropdown -->
   <li class="menu-item dropdown" [ngClass]="{'expanded': isMenuExpanded, 'open': isDropdownOpen('estoque')}" (click)="toggleDropdown('estoque')">

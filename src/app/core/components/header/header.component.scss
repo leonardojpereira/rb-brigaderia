@@ -73,6 +73,19 @@
       }
     }
 
+    .month-filter-container {
+      display: flex;
+      gap: 12px;
+
+      .filter-month {
+        width: 150px;
+      }
+
+      .filter-year {
+        width: 150px;
+      }
+    }
+
     .select-filter {
       display: flex;
       gap: 18px;

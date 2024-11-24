@@ -1,0 +1,31 @@
+<app-layout>
+    <div class="container">
+      <!-- Header -->
+      <app-header
+      [isSelectFilterVisible]="true"
+      [isMonthFilterVisible]="true"
+      [isDisabled]="isDisabled"
+      [isButtonVisible]="false"
+      [selectOptions]="vendedorOptions"
+      [isSearchFilterVisible]="false"
+      title="Resumo"
+      (filterChange)="onSelectChange($event)"
+      (monthChange)="onMonthChange($event)"
+      (yearChange)="onYearChange($event)">
+    </app-header>
+  
+      <!-- Tabela -->
+      <app-custom-table
+        minWidth="1400px"
+        [columns]="columns"
+        [data]="resumoVendedoras"
+        [noDataMessage]="'Nenhum resumo disponível.'">
+      </app-custom-table>
+
+      <app-paginacao *ngIf="!isLoading" (valuePagination)="onPaginacaoChange($event)" [paginacao]="paginacao"></app-paginacao>
+  
+      <!-- Loading -->
+      <app-brigadeiro-loading *ngIf="isLoading"></app-brigadeiro-loading>
+    </div>
+  </app-layout>
+  

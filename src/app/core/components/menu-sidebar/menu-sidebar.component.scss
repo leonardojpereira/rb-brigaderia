@@ -73,22 +73,6 @@
       }
     }
   }
-
-  @media (max-width: 1360px) {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 60px;
-    transform: translateX(-60px);
-    transition: width 0.3s ease-in-out, transform 0.3s ease;
-    background-color: var(--background-color-menu-sidebar);
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px;
-
-    &.expanded {
-      width: 220px;
-      transform: translateX(0);
-    }
-  }
 }
 
 .toggle-close-sidebar {

@@ -29,10 +29,13 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(clonedRequest).pipe(
       catchError((error) => {
-        if (error instanceof HttpErrorResponse && error.status === 401) {
-          this.loginService.logout();
+        if (error instanceof HttpErrorResponse) {
+          if (error.status === 401) {
+            this.loginService.logout();
+          }
+          console.error('Erro interceptado pelo AuthInterceptor:', error);
         }
-        return throwError(() => new Error(error.message));
+        return throwError(() => error);
       })
     );
   }

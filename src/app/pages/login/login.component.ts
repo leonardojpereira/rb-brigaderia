@@ -15,27 +15,35 @@ export class LoginComponent  {
 
   constructor(private loginService: LoginService){}
 
+  ngOnInit(): void {
+  }
+
+
   logar(event: ILoginModel) {
     this.isLoading = true;
-
-      this.loginService.login(event, {
-        onSuccess: () => {},
-        onError: (httpErrorResponse: { status: number; error: { errors: any; }; }) => {
-          this.isLoading = false;
-          if (
-            httpErrorResponse.status === 400 &&
-            httpErrorResponse.error &&
-            httpErrorResponse.error.errors
-          ) {
-            this.handleErrorModal(httpErrorResponse.error.errors);
-          } else {
-            this.isLoading = false;
-            console.error('Erro inesperado:', httpErrorResponse);
-          }
-        },
-      });
-
-    }
+  
+    this.loginService.login(event, {
+      onSuccess: (res) => {
+        console.log('Login realizado com sucesso:', res);
+        this.isLoading = false;
+      },
+      onError: (httpErrorResponse) => {
+        console.log('Erro ao realizar login:', httpErrorResponse);
+        this.isLoading = false;
+  
+        if (
+          httpErrorResponse.status === 400 &&
+          httpErrorResponse.error &&
+          httpErrorResponse.error.errors
+        ) {
+          this.handleErrorModal(httpErrorResponse.error.errors);
+        } else {
+          console.error('Erro inesperado:', httpErrorResponse);
+        }
+      },
+    });
+  }
+  
 
     handleErrorModal(message: string): void {
       this.modalError = true;

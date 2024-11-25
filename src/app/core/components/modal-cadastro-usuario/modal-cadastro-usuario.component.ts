@@ -130,9 +130,17 @@ export class ModalCadastroUsuarioComponent implements OnInit {
               );
             }
           },
-          error: (error) => {
-            console.error('Erro ao atualizar usuário:', error);
-            this.handleError('Erro ao atualizar usuário.');
+          error: (httpErrorResponse) => {
+            this.isLoading = false;
+            if (
+              httpErrorResponse.status === 400 &&
+              httpErrorResponse.error &&
+              httpErrorResponse.error.errors
+            ) {
+              this.handleError(httpErrorResponse.error.errors);
+            } else {
+              console.error('Erro inesperado:', httpErrorResponse);
+            }
           },
           complete: () => {
             this.isLoading = false;
@@ -150,9 +158,17 @@ export class ModalCadastroUsuarioComponent implements OnInit {
               );
             }
           },
-          error: (error) => {
-            console.error('Erro ao cadastrar usuário:', error);
-            this.handleError('Erro ao cadastrar usuário.');
+          error: (httpErrorResponse) => {
+            this.isLoading = false;
+            if (
+              httpErrorResponse.status === 400 &&
+              httpErrorResponse.error &&
+              httpErrorResponse.error.errors
+            ) {
+              this.handleError(httpErrorResponse.error.errors);
+            } else {
+              console.error('Erro inesperado:', httpErrorResponse);
+            }
           },
           complete: () => {
             this.isLoading = false;

@@ -39,12 +39,12 @@ export class LoginService {
     return false;
   }
 
-  login(login: ILoginModel, { onSuccess, onError }: any): any {
+  login(login: ILoginModel, { onSuccess, onError }: { onSuccess: (res: any) => void; onError: (error: any) => void }): void {
     const payload = {
       login: login.email,
       password: login.senha,
     };
-
+  
     localStorage.clear();
     this.httpClient
       .post(environment.apiUrl + `Authentication/Login`, payload, {
@@ -58,19 +58,26 @@ export class LoginService {
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('nmUsuario', res.data.nome);
             localStorage.setItem('role', res.data.role);
+            this.setUserLoggedIn(true);
+            this.router.navigate(['/dashboard']);
           } else {
             console.error('Token não encontrado na resposta');
           }
-
-          this.setUserLoggedIn(true);
-          this.router.navigate(['/dashboard']);
-          return onSuccess(res);
+  
+          if (onSuccess) {
+            onSuccess(res); // Chame onSuccess apenas se for definido
+          }
         },
         error: (error: any) => {
-          return onError(error);
+          if (onError) {
+            onError(error); // Chame onError apenas se for definido
+          } else {
+            console.error('Erro no login e callback onError não fornecido:', error);
+          }
         },
       });
   }
+  
 
   loginAd(login: any, { onSuccess, onError }: any): any {
     this.httpClient

@@ -3,7 +3,7 @@
 
 ---
 
-## 📋 Descrição do Projeto
+## 📋 Descrição do projeto
 
 Este projeto é o frontend do portal RB Brigaderia, desenvolvido para gerenciar vendas, estoque e outras operações da brigaderia. A aplicação é construída utilizando **Angular** e fornece uma interface moderna e responsiva para interagir com a [API RB Brigaderia](https://github.com/seu-usuario/seu-repositorio-api).
 
@@ -20,21 +20,21 @@ Este projeto é o frontend do portal RB Brigaderia, desenvolvido para gerenciar 
 
 ## ⚙️ Funcionalidades
 
-### Componentes Principais
+### Componentes principais
 - **Login**: Sistema de autenticação para usuários da plataforma.
 - **Dashboard**: Painel de resumo com visualização de métricas de vendas e estoque.
 - **Gestão de Estoque**: Controle de entradas e saídas de produtos.
 - **Gestão de Vendas**: Interface para cadastro e visualização de vendas realizadas.
 - **Métricas e Relatórios**: Gráficos e relatórios interativos para análise de dados.
 
-### Destaques Técnicos
+### Destaques técnicos
 - Reutilização de componentes: Layouts, tabelas customizadas, botões e inputs.
 - Utilização de interceptors para manipulação de requisições HTTP e autenticação.
 - Gráficos interativos com **Ngx-Charts**.
 
 ---
 
-## 💻 Estrutura do Projeto
+## 💻 Estrutura do projeto
 
 O projeto segue a estrutura de módulos do Angular. Alguns dos componentes e páginas incluem:
 - **Páginas**:
@@ -79,7 +79,7 @@ Siga as instruções abaixo para configurar e executar o projeto em sua máquina
 
 ## 🔐 Autenticação
 
-O frontend utiliza tokens JWT para autenticação com a [API RB Brigaderia](https://github.com/seu-usuario/seu-repositorio-api). As requisições autenticadas incluem o token no cabeçalho da seguinte forma:
+O frontend utiliza tokens JWT para autenticação com a [API RB Brigaderia](https://github.com/leonardojpereira/rb-brigaderia-api). As requisições autenticadas incluem o token no cabeçalho da seguinte forma:
 ```
 Authorization: Bearer <seu-token-jwt>
 ```
@@ -94,7 +94,7 @@ Authorization: Bearer <seu-token-jwt>
 
 ---
 
-## 📊 Scripts Disponíveis
+## 📊 Scripts disponíveis
 
 - `npm start`: Inicia o servidor de desenvolvimento.
 - `npm run build`: Gera o build de produção da aplicação.
@@ -109,4 +109,4 @@ Authorization: Bearer <seu-token-jwt>
 
 ---
 
-### :construction: PROJETO EM ANDAMENTO :construction:
+### :construction: PROJETO FINALIZADO :construction:

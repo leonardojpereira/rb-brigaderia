@@ -62,13 +62,21 @@
     justify-content: center;
   }
 
-  .status-alto {
+  .status-muito {
     background-color: #e0f7e9;
     color: #1a7f37;
   }
-  .status-baixo {
+  .status-medio {
+    background-color: #fff4e0;
+    color: #d9730d;
+  }
+  .status-pouco {
     background-color: #feeceb;
     color: #aa3028;
+  }
+  .status-acabou {
+    background-color: #ffc4c1;
+    color: #7e1d16;
   }
 
   .view-all-button {

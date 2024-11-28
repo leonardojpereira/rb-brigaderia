@@ -15,7 +15,7 @@ export class UsuarioService {
     filter: string = ''
   ): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.httpClient.get<any>(`${environment.apiUrl}User/GetAllUsers`, {
+    return this.httpClient.get<any>(`${environment.apiUrl}User/GetUsers`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,

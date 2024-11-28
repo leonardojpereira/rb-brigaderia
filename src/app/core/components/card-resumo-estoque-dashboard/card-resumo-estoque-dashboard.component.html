@@ -1,7 +1,7 @@
 <div class="card-resumo-estoque-dashboard">
     <div class="header">
         <h3 class="title">Estoque</h3>
-        <span (click)="navigate('/estoque')" class="see-more-link">Ver mais</span>
+        <span (click)="navigate('/estoque/cadastro')" class="see-more-link">Ver mais</span>
     </div>
 
     <div *ngIf="visibleProducts.length === 0" class="no-data">
@@ -14,7 +14,15 @@
           <span class="product-name">{{ product.name }}</span>
           <span class="product-quantity">Quantidade: {{ product.quantity }} unidades</span>
         </div>
-        <div class="status" [ngClass]="getStatusClass(product.status)">
+        <div
+        class="status"
+        [ngClass]="{
+          'status-pouco': product.status === 'Pouco',
+          'status-medio': product.status === 'Médio',
+          'status-muito': product.status === 'Muito',
+          'status-acabou': product.status === 'Acabou'
+        }"
+      >
           <span class="status-text">{{ product.status }}</span>
         </div>
       </div>

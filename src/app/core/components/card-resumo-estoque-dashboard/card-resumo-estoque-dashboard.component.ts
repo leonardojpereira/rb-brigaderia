@@ -54,10 +54,9 @@ export class CardResumoEstoqueDashboardComponent implements OnInit {
   }
 
   getStatus(stock: number, minimumStock: number): string {
-    return stock > minimumStock ? 'Alto' : 'Baixo';
-  }
-
-  getStatusClass(status: string): string {
-    return status === 'Alto' ? 'status-alto' : 'status-baixo';
+    if (stock === 0) return 'Acabou';
+    else if (stock <= minimumStock) return 'Pouco';
+    else if (stock > minimumStock && stock < minimumStock * 3) return 'Médio';  
+    return 'Muito';
   }
 }

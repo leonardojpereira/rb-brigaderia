@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: HomeComponent, canActivate: [AuthGuard] },
   {
-    path: 'estoque/cadastrar',
+    path: 'estoque/cadastro',
     component: EstoquePageComponent,
     canActivate: [AuthGuard],
   },
@@ -41,7 +41,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'vendas/cadastrar',
+    path: 'vendas/cadastro',
     component: VendasPageComponent,
     canActivate: [AuthGuard],
   },

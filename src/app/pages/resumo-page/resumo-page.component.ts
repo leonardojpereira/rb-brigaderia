@@ -29,7 +29,7 @@ export class ResumoPageComponent implements OnInit {
   paginacao = {
     pageNumber: 1,
     pageSize: 7,
-    totalItem: 0
+    totalItems: 0
   };
 
   constructor(
@@ -61,10 +61,10 @@ export class ResumoPageComponent implements OnInit {
 
   fetchResumoVendas(): void {
     this.isLoading = true;
-
+  
     const mes = this.selectedMonth ?? undefined;
     const ano = this.selectedYear ?? undefined;
-
+  
     this.vendasCaixinhasService
       .getResumeVendas(this.selectedVendedor, mes, ano, this.paginacao.pageNumber, this.paginacao.pageSize)
       .pipe(delay(500))
@@ -74,12 +74,13 @@ export class ResumoPageComponent implements OnInit {
             this.resumoVendedoras = response.data.resumoPorVendedora.map((vendedora: any) => ({
               nomeVendedor: vendedora.nomeVendedor,
               totalFaturamento: this.formatCurrency(vendedora.totalFaturamento),
-              totalSalario: vendedora.nomeVendedor == "Rebeca" ? "---" : this.formatCurrency(vendedora.totalSalario),
+              totalSalario: vendedora.nomeVendedor === "Rebeca" ? "---" : this.formatCurrency(vendedora.totalSalario),
               totalCusto: this.formatCurrency(vendedora.totalCusto),
               totalLucro: this.formatCurrency(vendedora.totalLucro),
               date: vendedora.date,
             }));
-            this.paginacao.totalItem = response.data.totalItems; // Atualiza o total de itens para a paginação
+  
+            this.paginacao.totalItems = response.data.totalItems;
           }
         },
         error: (error) => console.error('Erro ao buscar resumo de vendas:', error),

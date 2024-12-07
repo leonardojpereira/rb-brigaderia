@@ -5,7 +5,7 @@
 
 ## 📋 Descrição do projeto
 
-Este projeto é o frontend do portal RB Brigaderia, desenvolvido para gerenciar vendas, estoque e outras operações da brigaderia. A aplicação é construída utilizando **Angular** e fornece uma interface moderna e responsiva para interagir com a [API RB Brigaderia](https://github.com/seu-usuario/seu-repositorio-api).
+Este projeto é o frontend do portal RB Brigaderia, desenvolvido para gerenciar vendas, estoque e outras operações da brigaderia. A aplicação é construída utilizando **Angular** e fornece uma interface moderna e responsiva para interagir com a [API RB Brigaderia](https://github.com/leonardojpereira/rb-brigaderia-api).
 
 ---
 
